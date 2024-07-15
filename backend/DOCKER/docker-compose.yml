@@ -46,7 +46,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: point_app
     volumes:
-      - point-app-db-data:/var/lib/mysql　# データはdocker上で管理
+      - point-app-db-data:/var/lib/mysql # データはdocker上で管理
       - $PWD/_tools/mysql/conf.d:/etc/mysql/conf.d:cached
     ports:
       - "33306:3306"
