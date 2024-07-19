@@ -12,3 +12,8 @@ $ docker build --no-cache --target deploy ./
 $ docker build --no-cache --target dev ./
 
 ```
+
+### Docker 起動手順
+
+1. Docker を立ち上げる
+2. docker compose up -d --build
