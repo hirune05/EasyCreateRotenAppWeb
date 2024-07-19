@@ -37,6 +37,6 @@
     # 軽量にするためイメージはalpineを利用
     RUN apk update && apk add alpine-sdk && apk add jq
     # air ライブリロード（変更のたびにサーバーを起動する必要がなくなる）を行ってくれるモジュール
-    RUN go install github.com/cosmtrek/air@latest 
+    RUN go install github.com/air-verse/air@latest
     # sqldef マイグレーションツール（新規作成DDLを判別し差分適用DDL文を自動で生成）
-    RUN go install github.com/k0kubun/sqldef/cmd/mysqldef@latest
+    # RUN go install github.com/k0kubun/sqldef/cmd/mysqldef@latest
