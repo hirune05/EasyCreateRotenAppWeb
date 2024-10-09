@@ -1,0 +1,150 @@
+openapi: 3.0.3
+info:
+  title: Order Management API
+  description: API for managing orders in the system.
+  version: 1.0.0
+servers:
+- url: https://api.example.com/v1
+  description: Main production server
+paths:
+  /orders:
+    get:
+      summary: Get a list of orders
+      description: Retrieve a list of all orders with their basic details.
+      responses:
+        '200':
+          description: A list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      summary: Create a new order
+      description: Create a new order with the provided details.
+      requestBody:
+        description: Order details to create a new order
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderInput'
+      responses:
+        '201':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Invalid input
+  /orders/{orderId}:
+    get:
+      summary: Get order details
+      description: Retrieve details of a specific order by its ID.
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the order to retrieve
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Order not found
+    put:
+      summary: Update an existing order
+      description: Update details of an existing order by its ID.
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the order to update
+      requestBody:
+        description: Updated order details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderInput'
+      responses:
+        '200':
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Order not found
+        '400':
+          description: Invalid input
+    delete:
+      summary: Delete an order
+      description: Delete a specific order by its ID.
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the order to delete
+      responses:
+        '204':
+          description: Order deleted successfully
+        '404':
+          description: Order not found
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        stored_id:
+          type: string
+        prepared_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        pickuped_at:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        user_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    OrderInput:
+      type: object
+      properties:
+        stored_id:
+          type: string
+        status:
+          type: integer
+        user_id:
+          type: string
+        prepared_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        pickuped_at:
+          type: string
+          format: date-time

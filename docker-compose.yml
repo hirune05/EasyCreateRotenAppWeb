@@ -15,6 +15,7 @@ services:
       GO_ENV: development
       DB_HOST: db
       DB_PORT: 3306
+      MYSQL_HOST: "mysql:3306"
       DB_USER: admin
       DB_PASSWORD: password
       DB_NAME: point_app
