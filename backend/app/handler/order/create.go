@@ -1,3 +1,13 @@
+// @Summary Create a new order
+// @Description Create a new order with the provided details
+// @Tags orders
+// @Accept  json
+// @Produce  json
+// @Param order body object.Order true "Order data"
+// @Success 200 {object} object.Order
+// @Failure 400 {object} map[string]string "Bad Request"
+// @Failure 500 {object} map[string]string "Internal Server Error"
+// @Router /v1/orders [post]
 package order
 
 import (
