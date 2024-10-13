@@ -1,6 +1,6 @@
 services:
-  backend:
-    container_name: backend
+  app:
+    container_name: app
     restart: always
     build:
       context: ./
@@ -8,7 +8,7 @@ services:
       args:
         - target=dev # Dockerfileに対応する名前をしている
     volumes:
-      - .:/app
+      - ./:/app
     depends_on:
       - db # dbが立ち上がってから起動
     environment:
