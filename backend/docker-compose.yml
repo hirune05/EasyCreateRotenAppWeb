@@ -3,12 +3,12 @@ services:
     container_name: backend
     restart: always
     build:
-      context: ./backend/
+      context: ./
       dockerfile: Dockerfile
       args:
         - target=dev # Dockerfileに対応する名前をしている
     volumes:
-      - ./backend:/app
+      - .:/app
     depends_on:
       - db # dbが立ち上がってから起動
     environment:
@@ -30,15 +30,6 @@ services:
     tty: true
     ports:
       - 8081:80
-
-  frontend:
-    build:
-      context: ./frontend/
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend:/app
-    ports:
-      - 3000:3000
 
   doc:
     image: swaggerapi/swagger-ui:latest
