@@ -40,3 +40,5 @@ RUN apk update && apk add alpine-sdk && apk add jq
 RUN go install github.com/air-verse/air@latest
 # sqldef マイグレーションツール（新規作成DDLを判別し差分適用DDL文を自動で生成）
 # RUN go install github.com/k0kubun/sqldef/cmd/mysqldef@latest
+
+CMD ["go", "run", "main.go"]
