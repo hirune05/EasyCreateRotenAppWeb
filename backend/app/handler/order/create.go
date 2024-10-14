@@ -11,16 +11,11 @@
 package order
 
 import (
-	"backend/app/usecase"
 	"net/http"
 	"time"
 
 	"github.com/labstack/echo/v4"
 )
-
-type orderHandler struct {
-	orderUseCase usecase.Order
-}
 
 // Request body for `POST /v1/orders`
 type AddRequest struct {

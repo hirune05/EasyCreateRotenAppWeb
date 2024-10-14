@@ -6,6 +6,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type orderHandler struct {
+	orderUseCase usecase.Order
+}
+
 func RegisterRoutes(e *echo.Group, u usecase.Order) {
 	h := &orderHandler{
 		orderUseCase: u,

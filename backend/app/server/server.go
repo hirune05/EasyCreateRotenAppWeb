@@ -18,12 +18,15 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func Run() error {
 
 	dsn := "admin:password@tcp(point-app-db:3306)/point_app?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
 	}
@@ -55,9 +58,10 @@ func Run() error {
 	log.Printf("Serve on http://%s", addr)
 
 	orderUseCase := usecase.NewOrder(db, dao.NewOrderRepository(db))
+	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, dao.NewOrderRepository(db),
+		orderUseCase, orderItemUseCase,
 	)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)

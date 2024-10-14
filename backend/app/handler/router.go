@@ -4,15 +4,15 @@ import (
 	"net/http"
 	"time"
 
-	"backend/app/domain/repository"
 	"backend/app/handler/order"
+	orderItem "backend/app/handler/order_item"
 	"backend/app/usecase"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func NewRouter(ou usecase.Order, or repository.OrderRepository) http.Handler {
+func NewRouter(ou usecase.Order, oiu usecase.OrderItem) http.Handler {
 	e := echo.New()
 
 	// A good base middleware stack
@@ -33,6 +33,7 @@ func NewRouter(ou usecase.Order, or repository.OrderRepository) http.Handler {
 	v1 := e.Group("/v1")
 
 	order.RegisterRoutes(v1, ou)
+	orderItem.RegisterRoutes(v1, oiu)
 
 	return e
 }
