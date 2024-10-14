@@ -2,8 +2,10 @@ package server
 
 import (
 	"backend/app/config"
+	"backend/app/dao"
 	"backend/app/domain/object"
 	"backend/app/handler"
+	"backend/app/usecase"
 	"context"
 	"log"
 	"net"
@@ -16,20 +18,21 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func Run() error {
 
-	// Set up the connection string
 	dsn := "admin:password@tcp(point-app-db:3306)/point_app?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
 	}
 
 	log.Println("Database connected successfully")
 
-	// AutoMigrate for all objects
 	err = db.AutoMigrate(
 		&object.Store{},
 		&object.StoreStaff{},
@@ -45,17 +48,21 @@ func Run() error {
 	}
 	log.Println("Database migration completed successfully")
 
-	if err := seedData(db); err != nil {
-		log.Fatalf("failed to seed data: %v", err)
-	}
-	log.Println("Seed data added successfully")
-
-	//accountUsecase := usecase.NewAcocunt(db, dao.NewAccount(db))
+	// シードデータを追加したいときだけコメントアウトを外す
+	// if err := seedData(db); err != nil {
+	// 	log.Fatalf("failed to seed data: %v", err)
+	// }
+	// log.Println("Seed data added successfully")
 
 	addr := ":" + strconv.Itoa(config.Port())
 	log.Printf("Serve on http://%s", addr)
 
-	r := handler.NewRouter()
+	orderUseCase := usecase.NewOrder(db, dao.NewOrderRepository(db))
+	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
+
+	r := handler.NewRouter(
+		orderUseCase, orderItemUseCase,
+	)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	srv := &http.Server{
@@ -112,9 +119,10 @@ func seedData(db *gorm.DB) error {
 	}
 
 	// Orderのシードデータ
+	now := time.Now()
 	orders := []object.Order{
-		{StoreID: stores[0].ID, PickedUpAt: time.Now(), Status: 0, StoreStaffID: storeStaffs[0].ID},
-		{StoreID: stores[1].ID, PickedUpAt: time.Now(), Status: 1, StoreStaffID: storeStaffs[1].ID},
+		{StoreID: stores[0].ID, PickedUpAt: &now, Status: 0, StoreStaffID: storeStaffs[0].ID},
+		{StoreID: stores[1].ID, PickedUpAt: &now, Status: 1, StoreStaffID: storeStaffs[1].ID},
 	}
 	if err := db.Create(&orders).Error; err != nil {
 		return err

@@ -14,5 +14,5 @@ type Item struct {
 	ImageURL    *string     `json:"image_url"`
 	CreatedAt   time.Time   `json:"created_at"`
 	UpdatedAt   time.Time   `json:"updated_at"`
-	OrderItems  []OrderItem `gorm:"foreignKey:ItemID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"` // 関連するOrderItems
+	OrderItems  []OrderItem `gorm:"foreignKey:ItemID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
