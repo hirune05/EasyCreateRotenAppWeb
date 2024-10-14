@@ -8,7 +8,7 @@ import (
 
 const (
 	portKey     = "PORT"
-	defaultPort = 8080
+	defaultPort = 80
 )
 
 // Read port to listen on
