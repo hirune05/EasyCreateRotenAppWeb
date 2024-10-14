@@ -10,5 +10,8 @@ import (
 
 type OrderItemRepository interface {
 	Create(ctx context.Context, tx *gorm.DB, orderItem *object.OrderItem) error
+	GetByID(ctx context.Context, id string) (*object.OrderItem, error)
 	GetByOrderId(ctx context.Context, orderID string) ([]*object.OrderItem, error)
+	Update(ctx context.Context, tx *gorm.DB, order *object.OrderItem) error
+	Delete(ctx context.Context, id string) error
 }
