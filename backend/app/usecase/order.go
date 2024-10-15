@@ -15,6 +15,7 @@ type Order interface {
 	Update(ctx context.Context, id string, storeID, storeStaffID, status int, pickedUpAt *time.Time) (*UpdateOrderDTO, error)
 	Delete(ctx context.Context, id string) error
 	GetByID(ctx context.Context, id string) (*GetOrderDTO, error)
+	GetByStoreID(ctx context.Context, id string) ([]*GetOrderDTO, error)
 	GetAll(ctx context.Context) ([]*GetOrderDTO, error)
 }
 type order struct {
@@ -144,6 +145,30 @@ func (a *order) GetByID(ctx context.Context, id string) (*GetOrderDTO, error) {
 	return &GetOrderDTO{
 		Order: order,
 	}, nil
+}
+
+func (u *order) GetByStoreID(ctx context.Context, id string) ([]*GetOrderDTO, error) {
+	orders, err := u.orderRepo.GetByStoreID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var orderDTOs []*GetOrderDTO
+	for _, item := range orders {
+		orderDTOs = append(orderDTOs, &GetOrderDTO{
+			Order: &object.Order{
+				ID:           item.ID,
+				StoreID:      item.StoreID,
+				StoreStaffID: item.StoreStaffID,
+				Status:       item.Status,
+				PickedUpAt:   item.PickedUpAt,
+				CreatedAt:    item.CreatedAt,
+				UpdatedAt:    item.UpdatedAt,
+			},
+		})
+	}
+
+	return orderDTOs, nil
 }
 
 func (r *order) GetAll(ctx context.Context) ([]*GetOrderDTO, error) {

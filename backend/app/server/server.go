@@ -48,7 +48,7 @@ func Run() error {
 	}
 	log.Println("Database migration completed successfully")
 
-	// シードデータを追加したいときだけコメントアウトを外す
+	// // シードデータを追加したいときだけコメントアウトを外す
 	// if err := seedData(db); err != nil {
 	// 	log.Fatalf("failed to seed data: %v", err)
 	// }
@@ -102,8 +102,8 @@ func seedData(db *gorm.DB) error {
 
 	// StoreStaffのシードデータ
 	storeStaffs := []object.StoreStaff{
-		{Name: "John Doe", Password: "password1", StudentNumber: 1234, Role: 1, StoreID: &stores[0].ID},
-		{Name: "Jane Smith", Password: "password2", StudentNumber: 5678, Role: 0, StoreID: &stores[1].ID},
+		{Name: "John Doe", Password: "password1", StudentNumber: 1234, Role: 1, StoreID: stores[0].ID},
+		{Name: "Jane Smith", Password: "password2", StudentNumber: 5678, Role: 0, StoreID: stores[1].ID},
 	}
 	if err := db.Create(&storeStaffs).Error; err != nil {
 		return err
