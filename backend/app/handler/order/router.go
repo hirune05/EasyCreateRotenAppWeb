@@ -19,6 +19,7 @@ func RegisterRoutes(e *echo.Group, u usecase.Order) {
 	e.GET("/orders", h.GetAll)
 	e.GET("/orders/:id", h.GetByID)
 	e.GET("/orders/store/:storeId", h.GetByStoreID)
+	e.GET("/orders/store/:storeId/:status", h.GetByStatus)
 	e.PUT("/orders/:id", h.Update)
 	e.DELETE("/orders/:id", h.Delete)
 }

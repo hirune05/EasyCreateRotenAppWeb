@@ -44,6 +44,16 @@ func (r *OrderRepositoryImpl) GetByStoreID(ctx context.Context, id string) ([]*o
 	return orders, nil
 }
 
+func (r *OrderRepositoryImpl) GetByStatus(ctx context.Context, storeId, status string) ([]*object.Order, error) {
+	var orders []*object.Order
+	if err := r.db.WithContext(ctx).
+		Where("store_id = ? AND status = ?", storeId, status).
+		Find(&orders).Error; err != nil {
+		return nil, fmt.Errorf("failed to find order by store id and status: %w", err)
+	}
+	return orders, nil
+}
+
 func (r *OrderRepositoryImpl) GetAll(ctx context.Context) ([]*object.Order, error) {
 	var orders []*object.Order
 
