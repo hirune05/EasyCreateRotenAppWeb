@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Request body for `POST /v1/adminUsers`
+// Request body for `POST /v1/adminUser`
 type AddRequest struct {
 	Username string
 	Email    string

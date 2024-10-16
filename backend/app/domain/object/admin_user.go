@@ -16,7 +16,7 @@ type AdminUser struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func Create(username, email, password string) (*AdminUser, error) {
+func NewAdminUser(username, email, password string) (*AdminUser, error) {
 	adminUser := &AdminUser{
 		Username:  username,
 		Email:     email,
@@ -43,7 +43,7 @@ func (a *AdminUser) SetPassword(pass string) error {
 		return fmt.Errorf("パスワードは空にできません")
 	}
 
-	passwordHash, err := generatePasswordHash(pass)
+	passwordHash, err := generateAdminPasswordHash(pass)
 	if err != nil {
 		return fmt.Errorf("パスワードハッシュ生成エラー: %w", err)
 	}
@@ -51,7 +51,7 @@ func (a *AdminUser) SetPassword(pass string) error {
 	return nil
 }
 
-func generatePasswordHash(pass string) (string, error) {
+func generateAdminPasswordHash(pass string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
 	if err != nil {
 		return "", fmt.Errorf("hashing password failed: %w", err)

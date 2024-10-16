@@ -31,7 +31,7 @@ func NewAdminUser(db *gorm.DB, adminUserRepo repository.AdminUserRepository) *ad
 }
 
 func (a *adminUser) Create(ctx context.Context, username, email, password string) (*CreateAdminUserDTO, error) {
-	adminUser, err := object.Create(username, email, password)
+	adminUser, err := object.NewAdminUser(username, email, password)
 	if err != nil {
 		return nil, err
 	}

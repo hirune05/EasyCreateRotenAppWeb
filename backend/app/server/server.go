@@ -60,10 +60,10 @@ func Run() error {
 	orderUseCase := usecase.NewOrder(db, dao.NewOrderRepository(db))
 	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
 	adminUserUseCase := usecase.NewAdminUser(db, dao.NewAdminUserRepository(db))
+	storeStaffUseCase := usecase.NewStoreStaff(db, dao.NewStoreStaffRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, orderItemUseCase, adminUserUseCase,
-	)
+		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	srv := &http.Server{
