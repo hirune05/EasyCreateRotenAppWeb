@@ -59,9 +59,10 @@ func Run() error {
 
 	orderUseCase := usecase.NewOrder(db, dao.NewOrderRepository(db))
 	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
+	adminUserUseCase := usecase.NewAdminUser(db, dao.NewAdminUserRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, orderItemUseCase,
+		orderUseCase, orderItemUseCase, adminUserUseCase,
 	)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
