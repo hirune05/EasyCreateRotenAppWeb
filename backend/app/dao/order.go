@@ -36,6 +36,34 @@ func (r *OrderRepositoryImpl) GetByID(ctx context.Context, id string) (*object.O
 	return &order, nil
 }
 
+func (r *OrderRepositoryImpl) GetByStoreID(ctx context.Context, id string) ([]*object.Order, error) {
+	var orders []*object.Order
+	if err := r.db.WithContext(ctx).Where("store_id = ?", id).Find(&orders).Error; err != nil {
+		return nil, fmt.Errorf("failed to find order by store id: %w", err)
+	}
+	return orders, nil
+}
+
+func (r *OrderRepositoryImpl) GetByStatus(ctx context.Context, storeId, status string) ([]*object.Order, error) {
+	var orders []*object.Order
+	if err := r.db.WithContext(ctx).
+		Where("store_id = ? AND status = ?", storeId, status).
+		Find(&orders).Error; err != nil {
+		return nil, fmt.Errorf("failed to find order by store id and status: %w", err)
+	}
+	return orders, nil
+}
+
+func (r *OrderRepositoryImpl) GetAll(ctx context.Context) ([]*object.Order, error) {
+	var orders []*object.Order
+
+	if err := r.db.WithContext(ctx).Find(&orders).Error; err != nil {
+		return nil, fmt.Errorf("failed to retrieve all orders: %w", err)
+	}
+
+	return orders, nil
+}
+
 func (r *OrderRepositoryImpl) Update(ctx context.Context, tx *gorm.DB, order *object.Order) error {
 	if err := tx.WithContext(ctx).Model(&object.Order{}).Where("id = ?", order.ID).Updates(order).Error; err != nil {
 		return fmt.Errorf("failed to update order: %w", err)
@@ -48,14 +76,4 @@ func (r *OrderRepositoryImpl) Delete(ctx context.Context, id string) error {
 		return fmt.Errorf("failed to delete order: %w", err)
 	}
 	return nil
-}
-
-func (r *OrderRepositoryImpl) GetAll(ctx context.Context) ([]*object.Order, error) {
-	var orders []*object.Order
-
-	if err := r.db.WithContext(ctx).Find(&orders).Error; err != nil {
-		return nil, fmt.Errorf("failed to retrieve all orders: %w", err)
-	}
-
-	return orders, nil
 }

@@ -39,7 +39,7 @@ func (r *OrderItemRepositoryImpl) GetByID(ctx context.Context, id string) (*obje
 func (r *OrderItemRepositoryImpl) GetByOrderId(ctx context.Context, orderID string) ([]*object.OrderItem, error) {
 	var orderItems []*object.OrderItem
 	if err := r.db.WithContext(ctx).Where("order_id = ?", orderID).Find(&orderItems).Error; err != nil {
-		return nil, fmt.Errorf("failed to find order items by order_id: %w", err)
+		return nil, fmt.Errorf("failed to find order items by order id: %w", err)
 	}
 	return orderItems, nil
 }
