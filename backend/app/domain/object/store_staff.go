@@ -39,14 +39,11 @@ func NewStoreStaff(name, password string, studentNumber, role int, storeId int) 
 	return storeStaff, nil
 }
 
-// 指定されたパスワードが storeStaff のパスワードと一致するかを確認
 func (a *StoreStaff) CheckPassword(pass string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(a.Password), []byte(pass)) == nil
 }
 
-// パスワードをハッシュ化し、storeStaff に設定する
 func (a *StoreStaff) SetPassword(pass string) error {
-	// パスワードが空でないか確認
 	if pass == "" {
 		return fmt.Errorf("パスワードは空にできません")
 	}

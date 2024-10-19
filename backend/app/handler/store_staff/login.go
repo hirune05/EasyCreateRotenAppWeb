@@ -12,7 +12,11 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
-	Token string `json:"token"`
+	Token         string `json:"token"`
+	UserID        int    `json:"user_id"`
+	StudentNumber int    `json:"student_number"`
+	Name          string `json:"name"`
+	Role          int    `json:"role"`
 }
 
 func (h *storeStaffHandler) Login(c echo.Context) error {
@@ -28,5 +32,11 @@ func (h *storeStaffHandler) Login(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "invalid credentials"})
 	}
 
-	return c.JSON(http.StatusOK, LoginResponse{Token: dto.Token})
+	return c.JSON(http.StatusOK, LoginResponse{
+		Token:         dto.Token,
+		UserID:        dto.UserID,
+		StudentNumber: dto.StudentNumber,
+		Name:          dto.Name,
+		Role:          dto.Role,
+	})
 }

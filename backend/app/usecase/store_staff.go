@@ -15,7 +15,11 @@ type StoreStaff interface {
 	Login(ctx context.Context, studentNumber int, password string) (*LoginStoreStaffDTO, error)
 }
 type LoginStoreStaffDTO struct {
-	Token string `json:"token"`
+	Token         string `json:"token"`
+	UserID        int    `json:"user_id"`
+	StudentNumber int    `json:"student_number"`
+	Name          string `json:"name"`
+	Role          int    `json:"role"`
 }
 
 type CreateStoreStaffDTO struct {
@@ -87,6 +91,10 @@ func (a *storeStaff) Login(ctx context.Context, studentNumber int, password stri
 	}
 
 	return &LoginStoreStaffDTO{
-		Token: token,
+		Token:         token,
+		UserID:        storeStaff.ID,
+		StudentNumber: storeStaff.StudentNumber,
+		Name:          storeStaff.Name,
+		Role:          storeStaff.Role,
 	}, nil
 }
