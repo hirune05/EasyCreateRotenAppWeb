@@ -12,7 +12,7 @@ type StoreStaff struct {
 	ID            int       `gorm:"primaryKey;autoIncrement" json:"id"`
 	Name          string    `gorm:"size:255;not null" json:"name"`
 	Password      string    `gorm:"size:255;not null" json:"password"`
-	StudentNumber int       `gorm:"not null" json:"student_number"`
+	StudentNumber int       `gorm:"not null;unique" json:"student_number"`
 	Role          int       `gorm:"not null" json:"role"`
 	StoreID       int       `gorm:"not null" json:"store_id"`
 	Store         Store     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
@@ -21,7 +21,7 @@ type StoreStaff struct {
 	Orders        []Order   `gorm:"foreignKey:StoreStaffID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
-func NewStoreStaff(name, password string, studentNumber, role int, storeId *int) (*StoreStaff, error) {
+func NewStoreStaff(name, password string, studentNumber, role int, storeId int) (*StoreStaff, error) {
 	storeStaff := &StoreStaff{
 		Name:          name,
 		Password:      password,

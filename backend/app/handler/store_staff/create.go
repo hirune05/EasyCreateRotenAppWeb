@@ -11,7 +11,7 @@ type AddRequest struct {
 	Password      string
 	StudentNumber int
 	Role          int
-	StoreId       *int
+	StoreId       int
 }
 
 func (h *storeStaffHandler) Create(c echo.Context) error {

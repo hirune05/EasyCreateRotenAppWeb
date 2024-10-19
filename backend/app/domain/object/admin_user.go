@@ -11,7 +11,7 @@ type AdminUser struct {
 	ID        int       `gorm:"primaryKey;autoIncrement" json:"id"`
 	Username  string    `gorm:"size:255;not null" json:"username"`
 	Password  string    `gorm:"size:255;not null" json:"password"`
-	Email     string    `gorm:"size:255;not null" json:"email"`
+	Email     string    `gorm:"size:255;not null;unique" json:"email"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -31,14 +31,11 @@ func NewAdminUser(username, email, password string) (*AdminUser, error) {
 	return adminUser, nil
 }
 
-// 指定されたパスワードが adminUser のパスワードと一致するかを確認
 func (a *AdminUser) CheckPassword(pass string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(a.Password), []byte(pass)) == nil
 }
 
-// パスワードをハッシュ化し、adminUser に設定する
 func (a *AdminUser) SetPassword(pass string) error {
-	// パスワードが空でないか確認
 	if pass == "" {
 		return fmt.Errorf("パスワードは空にできません")
 	}

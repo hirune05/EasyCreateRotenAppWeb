@@ -11,7 +11,7 @@ import (
 )
 
 type StoreStaff interface {
-	Create(ctx context.Context, name string, password string, studentNumber int, role int, storeId *int) (*CreateStoreStaffDTO, error)
+	Create(ctx context.Context, name string, password string, studentNumber int, role int, storeId int) (*CreateStoreStaffDTO, error)
 	Login(ctx context.Context, studentNumber int, password string) (*LoginStoreStaffDTO, error)
 }
 type LoginStoreStaffDTO struct {
@@ -36,7 +36,7 @@ func NewStoreStaff(db *gorm.DB, storeStaffRepo repository.StoreStaffRepository) 
 	}
 }
 
-func (a *storeStaff) Create(ctx context.Context, name string, password string, studentNumber int, role int, storeId *int) (*CreateStoreStaffDTO, error) {
+func (a *storeStaff) Create(ctx context.Context, name string, password string, studentNumber int, role int, storeId int) (*CreateStoreStaffDTO, error) {
 	storeStaff, err := object.NewStoreStaff(name, password, studentNumber, role, storeId)
 	if err != nil {
 		return nil, err
