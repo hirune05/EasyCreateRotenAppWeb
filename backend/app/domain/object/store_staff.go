@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -21,7 +22,7 @@ type StoreStaff struct {
 }
 
 func NewStoreStaff(name, password string, studentNumber, role int, storeId *int) (*StoreStaff, error) {
-	adminUser := &StoreStaff{
+	storeStaff := &StoreStaff{
 		Name:          name,
 		Password:      password,
 		StudentNumber: studentNumber,
@@ -31,19 +32,19 @@ func NewStoreStaff(name, password string, studentNumber, role int, storeId *int)
 		UpdatedAt:     time.Now(),
 	}
 
-	if err := adminUser.SetPassword(password); err != nil {
+	if err := storeStaff.SetPassword(password); err != nil {
 		return nil, fmt.Errorf("パスワード設定エラー: %w", err)
 	}
 
-	return adminUser, nil
+	return storeStaff, nil
 }
 
-// 指定されたパスワードが adminUser のパスワードと一致するかを確認
+// 指定されたパスワードが storeStaff のパスワードと一致するかを確認
 func (a *StoreStaff) CheckPassword(pass string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(a.Password), []byte(pass)) == nil
 }
 
-// パスワードをハッシュ化し、adminUser に設定する
+// パスワードをハッシュ化し、storeStaff に設定する
 func (a *StoreStaff) SetPassword(pass string) error {
 	// パスワードが空でないか確認
 	if pass == "" {
@@ -64,4 +65,19 @@ func generatePasswordHash(pass string) (string, error) {
 		return "", fmt.Errorf("hashing password failed: %w", err)
 	}
 	return string(hash), nil
+}
+
+func (a *StoreStaff) GenerateJWTToken(secretKey string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"id":             a.ID,
+		"student_number": a.StudentNumber,
+		"exp":            time.Now().Add(time.Hour * 72).Unix(), // Token expiration time
+	})
+
+	tokenString, err := token.SignedString([]byte(secretKey))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }

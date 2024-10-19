@@ -6,7 +6,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Request body for `POST /v1/storeStaff`
 type AddRequest struct {
 	Name          string
 	Password      string

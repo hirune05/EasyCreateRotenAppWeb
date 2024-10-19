@@ -4,12 +4,18 @@ import (
 	"backend/app/domain/object"
 	"backend/app/domain/repository"
 	"context"
+	"errors"
+	"os"
 
 	"gorm.io/gorm"
 )
 
 type StoreStaff interface {
 	Create(ctx context.Context, name string, password string, studentNumber int, role int, storeId *int) (*CreateStoreStaffDTO, error)
+	Login(ctx context.Context, studentNumber int, password string) (*LoginStoreStaffDTO, error)
+}
+type LoginStoreStaffDTO struct {
+	Token string `json:"token"`
 }
 
 type CreateStoreStaffDTO struct {
@@ -57,5 +63,30 @@ func (a *storeStaff) Create(ctx context.Context, name string, password string, s
 
 	return &CreateStoreStaffDTO{
 		StoreStaff: storeStaff,
+	}, nil
+}
+
+func (a *storeStaff) Login(ctx context.Context, studentNumber int, password string) (*LoginStoreStaffDTO, error) {
+	storeStaff, err := a.storeStaffRepo.FindByStudentNumber(ctx, studentNumber)
+	if err != nil {
+		return nil, err
+	}
+
+	if !storeStaff.CheckPassword(password) {
+		return nil, errors.New("invalid student number or password")
+	}
+
+	secretKey := os.Getenv("JWT_SECRET_KEY")
+	if secretKey == "" {
+		return nil, errors.New("JWT secret key is not configured")
+	}
+
+	token, err := storeStaff.GenerateJWTToken(secretKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return &LoginStoreStaffDTO{
+		Token: token,
 	}, nil
 }
