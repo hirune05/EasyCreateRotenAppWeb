@@ -2,7 +2,7 @@
 
 # ビルド用環境
 # ----------------------------------------------
-FROM golang:1.23.2-bullseye AS deploy-builder
+FROM --platform=linux/x86_64 golang:1.23.2-bullseye AS deploy-builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN go build -trimpath -ldflags "-w -s" -o app
 
 # 本番環境
 # ----------------------------------------------
-FROM debian:bullseye-slim AS deploy
+FROM --platform=linux/x86_64 debian:bullseye-slim AS deploy
 
 # X509: Certificate Signed by Unknown Authorityエラーを回避する
 RUN apt-get update \
@@ -30,7 +30,7 @@ CMD ["./app"]
 
 # ローカルでの開発環境
 # ----------------------------------------------
-FROM golang:1.23.2-alpine3.20 AS dev
+FROM --platform=linux/x86_64 golang:1.23.2-alpine3.20 AS dev
 
 WORKDIR /app
 
