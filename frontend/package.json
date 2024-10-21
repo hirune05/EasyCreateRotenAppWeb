@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "biome lint --apply ./app ./components ./features ./hooks ./lib",
+    "format": "biome format --write ./app ./components ./features ./hooks ./lib",
+    "check": "biome check ./app ./components ./features ./hooks ./lib"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
