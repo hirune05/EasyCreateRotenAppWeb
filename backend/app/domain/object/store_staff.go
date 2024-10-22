@@ -68,7 +68,7 @@ func (a *StoreStaff) GenerateJWTToken(secretKey string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":             a.ID,
 		"student_number": a.StudentNumber,
-		"exp":            time.Now().Add(time.Hour * 72).Unix(), // Token expiration time
+		"exp":            time.Now().Add(time.Hour * 6).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte(secretKey))
