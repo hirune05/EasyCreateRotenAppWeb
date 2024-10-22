@@ -4,6 +4,24 @@
 # アーキテクチャ図
 ![image](https://github.com/user-attachments/assets/28fce68f-d552-4531-859c-f2d8abe97cde)
 
+# 使用技術
+## フロントエンド
+フレームワーク: Next.js (App Router)<br>
+CSS: Tailwind CSS<br>
+パッケージマネージャー: npm<br>
+状態管理: Jotai<br>
+API通信: Next.jsのfetch<br>
+## バックエンド
+フレームワーク: Golang (Echo)<br>
+データベース: MySQL<br>
+ORM: Gorm<br>
+API: REST API<br>
+認証: JWT<br>
+デプロイ: AWS (ECR)<br>
+CDN: AWS CloudFront<br>
+コンテナ: Docker
+
+
 
 ## Gitの運用ルール
 ### Issue
