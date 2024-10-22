@@ -1,9 +1,11 @@
 import MenuButton from '@/features/routes/reception/components/MenuButton'
+import OrderDetailModal from '@/features/routes/reception/components/orderDetailmodal'
 import ReceptionFooter from '@/features/routes/reception/components/ReceptionFooter'
 
 export default function Page() {
   return (
     <>
+      <OrderDetailModal />
       <div className='p-4 max-w-sm mx-auto'>
         <div className='space-y-2'>
           <MenuButton />
