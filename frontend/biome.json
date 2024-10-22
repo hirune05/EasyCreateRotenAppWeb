@@ -9,7 +9,7 @@
     "enabled": true,
     "formatWithErrors": false,
     "ignore": [],
-    "indentSize": 2,
+    "indentWidth": 2,
     "indentStyle": "space",
     "lineWidth": 80
   },
@@ -20,7 +20,7 @@
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "single",
-      "trailingComma": "all",
+      "trailingCommas": "all", 
       "semicolons": "asNeeded",
       "arrowParentheses": "asNeeded"
     }
@@ -30,7 +30,7 @@
     "formatter": {
       "enabled": true,
       "indentStyle": "space",
-      "indentSize": 2,
+      "indentWidth": 2,
       "lineWidth": 80
     }
   },
@@ -136,21 +136,6 @@
         "useDefaultSwitchClauseLast": "error",
         "useGetterReturn": "error",
         "useValidTypeof": "error"
-      },
-      "nursery": {
-        "noDuplicateJsonKeys": "error",
-        "noEmptyCharacterClassInRegex": "error",
-        "noExcessiveComplexity": "warn",
-        "noGlobalIsFinite": "error",
-        "noGlobalIsNan": "error",
-        "noUselessElse": "warn",
-        "useArrowFunction": "warn",
-        "useCollapsedElseIf": "warn",
-        "useExhaustiveDependencies": "warn",
-        "useGroupedTypeImport": "error",
-        "useHookAtTopLevel": "error",
-        "useIsArray": "error",
-        "useShorthandAssign": "error"
       }
     }
   }
