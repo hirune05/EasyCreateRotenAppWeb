@@ -40,8 +40,8 @@ function ReceptionFooter() {
             </div>
           </div>
         </div>
-    </FooterDrawerComponent>
-    <Footer/>
+      </FooterDrawerComponent>
+      <Footer />
     </>
   )
 }

@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import PlusButton from "@/features/routes/reception/components/PlusButton"
-import MinusButton from "./MinusButton"
+import { Card, CardContent } from '@/components/ui/card'
+import PlusButton from '@/features/routes/reception/components/PlusButton'
+import MinusButton from './MinusButton'
 
 function MenuButton() {
   return (
