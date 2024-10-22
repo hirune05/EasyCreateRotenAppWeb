@@ -1,6 +1,10 @@
 # EasyCreateRotenAppWeb
 4Iで開発した露店の回転を効率化するアプリです！！
 
+# アーキテクチャ図
+![image](https://github.com/user-attachments/assets/28fce68f-d552-4531-859c-f2d8abe97cde)
+
+
 ## Gitの運用ルール
 ### Issue
 機能追加やバグ、UI 等の改善時にIssueを立ててから作業する
@@ -21,10 +25,6 @@ chore(動作に影響しないファイルの編集)<br>
 ### Issue 番号を末尾につける
 コミットメッセージの末尾に固有IDを含めて Issueと関連づける
 例：update: ◯◯ なため、△△ を追加する #3
-
-# アーキテクチャ図
-![image](https://github.com/user-attachments/assets/28fce68f-d552-4531-859c-f2d8abe97cde)
-
 
 ## Development Environment
 開発環境をdocker-composeで構築しています。
