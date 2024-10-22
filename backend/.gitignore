@@ -1,0 +1,52 @@
+# Go build artifacts
+/bin/
+/build/
+/out/
+/dist/
+/*.exe
+/*.dll
+/*.so
+/*.dylib
+/*.test
+*.out
+
+# Go test artifacts
+*.test
+*.exe
+
+# Go modules
+/vendor/
+/.gopath/
+go.sum
+
+# Environment variables and editor files
+.env
+*.local
+.idea/
+/.vscode/
+/*.swp
+.DS_Store
+Thumbs.db
+
+# Dependencies and cache
+/go/
+/gocache/
+*.lock
+
+# Coverage reports
+coverage.out
+
+# Logs
+*.log
+
+# System specific files
+*.bak
+*.tmp
+*.old
+
+# Docker related files
+/docker-compose.override.yml
+docker-compose.override.yml
+.Dockerfile
+
+.env
