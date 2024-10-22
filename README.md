@@ -6,22 +6,20 @@
 
 # 使用技術
 ## フロントエンド
-フレームワーク: Next.js (App Router)<br>
-CSS: Tailwind CSS<br>
-パッケージマネージャー: npm<br>
-状態管理: Jotai<br>
-API通信: Next.jsのfetch<br>
+- フレームワーク: Next.js (App Router)
+- CSS: Tailwind CSS
+- パッケージマネージャー: npm
+- 状態管理: Jotai
+- API通信: Next.jsのfetch
 ## バックエンド
-フレームワーク: Golang (Echo)<br>
-データベース: MySQL<br>
-ORM: Gorm<br>
-API: REST API<br>
-認証: JWT<br>
-デプロイ: AWS (ECR)<br>
-CDN: AWS CloudFront<br>
-コンテナ: Docker
-
-
+- フレームワーク: Golang (Echo)
+- データベース: MySQL
+- ORM: Gorm
+- API: REST API
+- 認証: JWT
+- デプロイ: AWS (ECR)
+- CDN: AWS CloudFront
+- コンテナ: Docker
 
 ## Gitの運用ルール
 ### Issue
