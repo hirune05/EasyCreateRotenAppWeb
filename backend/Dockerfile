@@ -1,44 +1,39 @@
-# マルチステージビルド利用によるDockerfileの構築
-
-# ビルド用環境
-# ----------------------------------------------
-FROM --platform=linux/x86_64 golang:1.23.2-bullseye AS deploy-builder
-
+# 開発環境(dev)
+FROM golang:1.22-alpine AS dev
 WORKDIR /app
 
-COPY go.mod go.sum ./
+RUN apt-get update && apt-get install -y --no-install-recommends curl=7.68.0-1ubuntu2.6 \
+    && go install github.com/cosmtrek/air@v1.49.0
+
+# go.modとgo.sumを個別にコピーしてキャッシュを有効化
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
 
-COPY . .
-RUN go build -trimpath -ldflags "-w -s" -o app
+COPY . ./
 
-# 本番環境
-# ----------------------------------------------
-FROM --platform=linux/x86_64 debian:bullseye-slim AS deploy
+# dev環境ではホットリロードを使って実行
+CMD ["air"]
 
-# X509: Certificate Signed by Unknown Authorityエラーを回避する
-RUN apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends apt-transport-https curl ca-certificates \
-    && apt-get clean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=deploy-builder /app/app .
-
-CMD ["./app"]
-
-
-# ローカルでの開発環境
-# ----------------------------------------------
-FROM --platform=linux/x86_64 golang:1.23.2-alpine3.20 AS dev
-
+# ビルド環境(build)
+FROM golang:1.22-alpine AS build
 WORKDIR /app
 
-# 軽量にするためイメージはalpineを利用
-RUN apk update && apk add alpine-sdk && apk add jq
-# air ライブリロード（変更のたびにサーバーを起動する必要がなくなる）を行ってくれるモジュール
-RUN go install github.com/air-verse/air@latest
-# sqldef マイグレーションツール（新規作成DDLを判別し差分適用DDL文を自動で生成）
-# RUN go install github.com/k0kubun/sqldef/cmd/mysqldef@latest
+# go.modとgo.sumを個別にコピーしてキャッシュを効率化
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
 
-CMD ["go", "run", "main.go"]
+COPY . ./
+
+# アプリケーションをビルド
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o main
+
+# デプロイ環境(deploy)
+FROM alpine:3.19 AS deploy
+WORKDIR /root/
+
+# ビルド済みバイナリをコピー
+COPY --from=build /app/main .
+
+CMD ["./main"]
