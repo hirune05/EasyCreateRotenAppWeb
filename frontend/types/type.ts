@@ -1,10 +1,11 @@
 
 
-
 type LoginStudentResponse = {
   Token:      string;
   StudentID:  int;
   Name:       string;
+  StoreID:    int;
+  StoreName:  string;
 };
 
 type AdminUser = {
@@ -16,7 +17,6 @@ type AdminUser = {
   UpdatedAt: Date;
 };
 
-
 type Event = {
   ID:        int;
   Name:      string;
@@ -26,3 +26,11 @@ type Event = {
   CreatedAt: Date;
   UpdatedAt: Date;
 };
+
+type Student = {
+  ID:        int;
+  Name:      string;
+  Password:  string;
+  CreatedAt: Date;
+};
+
