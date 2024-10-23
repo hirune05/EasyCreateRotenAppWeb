@@ -1,10 +1,8 @@
 const MenuItem = () => {
   return (
-    <div>
-      {/* メニュー名 */}
-      <h4>メニュー1</h4>
-      {/* 注文個数 */}
-      <h4>1</h4>
+    <div className='space-y-1 flex justify-between border bg-blue-500'>
+      <div>メニュー 1</div>
+      <div>1</div>
     </div>
   )
 }

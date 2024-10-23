@@ -5,6 +5,8 @@ const MenuItems = () => {
     // マップで回す
     <div>
       <MenuItem />
+      <MenuItem />
+      <MenuItem />
     </div>
   )
 }
