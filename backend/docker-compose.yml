@@ -18,8 +18,6 @@ services:
       DB_USER: admin
       DB_PASSWORD: password
       DB_NAME: roten_app
-      REDIS_HOST: roten-app-redis
-      REDIS_PORT: 6379
       SENDER_MAIL_ADDRESS: roten.ishikawa.kosen@gmail.com
       FRONT_ENDPOINT: http://localhost:3000
     tty: true
@@ -51,13 +49,6 @@ services:
       - $PWD/_tools/mysql/conf.d:/etc/mysql/conf.d:cached
     ports:
       - "33306:3306"
-  cache:
-    image: "redis:latest"
-    container_name: roten-app-redis
-    ports:
-      - "36379:6379"
-    volumes:
-      - roten-app-redis-data:/data
   panel:
     image: "adminer:latest"
     restart: always
