@@ -18,6 +18,8 @@ type LoginStudentDTO struct {
 	Token         string `json:"token"`
 	StudentID     int    `json:"student_id"`
 	Name          string `json:"name"`
+        StoreID       int    `json:"store_id"`
+        StoreName     string `json:"store_name"`
 }
 
 type CreateStudentDTO struct {
@@ -77,11 +79,11 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		return nil, errors.New("invalid student id or password")
 	}
 
-        flag, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
+        store, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
         if err != nil {
                 return nil, err
         }
-        if !flag {
+        if store.ID == 0 && store.Name == "" {
                 return nil, errors.New("student id is not a vendor at this event.")
         }
 
@@ -94,10 +96,11 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 	if err != nil {
 		return nil, err
 	}
-
 	return &LoginStudentDTO{
 		Token:         token,
 		StudentID:     student.ID,
 		Name:          student.Name,
+                StoreID:       store.ID,
+                StoreName:     store.Name,
 	}, nil
 }

@@ -16,6 +16,8 @@ type LoginResponse struct {
 	Token         string `json:"token"`
 	StudentID     int    `json:"student_id"`
 	Name          string `json:"name"`
+        StoreID       int    `json:"store_id"`
+        StoreName     string `json:"store_name"`
 }
 
 func (h *studentHandler) Login(c echo.Context) error {
@@ -35,5 +37,7 @@ func (h *studentHandler) Login(c echo.Context) error {
 		Token:         dto.Token,
 		StudentID:     dto.StudentID,
 		Name:          dto.Name,
+                StoreID:       dto.StoreID,
+                StoreName:     dto.StoreName,
 	})
 }
