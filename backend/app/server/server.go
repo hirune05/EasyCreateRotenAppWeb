@@ -23,6 +23,12 @@ import (
 )
 
 func Run() error {
+
+	dbUser := os.Getenv("DB_USER")
+	if dbUser == "" {
+		return errors.New("DB user is not configured")
+	}
+
 	dbPassword := os.Getenv("DB_PASSWORD")
 	if dbPassword == "" {
 		return errors.New("DB password is not configured")
@@ -38,7 +44,7 @@ func Run() error {
 		return errors.New("DB port is not configured")
 	}
 
-	dsn := "admin:" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/roten-app?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/roten-app?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})

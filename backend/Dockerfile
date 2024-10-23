@@ -2,7 +2,7 @@
 FROM golang:1.23-alpine AS dev
 WORKDIR /app
 
-RUN apk update && apk add --no-cache curl \
+RUN apk add --no-cache curl \
     && go install github.com/cosmtrek/air@v1.49.0
 
 # go.modとgo.sumを個別にコピーしてキャッシュを有効化
@@ -26,8 +26,7 @@ RUN go mod download
 
 COPY . ./
 
-# アプリケーションをビルド
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o main
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main
 
 # デプロイ環境(deploy)
 FROM alpine:3.19 AS deploy
