@@ -61,9 +61,10 @@ func Run() error {
 	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
 	adminUserUseCase := usecase.NewAdminUser(db, dao.NewAdminUserRepository(db))
 	storeStaffUseCase := usecase.NewStoreStaff(db, dao.NewStoreStaffRepository(db))
+	studentUseCase := usecase.NewStudent(db, dao.NewStudentRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase)
+		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase, studentUseCase)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	srv := &http.Server{
@@ -101,10 +102,19 @@ func seedData(db *gorm.DB) error {
 		return err
 	}
 
+	// Studentのシードデータ
+	student := []object.Student{
+		{ID: 1234, Name: "John Doe", Password: "password1"},
+		{ID: 5678, Name: "Jane Smith", Password: "password2"},
+	}
+	if err := db.Create(&student).Error; err != nil {
+		return err
+	}
+
 	// StoreStaffのシードデータ
 	storeStaffs := []object.StoreStaff{
-		{Name: "John Doe", Password: "password1", StudentNumber: 1234, Role: 1, StoreID: stores[0].ID},
-		{Name: "Jane Smith", Password: "password2", StudentNumber: 5678, Role: 0, StoreID: stores[1].ID},
+		{StudentID: student[0].ID, Role: 1, StoreID: stores[0].ID},
+		{StudentID: student[1].ID, Role: 0, StoreID: stores[1].ID},
 	}
 	if err := db.Create(&storeStaffs).Error; err != nil {
 		return err

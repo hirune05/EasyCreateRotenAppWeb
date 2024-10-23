@@ -1,4 +1,4 @@
-package storeStaff
+package student
 
 import (
 	"net/http"
@@ -7,19 +7,17 @@ import (
 )
 
 type LoginRequest struct {
-	StudentNumber int    `json:"student_number"`
+	StudentId int    `json:"student_id"`
 	Password      string `json:"password"`
 }
 
 type LoginResponse struct {
 	Token         string `json:"token"`
-	UserID        int    `json:"user_id"`
-	StudentNumber int    `json:"student_number"`
+	StudentId     int    `json:"student_id"`
 	Name          string `json:"name"`
-	Role          int    `json:"role"`
 }
 
-func (h *storeStaffHandler) Login(c echo.Context) error {
+func (h *studentHandler) Login(c echo.Context) error {
 	var req LoginRequest
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid request"})
@@ -27,16 +25,14 @@ func (h *storeStaffHandler) Login(c echo.Context) error {
 
 	ctx := c.Request().Context()
 
-	dto, err := h.storeStaffUseCase.Login(ctx, req.StudentNumber, req.Password)
+	dto, err := h.studentUseCase.Login(ctx, req.StudentId, req.Password)
 	if err != nil {
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "invalid credentials"})
 	}
 
 	return c.JSON(http.StatusOK, LoginResponse{
 		Token:         dto.Token,
-		UserID:        dto.UserID,
-		StudentNumber: dto.StudentNumber,
+		StudentId:     dto.StudentId,
 		Name:          dto.Name,
-		Role:          dto.Role,
 	})
 }

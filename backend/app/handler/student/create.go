@@ -1,4 +1,4 @@
-package storeStaff
+package student
 
 import (
 	"net/http"
@@ -7,12 +7,12 @@ import (
 )
 
 type AddRequest struct {
-	StudentId     int
-	Role          int
-	StoreId       int
+	Id            int
+	Name          string
+	Password      string
 }
 
-func (h *storeStaffHandler) Create(c echo.Context) error {
+func (h *studentHandler) Create(c echo.Context) error {
 	var req AddRequest
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
@@ -20,10 +20,10 @@ func (h *storeStaffHandler) Create(c echo.Context) error {
 
 	ctx := c.Request().Context()
 
-	dto, err := h.storeStaffUseCase.Create(ctx, req.StudentId, req.Role, req.StoreId)
+	dto, err := h.studentUseCase.Create(ctx, req.Id, req.Name, req.Password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 
-	return c.JSON(http.StatusOK, dto.StoreStaff)
+	return c.JSON(http.StatusOK, dto.Student)
 }
