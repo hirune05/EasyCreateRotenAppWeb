@@ -1,3 +1,4 @@
+import ItemList from '@/components/itemList/itemList'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
@@ -25,24 +26,7 @@ export default function Page() {
         </Button>
       </div>
       <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4'>
-        <p className='font-bold mb-2'>小計/3点(2)</p>
-        <ul className='space-y-1'>
-          <li className='flex justify-between'>
-            <span>メニュー1</span>
-            <span>1</span>
-          </li>
-          <li className='flex justify-between'>
-            <span>※メニュー1</span>
-            <span>1</span>
-          </li>
-          <li className='flex justify-between text-gray-500'>
-            <span>- 揚げたて</span>
-          </li>
-          <li className='flex justify-between'>
-            <span>メニュー4</span>
-            <span>1</span>
-          </li>
-        </ul>
+        <ItemList />
       </div>
     </>
   )
