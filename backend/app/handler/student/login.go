@@ -7,13 +7,14 @@ import (
 )
 
 type LoginRequest struct {
-	StudentId int    `json:"student_id"`
+	StudentID     int    `json:"student_id"`
 	Password      string `json:"password"`
+        EventID       int    `json:"event_id"`
 }
 
 type LoginResponse struct {
 	Token         string `json:"token"`
-	StudentId     int    `json:"student_id"`
+	StudentID     int    `json:"student_id"`
 	Name          string `json:"name"`
 }
 
@@ -25,14 +26,14 @@ func (h *studentHandler) Login(c echo.Context) error {
 
 	ctx := c.Request().Context()
 
-	dto, err := h.studentUseCase.Login(ctx, req.StudentId, req.Password)
+	dto, err := h.studentUseCase.Login(ctx, req.StudentID, req.Password, req.EventID)
 	if err != nil {
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "invalid credentials"})
 	}
 
 	return c.JSON(http.StatusOK, LoginResponse{
 		Token:         dto.Token,
-		StudentId:     dto.StudentId,
+		StudentID:     dto.StudentID,
 		Name:          dto.Name,
 	})
 }

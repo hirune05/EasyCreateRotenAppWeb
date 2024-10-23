@@ -35,3 +35,23 @@ func (r *StudentRepositoryImpl) FindByStudentId(ctx context.Context, student_id 
 
 	return &storeStaff, nil
 }
+
+func (r *StudentRepositoryImpl) CheckInEvent(ctx context.Context, event_id int, student_id int) (bool, error) {
+        var name string
+        err := r.db.WithContext(ctx).Table("students").
+                Select("students.name").
+                Joins("INNER JOIN store_staffs ON students.id = store_staffs.student_id").
+                Joins("INNER JOIN stores ON store_staffs.store_id = stores.id").
+                Joins("INNER JOIN events ON stores.event_id = events.id").
+                Where("students.id = ? AND events.id = ?", student_id, event_id).
+                Limit(1).Scan(&name).Error
+
+
+        if err != nil {
+                return false, err
+        }
+        if name == "" {
+                return false, nil
+        }
+        return true, nil
+}
