@@ -12,11 +12,11 @@ import (
 
 type Student interface {
 	Create(ctx context.Context, id int, name string, password string) (*CreateStudentDTO, error)
-	Login(ctx context.Context, studentNumber int, password string) (*LoginStudentDTO, error)
+	Login(ctx context.Context, studentNumber int, password string, EventID int) (*LoginStudentDTO, error)
 }
 type LoginStudentDTO struct {
 	Token         string `json:"token"`
-	StudentId     int    `json:"student_id"`
+	StudentID     int    `json:"student_id"`
 	Name          string `json:"name"`
 }
 
@@ -29,7 +29,6 @@ type student struct {
 	studentRepo     repository.StudentRepository
 }
 
-var _ Student = (*student)(nil)
 
 func NewStudent(db *gorm.DB, studentRepo repository.StudentRepository) *student {
 	return &student{
@@ -68,17 +67,23 @@ func (a *student) Create(ctx context.Context, id int, name string, password stri
 	}, nil
 }
 
-func (a *student) Login(ctx context.Context, studentId int, password string) (*LoginStudentDTO, error) {
-	student, err := a.studentRepo.FindByStudentId(ctx, studentId)
+func (a *student) Login(ctx context.Context, studentID int, password string, eventID int) (*LoginStudentDTO, error) {
+	student, err := a.studentRepo.FindByStudentId(ctx, studentID)
 	if err != nil {
 		return nil, err
 	}
 
 	if !student.CheckPassword(password) {
-		return nil, errors.New("invalid student number or password")
+		return nil, errors.New("invalid student id or password")
 	}
 
-        // 現在のeventで露店従事している場合のみの指定
+        flag, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
+        if err != nil {
+                return nil, err
+        }
+        if !flag {
+                return nil, errors.New("student id is not a vendor at this event.")
+        }
 
 	secretKey := os.Getenv("JWT_SECRET_KEY")
 	if secretKey == "" {
@@ -92,7 +97,7 @@ func (a *student) Login(ctx context.Context, studentId int, password string) (*L
 
 	return &LoginStudentDTO{
 		Token:         token,
-		StudentId:     student.ID,
+		StudentID:     student.ID,
 		Name:          student.Name,
 	}, nil
 }

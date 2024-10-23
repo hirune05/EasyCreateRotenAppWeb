@@ -62,9 +62,10 @@ func Run() error {
 	adminUserUseCase := usecase.NewAdminUser(db, dao.NewAdminUserRepository(db))
 	storeStaffUseCase := usecase.NewStoreStaff(db, dao.NewStoreStaffRepository(db))
 	studentUseCase := usecase.NewStudent(db, dao.NewStudentRepository(db))
+	eventUseCase := usecase.NewEvent(db, dao.NewEventRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase, studentUseCase)
+		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase, studentUseCase, eventUseCase)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	srv := &http.Server{
@@ -93,10 +94,19 @@ func Run() error {
 }
 
 func seedData(db *gorm.DB) error {
+	// Eventのシードデータ
+	events := []object.Event{
+		{Name: "Event 1", Year: 2023, StartTime: time.Date(2023, time.October, 23, 0, 0, 0, 0, time.UTC), EndTime: time.Date(2023, time.October, 31, 0, 0, 0, 0, time.UTC)},
+		{Name: "Event 2", Year: 2024, StartTime: time.Date(2024, time.October, 23, 0, 0, 0, 0, time.UTC), EndTime: time.Date(2024, time.October, 31, 0, 0, 0, 0, time.UTC)},
+	}
+	if err := db.Create(&events).Error; err != nil {
+		return err
+	}
+
 	// Storeのシードデータ
 	stores := []object.Store{
-		{Name: "Store A", ImageURL: nil},
-		{Name: "Store B", ImageURL: nil},
+		{Name: "Store A", ImageURL: nil, EventID: events[0].ID},
+		{Name: "Store B", ImageURL: nil, EventID: events[1].ID},
 	}
 	if err := db.Create(&stores).Error; err != nil {
 		return err
@@ -154,15 +164,6 @@ func seedData(db *gorm.DB) error {
 		{StoreID: &stores[1].ID, StoreStaffID: &storeStaffs[1].ID, Description: "Report 2"},
 	}
 	if err := db.Create(&reports).Error; err != nil {
-		return err
-	}
-
-	// Eventのシードデータ
-	events := []object.Event{
-		{Name: "Event 1", Year: 2023},
-		{Name: "Event 2", Year: 2024},
-	}
-	if err := db.Create(&events).Error; err != nil {
 		return err
 	}
 

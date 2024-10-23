@@ -10,13 +10,14 @@ import (
 	orderItem "backend/app/handler/order_item"
 	storeStaff "backend/app/handler/store_staff"
         student "backend/app/handler/student"
+        event "backend/app/handler/event"
 	"backend/app/usecase"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su usecase.StoreStaff, stu usecase.Student) http.Handler {
+func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su usecase.StoreStaff, stu usecase.Student, eu usecase.Event) http.Handler {
 	e := echo.New()
 
 	// A good base middleware stack
@@ -41,6 +42,7 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	adminUser.RegisterRoutes(v1, au)
 	storeStaff.RegisterRoutes(v1, su)
         student.RegisterRoutes(v1, stu)
+        event.RegisterRoutes(v1, eu)
 
         // routeの一覧表示
         for _, rr := range e.Routes() {
