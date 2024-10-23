@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div> 
+    <div>
       <h1>delivery</h1>
     </div>
   )
