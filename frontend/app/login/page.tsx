@@ -1,9 +1,9 @@
-import Login from "@/features/routes/login/components/Login"
+import Login from '@/features/routes/login/components/Login'
 
 export default function Page() {
-    return (
-      <>
-   <Login/>
-      </>
-    )
-  }
+  return (
+    <>
+      <Login />
+    </>
+  )
+}
