@@ -7,7 +7,7 @@ import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
 
 function ReceptionFooter() {
-  const [cartItems, isSetCartItems] = useAtom(cartItemsAtom)
+  const [cartItems] = useAtom(cartItemsAtom)
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -15,10 +15,8 @@ function ReceptionFooter() {
         <FooterDrawerComponent>
           <div className='p-4 max-w-sm mx-auto overflow-scroll'>
             {cartItems &&
-              cartItems.map(cartItem => (
-                <>
-                  <CartMenu item={cartItem} />
-                </>
+              cartItems.map((cartItem, index) => (
+                <CartMenu item={cartItem} index={index} key={index} />
               ))}
           </div>
         </FooterDrawerComponent>
