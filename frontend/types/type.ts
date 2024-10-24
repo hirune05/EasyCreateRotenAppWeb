@@ -7,6 +7,18 @@ type LoginStudentResponse = {
   storeName: string;
 };
 
+type AddOrderComplexItem = {
+  item_id: number;
+  quantity: number;
+  arranges: string | undefined;
+}
+
+type AddOrderComplexRequest = {
+  store_id: string;
+  store_staff_id: string;
+  items: AddOrderComplexItem[]
+}
+
 type AdminUser = {
   id: number;
   username: string;
