@@ -7,6 +7,7 @@ import (
 	"backend/app/handler"
 	"backend/app/usecase"
 	"context"
+	"errors"
 	"log"
 	"net"
 	"net/http"
@@ -23,7 +24,27 @@ import (
 
 func Run() error {
 
-	dsn := "admin:password@tcp(point-app-db:3306)/point_app?charset=utf8mb4&parseTime=True&loc=Local"
+	dbUser := os.Getenv("DB_USER")
+	if dbUser == "" {
+		return errors.New("DB user is not configured")
+	}
+
+	dbPassword := os.Getenv("DB_PASSWORD")
+	if dbPassword == "" {
+		return errors.New("DB password is not configured")
+	}
+
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		return errors.New("DB host is not configured")
+	}
+
+	dbPort := os.Getenv("DB_PORT")
+	if dbPort == "" {
+		return errors.New("DB port is not configured")
+	}
+
+	dsn := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/roten-app?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
@@ -61,9 +82,11 @@ func Run() error {
 	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
 	adminUserUseCase := usecase.NewAdminUser(db, dao.NewAdminUserRepository(db))
 	storeStaffUseCase := usecase.NewStoreStaff(db, dao.NewStoreStaffRepository(db))
+	studentUseCase := usecase.NewStudent(db, dao.NewStudentRepository(db))
+	eventUseCase := usecase.NewEvent(db, dao.NewEventRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase)
+		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase, studentUseCase, eventUseCase)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	srv := &http.Server{
@@ -92,19 +115,37 @@ func Run() error {
 }
 
 func seedData(db *gorm.DB) error {
+	// Eventのシードデータ
+	events := []object.Event{
+		{Name: "Event 1", Year: 2023, StartTime: time.Date(2023, time.October, 23, 0, 0, 0, 0, time.UTC), EndTime: time.Date(2023, time.October, 31, 0, 0, 0, 0, time.UTC)},
+		{Name: "Event 2", Year: 2024, StartTime: time.Date(2024, time.October, 23, 0, 0, 0, 0, time.UTC), EndTime: time.Date(2024, time.October, 31, 0, 0, 0, 0, time.UTC)},
+	}
+	if err := db.Create(&events).Error; err != nil {
+		return err
+	}
+
 	// Storeのシードデータ
 	stores := []object.Store{
-		{Name: "Store A", ImageURL: nil},
-		{Name: "Store B", ImageURL: nil},
+		{Name: "Store A", ImageURL: nil, EventID: events[0].ID},
+		{Name: "Store B", ImageURL: nil, EventID: events[1].ID},
 	}
 	if err := db.Create(&stores).Error; err != nil {
 		return err
 	}
 
+	// Studentのシードデータ
+	student := []object.Student{
+		{ID: 1234, Name: "John Doe", Password: "password1"},
+		{ID: 5678, Name: "Jane Smith", Password: "password2"},
+	}
+	if err := db.Create(&student).Error; err != nil {
+		return err
+	}
+
 	// StoreStaffのシードデータ
 	storeStaffs := []object.StoreStaff{
-		{Name: "John Doe", Password: "password1", StudentNumber: 1234, Role: 1, StoreID: stores[0].ID},
-		{Name: "Jane Smith", Password: "password2", StudentNumber: 5678, Role: 0, StoreID: stores[1].ID},
+		{StudentID: student[0].ID, Role: 1, StoreID: stores[0].ID},
+		{StudentID: student[1].ID, Role: 0, StoreID: stores[1].ID},
 	}
 	if err := db.Create(&storeStaffs).Error; err != nil {
 		return err
@@ -144,15 +185,6 @@ func seedData(db *gorm.DB) error {
 		{StoreID: &stores[1].ID, StoreStaffID: &storeStaffs[1].ID, Description: "Report 2"},
 	}
 	if err := db.Create(&reports).Error; err != nil {
-		return err
-	}
-
-	// Eventのシードデータ
-	events := []object.Event{
-		{Name: "Event 1", Year: 2023},
-		{Name: "Event 2", Year: 2024},
-	}
-	if err := db.Create(&events).Error; err != nil {
 		return err
 	}
 

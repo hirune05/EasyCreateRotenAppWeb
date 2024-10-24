@@ -16,5 +16,4 @@ func RegisterRoutes(e *echo.Group, u usecase.StoreStaff) {
 	}
 
 	e.POST("/storeStaff", h.Create)
-	e.POST("/storeStaff/login", h.Login)
 }

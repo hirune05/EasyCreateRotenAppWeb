@@ -26,12 +26,3 @@ func (r *StoreStaffRepositoryImpl) Create(ctx context.Context, tx *gorm.DB, stor
 	return nil
 }
 
-func (r *StoreStaffRepositoryImpl) FindByStudentNumber(ctx context.Context, student_number int) (*object.StoreStaff, error) {
-	var storeStaff object.StoreStaff
-
-	if err := r.db.WithContext(ctx).Where("student_number = ?", student_number).First(&storeStaff).Error; err != nil {
-		return nil, fmt.Errorf("failed to find store_staff by student_number: %w", err)
-	}
-
-	return &storeStaff, nil
-}

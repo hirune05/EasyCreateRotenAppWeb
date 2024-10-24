@@ -1,3 +1,4 @@
+
 type LoginStudentResponse = {
   token: string;
   studentId: number;
@@ -34,64 +35,64 @@ type Student = {
 
 type Order = {
   id: number;
-  storeId: number; // store_idをstoreIdに変更
+  storeId: number;
   store: Store;
-  pickedUpAt?: Date | null; // picked_up_atをpickedUpAtに変更
+  pickedUpAt?: Date | null;
   status: number;
-  storeStaffId: number; // store_staff_idをstoreStaffIdに変更
+  storeStaffId: number;
   storeStaff: StoreStaff;
-  createdAt: Date; // created_atをcreatedAtに変更
-  updatedAt: Date; // updated_atをupdatedAtに変更
-  orderItems: OrderItem[]; // order_itemsをorderItemsに変更
+  createdAt: Date;
+  updatedAt: Date;
+  orderItems: OrderItem[];
 };
 
 type StoreStaff = {
   id: number;
   role: number;
-  studentId: number; // student_idをstudentIdに変更
+  studentId: number;
   student: Student;
-  storeId: number; // store_idをstoreIdに変更
+  storeId: number;
   store: Store;
-  createdAt: Date; // created_atをcreatedAtに変更
-  updatedAt: Date; // updated_atをupdatedAtに変更
+  createdAt: Date;
+  updatedAt: Date;
   orders: Order[];
 };
 
 type Store = {
   id: number;
   name: string;
-  imageUrl?: string | null; // image_urlをimageUrlに変更
-  eventId: number; // event_idをeventIdに変更
+  imageUrl?: string | null;
+  eventId: number;
   event: Event;
-  createdAt: Date; // created_atをcreatedAtに変更
-  updatedAt: Date; // updated_atをupdatedAtに変更
+  createdAt: Date;
+  updatedAt: Date;
   staffs: StoreStaff[];
   items: Item[];
 };
 
 type Item = {
   id: number;
-  storeId: number; // store_idをstoreIdに変更
+  storeId: number;
   store: Store;
   name: string;
   description?: string | null;
   price: number;
-  imageUrl?: string | null; // image_urlをimageUrlに変更
-  createdAt: Date; // created_atをcreatedAtに変更
-  updatedAt: Date; // updated_atをupdatedAtに変更
-  orderItems: OrderItem[]; // order_itemsをorderItemsに変更
+  imageUrl?: string | null;
+  createdAt: Date; 
+  updatedAt: Date; 
+  orderItems: OrderItem[]; 
 };
 
 type OrderItem = {
   id: number;
-  orderId: number; // order_idをorderIdに変更
+  orderId: number;
   order: Order;
-  itemId: number; // item_idをitemIdに変更
+  itemId: number; 
   item: Item;
   arranges?: string | null;
   quantity: number;
-  createdAt: Date; // created_atをcreatedAtに変更
-  updatedAt: Date; // updated_atをupdatedAtに変更
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type {LoginStudentResponse,AdminUser,EventInfo,Order}
