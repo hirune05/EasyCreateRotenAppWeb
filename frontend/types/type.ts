@@ -1,11 +1,17 @@
 
 type LoginStudentResponse = {
   token: string;
-  studentId: number;
+  student_id: number;
   name: string;
-  storeId: number;
-  storeName: string;
+  store_id: number;
+  store_name: string;
 };
+
+type LoginStudentRequest = {
+  student_id: number;
+  password: string;
+  event_id: number;
+}
 
 type AddOrderComplexItem = {
   item_id: number;
@@ -75,7 +81,7 @@ type Store = {
   name: string;
   imageUrl?: string;
   eventId: number;
-  event: Event;
+  event: EventInfo;
   createdAt: Date;
   updatedAt: Date;
   staffs: StoreStaff[];
@@ -107,4 +113,4 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}
+export type {LoginStudentResponse,LoginStudentRequest,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}
