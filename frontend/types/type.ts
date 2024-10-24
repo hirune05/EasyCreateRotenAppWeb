@@ -37,7 +37,7 @@ type Order = {
   id: number;
   storeId: number;
   store: Store;
-  pickedUpAt?: Date | null;
+  pickedUpAt?: Date;
   status: number;
   storeStaffId: number;
   storeStaff: StoreStaff;
@@ -61,7 +61,7 @@ type StoreStaff = {
 type Store = {
   id: number;
   name: string;
-  imageUrl?: string | null;
+  imageUrl?: string;
   eventId: number;
   event: Event;
   createdAt: Date;
@@ -75,9 +75,9 @@ type Item = {
   storeId: number;
   store: Store;
   name: string;
-  description?: string | null;
+  description?: string;
   price: number;
-  imageUrl?: string | null;
+  imageUrl?: string;
   createdAt: Date; 
   updatedAt: Date; 
   orderItems: OrderItem[]; 
@@ -89,7 +89,7 @@ type OrderItem = {
   order: Order;
   itemId: number; 
   item: Item;
-  arranges?: string | null;
+  arranges?: string;
   quantity: number;
   createdAt: Date;
   updatedAt: Date;
