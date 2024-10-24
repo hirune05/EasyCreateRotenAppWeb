@@ -1,4 +1,6 @@
 'use client'
+import { cartItemsAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
 import { useState } from 'react'
 import {
   Dialog,
@@ -6,8 +8,6 @@ import {
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
-import { useAtom } from 'jotai'
-import { cartItemsAtom } from '@/utils/globalState'
 
 export default function OrderDetailModal() {
   const [isOpen, setIsOpen] = useState(true)

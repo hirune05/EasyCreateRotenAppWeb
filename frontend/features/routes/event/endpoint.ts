@@ -1,4 +1,4 @@
-import { EventInfo } from '@/types/type'
+import type { EventInfo } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -8,7 +8,7 @@ export const getAllEvents = async () => {
     cache: 'no-store',
   })
   const data = await res.json()
-  return data as Event[]
+  return data as EventInfo[]
 }
 
 export const getNowEvents = async () => {
@@ -17,7 +17,7 @@ export const getNowEvents = async () => {
     cache: 'no-store',
   })
   const data = await res.json()
-  return data as Event[]
+  return data as EventInfo[]
 }
 
 export const getEventById = async (eventId: string) => {
@@ -26,5 +26,5 @@ export const getEventById = async (eventId: string) => {
     cache: 'no-store',
   })
   const data = await res.json()
-  return data as Event
+  return data as EventInfo
 }

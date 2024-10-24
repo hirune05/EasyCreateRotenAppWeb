@@ -1,6 +1,6 @@
 import MenuButtons from '@/features/routes/reception/components/MenuButtons'
-import OrderDetailModal from '@/features/routes/reception/components/orderDetailmodal'
 import ReceptionFooter from '@/features/routes/reception/components/ReceptionFooter'
+import OrderDetailModal from '@/features/routes/reception/components/orderDetailmodal'
 
 export default function Page() {
   return (

@@ -1,4 +1,4 @@
-import { Order, AddOrderComplexRequest, OrderItem } from '@/types/type'
+import type { AddOrderComplexRequest, Order, OrderItem } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
