@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"gorm.io/gorm"
-        "log"
 )
 
 type Student interface {
@@ -16,12 +15,12 @@ type Student interface {
 	Login(ctx context.Context, studentNumber int, password string, EventID int) (*LoginStudentDTO, error)
 }
 type LoginStudentDTO struct {
-	Token         string `json:"token"`
-	StudentID     int    `json:"student_id"`
-	Name          string `json:"name"`
-        StoreID       int    `json:"store_id"`
-        StoreName     string `json:"store_name"`
-        StoreStaffID  int    `json:"store_staff_id"`
+	Token        string `json:"token"`
+	StudentID    int    `json:"student_id"`
+	Name         string `json:"name"`
+	StoreID      int    `json:"store_id"`
+	StoreName    string `json:"store_name"`
+	StoreStaffID int    `json:"store_staff_id"`
 }
 
 type CreateStudentDTO struct {
@@ -29,15 +28,14 @@ type CreateStudentDTO struct {
 }
 
 type student struct {
-	db              *gorm.DB
-	studentRepo     repository.StudentRepository
+	db          *gorm.DB
+	studentRepo repository.StudentRepository
 }
-
 
 func NewStudent(db *gorm.DB, studentRepo repository.StudentRepository) *student {
 	return &student{
-		db:             db,
-		studentRepo:    studentRepo,
+		db:          db,
+		studentRepo: studentRepo,
 	}
 }
 
@@ -81,13 +79,13 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		return nil, errors.New("invalid student id or password")
 	}
 
-        dao, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
-        if err != nil {
-                return nil, err
-        }
-        if dao.StoreID == 0 && dao.StoreName == "" && dao.StoreStaffID == 0 {
-                return nil, errors.New("student id is not a vendor at this event.")
-        }
+	dao, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
+	if err != nil {
+		return nil, err
+	}
+	if dao.StoreID == 0 && dao.StoreName == "" && dao.StoreStaffID == 0 {
+		return nil, errors.New("student id is not a vendor at this event.")
+	}
 
 	secretKey := os.Getenv("JWT_SECRET_KEY")
 	if secretKey == "" {
@@ -99,11 +97,11 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		return nil, err
 	}
 	return &LoginStudentDTO{
-		Token:         token,
-		StudentID:     student.ID,
-		Name:          student.Name,
-                StoreID:       dao.StoreID,
-                StoreName:     dao.StoreName,
-                StoreStaffID:  dao.StoreStaffID,
+		Token:        token,
+		StudentID:    student.ID,
+		Name:         student.Name,
+		StoreID:      dao.StoreID,
+		StoreName:    dao.StoreName,
+		StoreStaffID: dao.StoreStaffID,
 	}, nil
 }
