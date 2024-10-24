@@ -14,8 +14,8 @@ type AddOrderComplexItem = {
 }
 
 type AddOrderComplexRequest = {
-  store_id: string;
-  store_staff_id: string;
+  store_id: number;
+  store_staff_id: number;
   items: AddOrderComplexItem[]
 }
 
@@ -107,4 +107,4 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}
+export type {LoginStudentResponse,AddOrderComplexItem,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}
