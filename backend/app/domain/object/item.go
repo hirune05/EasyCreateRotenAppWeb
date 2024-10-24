@@ -16,3 +16,16 @@ type Item struct {
 	UpdatedAt   time.Time   `json:"updated_at"`
 	OrderItems  []OrderItem `gorm:"foreignKey:ItemID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
+
+func NewItem(storeID int, name string, description *string, price int, imageURL *string) (*Item, error) {
+        item := &Item{
+		StoreID:      storeID,
+                Name:         name,
+                Description:  description,
+                Price:        price,
+                ImageURL:     imageURL,
+		CreatedAt:    time.Now(),
+		UpdatedAt:    time.Now(),
+        }
+        return item, nil
+}

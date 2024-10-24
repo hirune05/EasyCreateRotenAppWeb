@@ -25,6 +25,16 @@ type AddOrderComplexRequest = {
   items: AddOrderComplexItem[]
 }
 
+type StoreAndItems = {
+  store_id: number;
+  store_name: string;
+  items: Item;
+}
+
+type getItemByStoreIdResponse = {
+  StoreAndItems: StoreAndItems
+}
+
 type AdminUser = {
   id: number;
   username: string;
@@ -113,4 +123,4 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,LoginStudentRequest,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}
+export type {LoginStudentResponse,LoginStudentRequest,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,getItemByStoreIdResponse}
