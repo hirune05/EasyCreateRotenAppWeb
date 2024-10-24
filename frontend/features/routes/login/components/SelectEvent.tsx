@@ -9,9 +9,9 @@ const SelectEvent: React.FC = () => {
   }
 
   return (
-    <div className=' min-h-screen flex items-center justify-center bg-gray-100'>
-      <div className='bg-white  rounded-lg shadow-lg w-full'>
-        <h1 className=' mb-4'>イベント名</h1>
+    <div className=' flex  justify-center bg-gray-100 mb-4'>
+      <div className='bg-white  rounded-lg  w-full'>
+        <h1 className=' text-center'>イベント名</h1>
         <select
           value={selectedValue}
           onChange={handleSelectChange}
