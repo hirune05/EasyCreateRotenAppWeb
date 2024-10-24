@@ -1,6 +1,7 @@
 import ItemList from '@/components/itemList/itemList'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import SubmitButton from '@/features/routes/casher/components/submitButton'
 import Link from 'next/link'
 
 export default function Page() {
@@ -22,9 +23,7 @@ export default function Page() {
             戻る
           </Button>
         </Link>
-        <Button className='bg-green-400 text-white py-2 px-4 mr-5 w-5/12'>
-          確定
-        </Button>
+        <SubmitButton />
       </div>
       <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4'>
         <ItemList />
