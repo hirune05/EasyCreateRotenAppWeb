@@ -35,6 +35,7 @@ type AdminUser = {
 };
 
 type EventInfo = {
+  Event: {
   id: number;
   name: string;
   year: number;
@@ -42,6 +43,7 @@ type EventInfo = {
   endTime: Date;
   createdAt: Date;
   updatedAt: Date;
+  }
 };
 
 type Student = {
