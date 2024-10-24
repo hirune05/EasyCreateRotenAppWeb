@@ -5,9 +5,9 @@ export default function Page() {
     <div>
       <h1 className='flex justify-center'>受け渡し</h1>
       <div className='container flex flex-col w-11/12 justify-center m-1'>
-      <DeliveryDetailDialog />
-      <DeliveryDetailDialog />
-      <DeliveryDetailDialog />
+        <DeliveryDetailDialog />
+        <DeliveryDetailDialog />
+        <DeliveryDetailDialog />
       </div>
     </div>
   )
