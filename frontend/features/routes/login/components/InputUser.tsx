@@ -12,8 +12,7 @@ const InputUser: React.FC = () => {
   }
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-100 flex-col'>
-      <div className='bg-white p-8 rounded-lg shadow-lg max-w-md w-full'>
+      <div >
         {errorMessage && (
           <p className='text-red-500 text-center mb-4'>{errorMessage}</p>
         )}
@@ -53,7 +52,6 @@ const InputUser: React.FC = () => {
           </button>
         </form>
       </div>
-    </div>
   )
 }
 

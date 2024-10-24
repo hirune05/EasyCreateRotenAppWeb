@@ -5,11 +5,12 @@ import { Button } from '@/components/ui/button'
 function Login() {
   return (
     <>
+    <div className='min-h-screen  justify-center  flex-col '>
+        <div className='bg-white p-8 rounded-lg  max-w-md w-full'>
       <SelectEvent />
       <InputUser />
-      <Button className='bg-green-400 text-white py-2 px-4 rounded'>
-        会計
-      </Button>
+      </div>
+      </div>
     </>
   )
 }
