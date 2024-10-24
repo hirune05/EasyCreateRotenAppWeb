@@ -7,7 +7,7 @@ import (
 )
 
 type SetStatusRequest struct {
-        Status       int
+        Status       int  `json:"status"`
 }
 
 func (h *orderHandler) SetStatus(c echo.Context) error {

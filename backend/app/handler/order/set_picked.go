@@ -8,7 +8,7 @@ import (
 )
 
 type SetPickedRequest struct {
-        PickedUpAt   time.Time
+        PickedUpAt   time.Time  `json:"picked_up_at"`
 }
 
 func (h *orderHandler) SetPickedUpAt(c echo.Context) error {

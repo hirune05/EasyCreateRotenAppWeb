@@ -8,9 +8,9 @@ import (
 )
 
 type AddComplexRequest struct {
-	StoreID      int
-	StoreStaffID int
-        Items        []*usecase.OrderComplexItem
+	StoreID      int                          `json:"store_id"`
+	StoreStaffID int                          `json:"store_staff_id"`
+        Items        []*usecase.OrderComplexItem  `json:"items"`
 }
 
 func (h *orderHandler) CreateComplex(c echo.Context) error {

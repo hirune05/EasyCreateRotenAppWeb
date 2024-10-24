@@ -27,9 +27,9 @@ type order struct {
 }
 
 type OrderComplexItem struct {
-	ItemID    int
-	Quantity  int
-	Arranges  *string
+	ItemID    int     `json:"item_id"`
+	Quantity  int     `json:"quantity"`
+	Arranges  *string `json:"arranges"`
 }
 
 type OrderDTO struct {
@@ -92,6 +92,17 @@ func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int
 		return nil, tx.Error
 	}
 
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		} else if tx.Error != nil {
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
+
+
 
 	if err := a.orderRepo.Create(ctx, tx, acc); err != nil {
 		return nil, err
@@ -104,22 +115,12 @@ func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int
                 if err != nil {
                         return nil, err
                 }
-//
+
                 if err := a.orderItemRepo.Create(ctx, tx, oi); err != nil {
                         return nil, err
                 }
                 acc_items[i] = *oi
         }
-
-	defer func() {
-		if r := recover(); r != nil {
-			tx.Rollback()
-		} else if tx.Error != nil {
-			tx.Rollback()
-		} else {
-			tx.Commit()
-		}
-	}()
 
         acc.OrderItems = acc_items
 

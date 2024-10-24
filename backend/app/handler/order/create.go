@@ -19,10 +19,10 @@ import (
 
 // Request body for `POST /v1/orders`
 type AddRequest struct {
-	StoreID      int
-	StoreStaffID int
-	Status       int
-	PickedUpAt   *time.Time
+	StoreID      int        `json:"store_id"`
+	StoreStaffID int        `json:"store_staff_id"`
+	Status       int        `json:"status"`
+	PickedUpAt   *time.Time `json:"picked_up_at"`
 }
 
 func (h *orderHandler) Create(c echo.Context) error {
