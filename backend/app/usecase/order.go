@@ -94,13 +94,10 @@ func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int
 
 	defer func() {
 		if r := recover(); r != nil {
-                        fmt.Println("RollBack!!!!!!!!!!!!!!!!!1")
 			tx.Rollback()
 		} else if tx.Error != nil {
-                        fmt.Println("RollBack!!!!!!!!!!!!!!!!!2")
 			tx.Rollback()
 		} else {
-                        fmt.Println("Commit!!!!!!!!!!!!!!!!!")
 			tx.Commit()
 		}
 	}()
