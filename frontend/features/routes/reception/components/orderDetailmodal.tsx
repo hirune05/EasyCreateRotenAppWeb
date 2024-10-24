@@ -1,6 +1,11 @@
 'use client'
 import { useState } from 'react'
-import { Dialog, DialogContent } from '../../../../components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '../../../../components/ui/dialog'
 import { useAtom } from 'jotai'
 import itemAtom from '@/utils/globalState'
 
@@ -11,7 +16,10 @@ export default function OrderDetailModal() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
-        <p className='font-bold mb-2'>小計/{items.length}点(2)</p>
+        <DialogTitle>
+          <p className='font-bold mb-2'>小計/{items.length}点(2)</p>
+        </DialogTitle>
+        <DialogDescription></DialogDescription>
         <p>合計 200円</p>
         <p>お預り</p>
         <p>お釣り</p>
@@ -23,7 +31,7 @@ export default function OrderDetailModal() {
                   <span>{item.name}</span>
                   <span>1</span>
                 </div>
-                <p>{item.description}</p>
+                {item.description && <p>{item.description}</p>}
               </li>
             ))}
         </ul>
