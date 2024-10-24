@@ -3,11 +3,20 @@ import React, { ReactNode } from 'react'
 
 interface SkeletonButtonProps {
   children: ReactNode
+  handleFunction: () => void
 }
 
-export default function SkeletonButton({ children }: SkeletonButtonProps) {
+export default function SkeletonButton({
+  children,
+  handleFunction,
+}: SkeletonButtonProps) {
   return (
-    <Button size='icon' variant='ghost' className='rounded-full'>
+    <Button
+      size='icon'
+      variant='ghost'
+      className='rounded-full'
+      onClick={() => handleFunction()}
+    >
       {children}
     </Button>
   )
