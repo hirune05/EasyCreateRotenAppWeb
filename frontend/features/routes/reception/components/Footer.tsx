@@ -1,9 +1,8 @@
-import Link from 'next/link'
-import React from 'react'
 import { Button } from '@/components/ui/button'
 import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
-
+import Link from 'next/link'
+import type React from 'react'
 
 const Footer: React.FC = () => {
   const [cartItems] = useAtom(cartItemsAtom)
