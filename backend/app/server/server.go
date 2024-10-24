@@ -57,7 +57,7 @@ func Run() error {
 	addr := ":" + strconv.Itoa(config.Port())
 	log.Printf("Serve on http://%s", addr)
 
-	orderUseCase := usecase.NewOrder(db, dao.NewOrderRepository(db))
+	orderUseCase := usecase.NewOrder(db, dao.NewOrderRepository(db), dao.NewOrderItemRepository(db))
 	orderItemUseCase := usecase.NewOrderItem(db, dao.NewOrderItemRepository(db))
 	adminUserUseCase := usecase.NewAdminUser(db, dao.NewAdminUserRepository(db))
 	storeStaffUseCase := usecase.NewStoreStaff(db, dao.NewStoreStaffRepository(db))

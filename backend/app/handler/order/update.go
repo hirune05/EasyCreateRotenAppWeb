@@ -8,9 +8,9 @@ import (
 )
 
 type UpdateRequest struct {
-	StoreID      int
-	StoreStaffID int
-	Status       int
+	StoreID      *int
+	StoreStaffID *int
+	Status       *int
 	PickedUpAt   *time.Time
 }
 
