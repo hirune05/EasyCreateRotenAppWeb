@@ -2,6 +2,7 @@ package student
 
 import (
 	"net/http"
+        "log"
 
 	"github.com/labstack/echo/v4"
 )
@@ -30,6 +31,7 @@ func (h *studentHandler) Login(c echo.Context) error {
 
 	dto, err := h.studentUseCase.Login(ctx, req.StudentID, req.Password, req.EventID)
 	if err != nil {
+                log.Printf("Request error: %v", err)
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "invalid credentials"})
 	}
 
