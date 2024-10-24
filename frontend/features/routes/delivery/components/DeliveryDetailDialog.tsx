@@ -9,6 +9,7 @@ import {
 import DeliveryItem from './DeliveryItem'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import ItemList from '@/components/itemList/itemList'
 
 const DeliveryDetailDialog = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,23 +33,7 @@ const DeliveryDetailDialog = () => {
         </DialogDescription>
         <div>
           <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4'>
-            <ul className='space-y-1'>
-              <li className='flex justify-between'>
-                <span>メニュー1</span>
-                <span>1</span>
-              </li>
-              <li className='flex justify-between'>
-                <span>※メニュー1</span>
-                <span>1</span>
-              </li>
-              <li className='flex justify-between text-gray-500'>
-                <span>- 揚げたて</span>
-              </li>
-              <li className='flex justify-between'>
-                <span>メニュー4</span>
-                <span>1</span>
-              </li>
-            </ul>
+            <ItemList />
           </div>
           <Button className='bg-green-400 text-white py-2 px-6 rounded'>
             完了

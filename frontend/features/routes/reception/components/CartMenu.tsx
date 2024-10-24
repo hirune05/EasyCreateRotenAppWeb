@@ -1,16 +1,20 @@
 import { Input } from '@/components/ui/input'
 import CrossButton from '@/features/common/button/components/CrossButton'
+import ItemType from '@/types/item'
 
-function CartMenu() {
+type CartMenuProps = {
+  item: ItemType
+}
+
+function CartMenu({ item }: CartMenuProps) {
   return (
     <div className='space-y-2 flex-col'>
       <div className='flex justify-between items-center border rounded-md bg-gray-100'>
-        <span className='text-lg text-black'>メニュー 1</span>
-        <span className='px-3 py-1 text-black'>(2)</span>
+        <span className='text-lg text-black'>{item.itemName}</span>
         <CrossButton />
       </div>
       <div>
-        <Input type='text' placeholder='備考' />
+        <Input type='text' value={item.itemDescription} placeholder='備考' />
       </div>
     </div>
   )
