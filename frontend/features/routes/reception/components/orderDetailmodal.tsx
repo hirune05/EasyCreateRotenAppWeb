@@ -20,27 +20,12 @@ export default function OrderDetailModal() {
             items.map((item, index) => (
               <li key={index}>
                 <div className='flex justify-between'>
-                  <span>{item.itemName}</span>
+                  <span>{item.name}</span>
                   <span>1</span>
                 </div>
-                <p>{item.itemDescription}</p>
+                <p>{item.description}</p>
               </li>
             ))}
-          {/* <li className='flex justify-between'>
-            <span>メニュー1</span>
-            <span>1</span>
-          </li>
-          <li className='flex justify-between'>
-            <span>※メニュー1</span>
-            <span>1</span>
-          </li>
-          <li className='flex justify-between text-gray-500'>
-            <span>- 揚げたて</span>
-          </li>
-          <li className='flex justify-between'>
-            <span>メニュー4</span>
-            <span>1</span>
-          </li> */}
         </ul>
       </DialogContent>
     </Dialog>
