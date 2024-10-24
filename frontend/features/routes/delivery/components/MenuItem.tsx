@@ -1,9 +1,10 @@
 const MenuItem = () => {
   return (
-    <div className='space-y-1 flex justify-between border bg-blue-500'>
-      <div>メニュー 1</div>
-      <div>1</div>
-    </div>
+<div className=' flex justify-between border box m-1 bg-blue-50'>
+  <div className="flex justify-end items-center pl-2 text-sm">メニュー 1</div>
+  <div className="flex justify-startitems-center pr-2 font-bold">1</div>
+  
+</div>
   )
 }
 
