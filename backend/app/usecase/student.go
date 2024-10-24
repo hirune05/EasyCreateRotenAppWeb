@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"gorm.io/gorm"
+        "log"
 )
 
 type Student interface {
@@ -20,6 +21,7 @@ type LoginStudentDTO struct {
 	Name          string `json:"name"`
         StoreID       int    `json:"store_id"`
         StoreName     string `json:"store_name"`
+        StoreStaffID  int    `json:"store_staff_id"`
 }
 
 type CreateStudentDTO struct {
@@ -79,11 +81,11 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		return nil, errors.New("invalid student id or password")
 	}
 
-        store, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
+        dao, err := a.studentRepo.CheckInEvent(ctx, eventID, studentID)
         if err != nil {
                 return nil, err
         }
-        if store.ID == 0 && store.Name == "" {
+        if dao.StoreID == 0 && dao.StoreName == "" && dao.StoreStaffID == 0 {
                 return nil, errors.New("student id is not a vendor at this event.")
         }
 
@@ -100,7 +102,8 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		Token:         token,
 		StudentID:     student.ID,
 		Name:          student.Name,
-                StoreID:       store.ID,
-                StoreName:     store.Name,
+                StoreID:       dao.StoreID,
+                StoreName:     dao.StoreName,
+                StoreStaffID:  dao.StoreStaffID,
 	}, nil
 }
