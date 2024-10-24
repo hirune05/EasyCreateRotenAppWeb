@@ -1,21 +1,21 @@
-import ItemType from '@/types/item'
+import { Item } from '@/types/type'
 
 type ItemProp = {
-  item: ItemType
+  item: Item
 }
 
-const Item = ({ item }: ItemProp) => {
+const ItemComponent = ({ item }: ItemProp) => {
   return (
     <li className='flex justify-between'>
       <div>
-        <span>{item.itemName}</span>
+        <span>{item.name}</span>
         <span>1</span>
       </div>
       <div className='flex justify-center'>
-        <span>{item.itemDescription}</span>
+        <span>{item.description}</span>
       </div>
     </li>
   )
 }
 
-export default Item
+export default ItemComponent

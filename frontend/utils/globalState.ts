@@ -1,11 +1,7 @@
-import ItemType from '@/types/item';
+
+import { Item } from '@/types/type';
 import { atom } from 'jotai';
 
-const sampleItem:ItemType = {
-    itemName:"メニュー",
-    itemPrice:200
-}
-
-const itemAtom = atom<ItemType[]>([sampleItem])
+const itemAtom = atom<Item[]>([])
 
 export default itemAtom

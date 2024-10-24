@@ -1,15 +1,17 @@
-import ItemType from '@/types/item'
-import Item from './item'
+import { Item } from '@/types/type'
+import ItemComponent from './item'
 
 type ItemsProp = {
-  items: ItemType[]
+  items: Item[]
 }
 
 const Items: React.FC<ItemsProp> = ({ items }) => {
   return (
     <ul className='space-y-1'>
       {items &&
-        items.map((item: ItemType, index) => <Item key={index} item={item} />)}
+        items.map((item: Item, index) => (
+          <ItemComponent key={index} item={item} />
+        ))}
     </ul>
   )
 }
