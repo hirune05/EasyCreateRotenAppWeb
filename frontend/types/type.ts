@@ -107,4 +107,4 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,AdminUser,EventInfo,Order,Item}
+export type {LoginStudentResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}

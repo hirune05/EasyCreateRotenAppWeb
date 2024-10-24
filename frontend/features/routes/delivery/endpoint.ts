@@ -1,4 +1,4 @@
-import { Order, OrderItem, AddOrderComplexRequest } from '@/types/type'
+import { Order, AddOrderComplexRequest, OrderItem } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -56,13 +56,16 @@ export const getOrderItemsById = async (orderItemId: string) => {
   return data as OrderItem[]
 }
 
-export const setOrderPickedUpAt = async (orderId: string, pickedUpTime: Date) => {
-  let reqData: {picked_up_at: Date} = {picked_up_at: pickedUpTime}
+export const setOrderPickedUpAt = async (
+  orderId: string,
+  pickedUpTime: Date,
+) => {
+  const reqData: { picked_up_at: Date } = { picked_up_at: pickedUpTime }
   const res = await fetch(`${apiUrl}/v1/orders/${orderId}/picked`, {
     method: 'PUT',
     cache: 'no-store',
     headers: {
-        'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(reqData),
   })
@@ -71,12 +74,12 @@ export const setOrderPickedUpAt = async (orderId: string, pickedUpTime: Date) =>
 }
 
 export const setOrderStatus = async (orderId: string, status: number) => {
-  let reqData: {status: number} = {status: status}
+  const reqData: { status: number } = { status: status }
   const res = await fetch(`${apiUrl}/v1/orders/${orderId}/status`, {
     method: 'PUT',
     cache: 'no-store',
     headers: {
-        'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(reqData),
   })
@@ -84,30 +87,18 @@ export const setOrderStatus = async (orderId: string, status: number) => {
   return data as Order[]
 }
 
-export const addOrderComplex = async (orderId: string, reqData: AddOrderComplexRequest) => {
+export const addOrderComplex = async (
+  orderId: string,
+  reqData: AddOrderComplexRequest,
+) => {
   const res = await fetch(`${apiUrl}/v1/orders/complex`, {
     method: 'POST',
     cache: 'no-store',
     headers: {
-        'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
   return data as Order
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
