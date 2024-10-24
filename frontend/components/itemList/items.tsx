@@ -1,4 +1,4 @@
-import { Item } from '@/types/type'
+import type { Item } from '@/types/type'
 import ItemComponent from './item'
 
 type ItemsProp = {

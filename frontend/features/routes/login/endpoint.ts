@@ -1,4 +1,4 @@
-import { LoginStudentRequest, LoginStudentResponse } from '@/types/type'
+import type { LoginStudentRequest, LoginStudentResponse } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 

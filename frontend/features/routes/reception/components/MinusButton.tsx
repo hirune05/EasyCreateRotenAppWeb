@@ -1,5 +1,5 @@
 import SkeletonButton from '@/components/skeletonButton'
-import { Item } from '@/types/type'
+import type { Item } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
 import { Minus } from 'lucide-react'

@@ -1,10 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card'
-import { Item } from '@/types/type'
-import PlusButton from './PlusButton'
-import MinusButton from './MinusButton'
-import { useAtom } from 'jotai'
+import type { Item } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
+import MinusButton from './MinusButton'
+import PlusButton from './PlusButton'
 
 type ItemProp = {
   storeItem: Item

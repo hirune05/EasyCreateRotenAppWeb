@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import React, { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 
 interface SkeletonButtonProps {
   children: ReactNode
