@@ -95,4 +95,4 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,AdminUser,EventInfo,Order}
+export type {LoginStudentResponse,AdminUser,EventInfo,Order,Item}
