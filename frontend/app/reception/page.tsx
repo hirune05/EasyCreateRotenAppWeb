@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <>
       <OrderDetailModal />
-      <div className='p-4 max-w-sm mx-auto'>
+      <div className='p-4 max-w-sm mx-auto bg-white'>
         <div className='space-y-2'>
           <MenuButtons />
         </div>
