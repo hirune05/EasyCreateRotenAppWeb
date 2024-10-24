@@ -4,20 +4,20 @@ import { FooterDrawerComponent } from '@/components/footer-drawer'
 import CartMenu from './CartMenu'
 import Footer from './Footer'
 import { useAtom } from 'jotai'
-import itemAtom from '@/utils/globalState'
+import { cartItemsAtom } from '@/utils/globalState'
 
 function ReceptionFooter() {
-  const [Items, isSetItems] = useAtom(itemAtom)
+  const [cartItems, isSetCartItems] = useAtom(cartItemsAtom)
 
   return (
     <div className='flex flex-col min-h-screen'>
       <div className='flex-grow'>
         <FooterDrawerComponent>
           <div className='p-4 max-w-sm mx-auto overflow-scroll'>
-            {Items &&
-              Items.map(item => (
+            {cartItems &&
+              cartItems.map(cartItem => (
                 <>
-                  <CartMenu item={item} />
+                  <CartMenu item={cartItem} />
                 </>
               ))}
           </div>
