@@ -7,6 +7,7 @@ import (
 	"backend/app/handler"
 	"backend/app/usecase"
 	"context"
+	"errors"
 	"log"
 	"net"
 	"net/http"
@@ -23,7 +24,27 @@ import (
 
 func Run() error {
 
-	dsn := "admin:password@tcp(point-app-db:3306)/point_app?charset=utf8mb4&parseTime=True&loc=Local"
+	dbUser := os.Getenv("DB_USER")
+	if dbUser == "" {
+		return errors.New("DB user is not configured")
+	}
+
+	dbPassword := os.Getenv("DB_PASSWORD")
+	if dbPassword == "" {
+		return errors.New("DB password is not configured")
+	}
+
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		return errors.New("DB host is not configured")
+	}
+
+	dbPort := os.Getenv("DB_PORT")
+	if dbPort == "" {
+		return errors.New("DB port is not configured")
+	}
+
+	dsn := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/roten-app?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})

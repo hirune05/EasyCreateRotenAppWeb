@@ -13,18 +13,11 @@ services:
       - db # dbが立ち上がってから起動
     environment:
       GO_ENV: development
-      DB_HOST: db
+      DB_HOST: roten-app-db
       DB_PORT: 3306
-      MYSQL_HOST: "mysql:3306"
       DB_USER: admin
       DB_PASSWORD: password
-      DB_NAME: point_app
-      REDIS_HOST: point-app-redis
-      REDIS_PORT: 6379
-      AWS_ENDPOINT: http://aws:4566
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
-      AWS_REGION: ap-northeast-1
+      DB_NAME: roten_app
       SENDER_MAIL_ADDRESS: roten.ishikawa.kosen@gmail.com
       FRONT_ENDPOINT: http://localhost:3000
     tty: true
@@ -45,24 +38,17 @@ services:
   db:
     image: mysql:8.0.31
     platform: linux/amd64
-    container_name: point-app-db
+    container_name: roten-app-db
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_USER: admin
       MYSQL_PASSWORD: password
-      MYSQL_DATABASE: point_app
+      MYSQL_DATABASE: roten_app
     volumes:
-      - point-app-db-data:/var/lib/mysql # データはdocker上で管理
+      - roten-app-db-data:/var/lib/mysql # データはdocker上で管理
       - $PWD/_tools/mysql/conf.d:/etc/mysql/conf.d:cached
     ports:
       - "33306:3306"
-  cache:
-    image: "redis:latest"
-    container_name: point-app-redis
-    ports:
-      - "36379:6379"
-    volumes:
-      - point-app-redis-data:/data
   panel:
     image: "adminer:latest"
     restart: always
@@ -78,5 +64,5 @@ services:
       - SERVICES=ses
       - DEFAULT_REGION=ap-northeast-1
 volumes: # dockerでデータを管理
-  point-app-db-data:
-  point-app-redis-data:
+  roten-app-db-data:
+  roten-app-redis-data:
