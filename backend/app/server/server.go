@@ -7,7 +7,9 @@ import (
 	"backend/app/handler"
 	"backend/app/usecase"
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -24,24 +26,60 @@ import (
 
 func Run() error {
 
-	dbUser := os.Getenv("DB_USER")
-	if dbUser == "" {
-		return errors.New("DB user is not configured")
-	}
+	var dbUser, dbPassword, dbHost, dbPort string
 
-	dbPassword := os.Getenv("DB_PASSWORD")
-	if dbPassword == "" {
-		return errors.New("DB password is not configured")
-	}
+	dbConfig := os.Getenv("DB_CONFIG")
+	if dbConfig == "" {
+		// ローカルで実行する場合、Configではなく、別々で格納される
+		dbUser = os.Getenv("DB_USER")
+		if dbUser == "" {
+			fmt.Println(errors.New("DB user is not configured"))
+			return nil
+		}
 
-	dbHost := os.Getenv("DB_HOST")
-	if dbHost == "" {
-		return errors.New("DB host is not configured")
-	}
+		dbPassword = os.Getenv("DB_PASSWORD")
+		if dbPassword == "" {
+			fmt.Println(errors.New("DB password is not configured"))
+			return nil
+		}
 
-	dbPort := os.Getenv("DB_PORT")
-	if dbPort == "" {
-		return errors.New("DB port is not configured")
+		dbHost = os.Getenv("DB_HOST")
+		if dbHost == "" {
+			fmt.Println(errors.New("DB host is not configured"))
+			return nil
+		}
+
+		dbPort = os.Getenv("DB_PORT")
+		if dbPort == "" {
+			fmt.Println(errors.New("DB port is not configured"))
+			return nil
+		}
+	} else {
+		// AppRunnerからシークレットの環境変数DB_CONFIGを取得して、JSONデータをパースする
+		var err error
+		dbUser, err = getEnvVariable("DB_CONFIG", "DB_USER")
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		dbPassword, err = getEnvVariable("DB_CONFIG", "DB_PASSWORD")
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		dbHost, err = getEnvVariable("DB_CONFIG", "DB_HOST")
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		dbPort, err = getEnvVariable("DB_CONFIG", "DB_PORT")
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
 	}
 
 	dsn := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/roten_app?charset=utf8mb4&parseTime=True&loc=Local"
@@ -112,6 +150,27 @@ func Run() error {
 	}
 
 	return nil
+}
+
+func getEnvVariable(jsonEnvKey string, key string) (string, error) {
+	// Get the environment variable that contains JSON data
+	jsonEnv := os.Getenv(jsonEnvKey)
+	if jsonEnv == "" {
+		return "", errors.New(fmt.Sprintf("Environment variable %s is not configured", jsonEnvKey))
+	}
+
+	// Parse the JSON data
+	var jsonData map[string]string
+	err := json.Unmarshal([]byte(jsonEnv), &jsonData)
+	if err != nil {
+		return "", errors.New(fmt.Sprintf("Failed to parse JSON from %s: %s", jsonEnvKey, err))
+	}
+
+	// Extract the value for the given key
+	if val, exists := jsonData[key]; exists {
+		return val, nil
+	}
+	return "", errors.New(fmt.Sprintf("Key %s not found in JSON from %s", key, jsonEnvKey))
 }
 
 func seedData(db *gorm.DB) error {
