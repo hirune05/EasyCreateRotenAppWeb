@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useEffect, useState } from 'react'
 import { addOrderComplex } from '../delivery/endpoint'
 import { AddOrderComplexRequest, Order } from '@/types/type'
@@ -15,7 +15,7 @@ export const useSubmitCart = () => {
         // const query = {
         //   items: reqData.items,
         // }
-        router.push("reception")
+        router.push('reception')
       }
     }
     postCartItems()
