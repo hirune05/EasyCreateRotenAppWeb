@@ -8,7 +8,7 @@ const DeliveryItem = () => {
         <p className='flex justify-start items-center pl-2'>注文者:あすし</p>
         {/* 受け取り番号 */}
         <p className='flex justify-end items-center pr-5 font-bold'>3</p>
-        </div>
+      </div>
       <MenuItems />
     </div>
   )
