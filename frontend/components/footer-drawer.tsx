@@ -15,7 +15,7 @@ export function FooterDrawerComponent({ children }: FooterDrawerProps) {
 
   return (
     <div
-      className={`fixed ${isOpen ? 'bottom-16' : 'bottom-16'} left-0 right-0 bg-gray-100`}
+      className={`fixed ${isOpen ? 'bottom-14' : 'bottom-14'} left-0 right-0 bg-gray-100`}
     >
       <div className='max-w-screen-xl mx-auto relative'>
         <button
