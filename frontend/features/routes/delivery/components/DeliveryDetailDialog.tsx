@@ -25,7 +25,7 @@ const DeliveryDetailDialog = () => {
           <p>注文番号: 3</p>
         </DialogTitle>
         <DialogDescription>
-            <div>受注: あすし</div>
+          <div>受注: あすし</div>
         </DialogDescription>
         <div>
           <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4'>
