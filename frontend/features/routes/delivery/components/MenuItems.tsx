@@ -1,12 +1,19 @@
-import MenuItem from './MenuItem'
 
-const MenuItems = () => {
+import MenuItem from './MenuItem'
+import {  OrderItem } from '@/types/type'
+
+
+
+type MenuItemsProps = {
+  orderItems: OrderItem[];
+}
+
+const MenuItems: React.FC<MenuItemsProps> = ({ orderItems }) => {
   return (
-    // マップで回す
     <div className='grid grid-cols-2 gap-1 '>
-      <MenuItem />
-      <MenuItem />
-      <MenuItem />
+    {orderItems.map((orderItem, index) => (
+      <MenuItem item={orderItem.item} quantity={orderItem.quantity} key={index}/>
+    ))}
     </div>
   )
 }

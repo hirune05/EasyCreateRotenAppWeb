@@ -10,22 +10,26 @@ import {
 } from '@/components/ui/dialog'
 import { useState } from 'react'
 import DeliveryItem from './DeliveryItem'
+import { Order } from '@/types/type'
 
-const DeliveryDetailDialog = () => {
+type deliveryOrderProp = {
+  deliveryOrder: Order;
+}
+
+const DeliveryDetailDialog: React.FC<deliveryOrderProp> = ({ deliveryOrder }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <DeliveryItem />
+        <DeliveryItem storeStaffId={deliveryOrder.storeStaffId} id={deliveryOrder.id} orderItems={deliveryOrder.orderItems}/>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>
-          <p>ID: 1002003</p>
-          <p>注文番号: 3</p>
+          <p>注文番号: {deliveryOrder.id}</p>
         </DialogTitle>
         <DialogDescription>
-          <div>受注: あすし</div>
+          <div>受注: {deliveryOrder.storeStaffId}</div>
         </DialogDescription>
         <div>
           <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4'>
