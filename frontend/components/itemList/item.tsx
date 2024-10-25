@@ -8,12 +8,12 @@ type ItemProp = {
 const ItemComponent = ({ item }: ItemProp) => {
   const uniqueID = uuidv4()
   return (
-    <li className='flex justify-between' key={uniqueID}>
-      <div>
-        <span>{item.name}</span>
-        <span>1</span>
+    <li key={uniqueID} className=''>
+      <div className='flex justify-between w-full'>
+        <div className='pl-3 text-left text-xl'>{item.name}</div>
+        {/* <div className='text-end'>{1}</div> */}
       </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-center w-full'>
         <span>{item.description}</span>
       </div>
     </li>
