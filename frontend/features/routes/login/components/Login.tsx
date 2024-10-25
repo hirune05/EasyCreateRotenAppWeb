@@ -43,9 +43,12 @@ function Login() {
     }
 
     const student_id_number = Number(studentId)
-    console.log(student_id_number)
+    if(isNaN(student_id_number)) {
+      setErrorMessage('学籍番号は数字だけを入力して下さい')
+      return
+    }
     const selectedEventId_number = Number(selectedEventId)
-
+    
     const reqData: LoginStudentRequest = {
       student_id: student_id_number,
       password,
