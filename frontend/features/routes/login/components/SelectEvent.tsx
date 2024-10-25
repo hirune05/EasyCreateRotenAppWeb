@@ -1,8 +1,15 @@
 'use client'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { useFetchEvents } from '../../event/hooks'
 
-const SelectEventWithHook = ({selectedEvent,setSelectedEvent}:{selectedEvent:string,setSelectedEvent:Dispatch<SetStateAction<string>>
+interface SelectEventProps {
+  selectedEvent: string
+  setSelectedEvent: Dispatch<SetStateAction<string>>
+}
+
+const SelectEventWithHook: FC<SelectEventProps> = ({
+  selectedEvent,
+  setSelectedEvent,
 }) => {
   const { events, error, isLoading } = useFetchEvents()
 
@@ -14,7 +21,7 @@ const SelectEventWithHook = ({selectedEvent,setSelectedEvent}:{selectedEvent:str
     return <p>Error: {error}</p>
   }
 
-  if (events == undefined || isLoading) {
+  if (isLoading || !events) {
     return <p>Loading...</p>
   }
 
@@ -29,7 +36,7 @@ const SelectEventWithHook = ({selectedEvent,setSelectedEvent}:{selectedEvent:str
         >
           <option value=''>選択</option>
           {events.map(event => (
-            <option key={event.Event.id} value={event.Event.name}>
+            <option key={event.Event.id} value={event.Event.id}>
               {event.Event.name}
             </option>
           ))}
