@@ -6,7 +6,11 @@ import { AddOrderComplexItem, AddOrderComplexRequest } from '@/types/type'
 import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
 
-const SubmitButton = () => {
+type submitProps = {
+  payment: number
+}
+
+const SubmitButton = ({ payment }: submitProps) => {
   const [cartItems] = useAtom(cartItemsAtom)
   const [alertState, useAlertState] = useState(false)
   const submitFunc = () => {
@@ -43,6 +47,7 @@ const SubmitButton = () => {
       <SubmitAlertDialog
         alertState={alertState}
         useAlertState={useAlertState}
+        payment={payment}
         reqData={reqData}
       />
       <Button

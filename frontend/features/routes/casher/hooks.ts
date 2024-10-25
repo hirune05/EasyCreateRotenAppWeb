@@ -5,15 +5,26 @@ import { AddOrderComplexRequest, OrderedItem } from '@/types/type'
 import { useRouter } from 'next/navigation'
 import { useAtom, useSetAtom } from 'jotai'
 import { cartItemsAtom, storeItemsAtom } from '@/utils/globalState'
+import useCountAdvSaleItems from '@/hooks/useCountAdvSaleItems'
+import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
 export const useSubmitCart = () => {
   const router = useRouter()
   const [reqData, setReqData] = useState<AddOrderComplexRequest>()
+  const [paymentAmount, setPaymentAmount] = useState(0)
   const setCartItems = useSetAtom(cartItemsAtom)
   const [storeItems] = useAtom(storeItemsAtom)
+  const [cartItems] = useAtom(cartItemsAtom)
+  const advSaleItems = useCountAdvSaleItems()
+  const totalPrice = useCountTotalPrice()
 
-  const totalPrice = 900
-  const paymentAmount = 1000
+  const setSubmitValue = (
+    reqDataProp: AddOrderComplexRequest,
+    paymentProp: number,
+  ) => {
+    setPaymentAmount(paymentProp)
+    setReqData(reqDataProp)
+  }
 
   useEffect(() => {
     const postCartItems = async () => {
@@ -34,6 +45,10 @@ export const useSubmitCart = () => {
           String(totalPrice) +
           '&paymentAmount=' +
           String(paymentAmount) +
+          '&totalItems=' +
+          String(cartItems.length) +
+          '&advSaleItems=' +
+          String(advSaleItems.length) +
           '&itemData=' +
           JSON.stringify(itemData)
         setCartItems([])
@@ -43,5 +58,5 @@ export const useSubmitCart = () => {
     postCartItems()
   }, [reqData])
 
-  return { setReqData: setReqData }
+  return { setSubmitValue }
 }
