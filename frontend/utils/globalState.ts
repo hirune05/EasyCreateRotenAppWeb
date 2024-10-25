@@ -7,11 +7,13 @@ import { atom } from 'jotai';
 const sample:Item[] = [
     {
         id:123,
-        name:"メニュー1"
+        name:"メニュー1",
+        price:200
     },
     {
         id:124,
-        name:"メニュー2"
+        name:"メニュー2",
+        price:100
     }
 ]
 
