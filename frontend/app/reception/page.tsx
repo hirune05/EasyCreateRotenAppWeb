@@ -6,7 +6,6 @@ import OrderDetailModal from '@/features/routes/reception/components/orderDetail
 export default function Page() {
   return (
     <>
-
       <Suspense fallback={<div>Loading...</div>}>
         <OrderDetailModal />
       </Suspense>
