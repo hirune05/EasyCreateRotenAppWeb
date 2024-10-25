@@ -6,37 +6,24 @@ import {
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
-import { cartItemsAtom } from '@/utils/globalState'
 import { useSearchParams } from 'next/navigation'
 import { OrderedItem } from '@/types/type'
+import { useGetParams } from '../hooks'
 
 export default function OrderDetailModal() {
   const [isOpen, setIsOpen] = useState(true)
-  const [orderedItems, setOrderedItems] = useState<OrderedItem[]>()
-  const [totalPrice, setTotalPrice] = useState<number>(0)
-  const [paymentAmount, setPaymentAmount] = useState<number>(0)
-  const searchParams = useSearchParams()
+  const { orderedItems, totalPrice, paymentAmount, totalItems, advSaleItems } =
+    useGetParams()
 
-  // Todo
-  // この関数とhooks群をhooksにまとめる
-  useEffect(() => {
-    const getItemDataParams = searchParams.get('itemData')
-    const getTotalPriceParams = searchParams.get('totalPrice')
-    const getPaymentAmountParams = searchParams.get('paymentAmount')
-
-    if (getItemDataParams && getTotalPriceParams && getPaymentAmountParams) {
-      setOrderedItems(JSON.parse(getItemDataParams))
-      setTotalPrice(Number(getTotalPriceParams))
-      setPaymentAmount(Number(getPaymentAmountParams))
-    }
-  }, [searchParams])
   return (
     <>
       {orderedItems && (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogContent>
             <DialogTitle>
-              <p className='font-bold mb-2'>小計/{100}点(2)</p>
+              <p className='font-bold mb-2'>
+                小計/{totalItems} 点 ({advSaleItems} 点)
+              </p>
             </DialogTitle>
             <DialogDescription></DialogDescription>
             <p>合計 {totalPrice}円</p>
