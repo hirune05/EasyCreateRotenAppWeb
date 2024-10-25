@@ -20,14 +20,14 @@ const Footer: React.FC = () => {
   return (
     <div className='bg-gray-200 fixed bottom-0 position-absolute left-0 right-0 p-4 h-[60px] flex justify-between items-center '>
       <div className='flex flex-col space-x-4'>
-        <p className='text-lg ml-4  text-gray-800'>
+        <p className='text-xl ml-4 font-bold text-gray-800'>
           通常:{usuSaleItems.length} 券:{advSaleItems.length}
         </p>
-        <p className='text-lg  text-gray-800'>計:{totalPrice}</p>
+        <p className='text-xl font-bold text-gray-800'>計:{totalPrice}</p>
       </div>
 
       <Link className=' text-gray-800' href='/casher'>
-        <Button className='bg-green-400 text-white py-2 px-4 rounded'>
+        <Button className='bg-green-400 text-white py-2 px-4 w-30 rounded text-lg '>
           会計
         </Button>
       </Link>
