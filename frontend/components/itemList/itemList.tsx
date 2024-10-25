@@ -7,7 +7,7 @@ const ItemList = () => {
   const [cartItems] = useAtom(cartItemsAtom)
   return (
     <>
-      <p className='font-bold mb-2'>小計/{cartItems.length}点(2)</p>
+      <p className='font-bold mb-2'>小計/{cartItems.length}点</p>
       <Items items={cartItems} />
     </>
   )
