@@ -6,7 +6,6 @@ import {
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
-import { useSetAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
 import { useSearchParams } from 'next/navigation'
 import { OrderedItem } from '@/types/type'

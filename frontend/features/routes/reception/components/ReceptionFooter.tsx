@@ -1,10 +1,10 @@
 'use client'
-import React from 'react'
 import { FooterDrawerComponent } from '@/components/footer-drawer'
+import { cartItemsAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
+import React from 'react'
 import CartMenu from './CartMenu'
 import Footer from './Footer'
-import { useAtom } from 'jotai'
-import { cartItemsAtom } from '@/utils/globalState'
 
 function ReceptionFooter() {
   const [cartItems] = useAtom(cartItemsAtom)

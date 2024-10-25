@@ -1,9 +1,9 @@
-import { Order, AddOrderComplexRequest, OrderItem } from '@/types/type'
+import type { AddOrderComplexRequest, Order, OrderItem } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
-export const getOrdersCanDelivery = async (storeId: string) => {
-  const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}/1`, {
+export const getOrdersCanDelivery = async (storeId: string, status: string) => {
+  const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}/${status}`, {
     method: 'GET',
     cache: 'no-store',
   })

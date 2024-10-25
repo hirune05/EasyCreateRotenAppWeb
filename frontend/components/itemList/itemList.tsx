@@ -1,7 +1,7 @@
 'use client'
 import { cartItemsAtom } from '@/utils/globalState'
-import Items from './items'
 import { useAtom } from 'jotai'
+import Items from './items'
 
 const ItemList = () => {
   const [cartItems] = useAtom(cartItemsAtom)

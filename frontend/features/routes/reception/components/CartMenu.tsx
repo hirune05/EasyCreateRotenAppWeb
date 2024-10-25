@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import CrossButton from '@/features/routes/reception/components/CrossButton'
-import { Item } from '@/types/type'
+import type { Item } from '@/types/type'
 
 type CartMenuProps = {
   item: Item

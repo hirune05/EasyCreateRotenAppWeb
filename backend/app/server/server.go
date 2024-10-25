@@ -69,11 +69,11 @@ func Run() error {
 	}
 	log.Println("Database migration completed successfully")
 
-	// // シードデータを追加したいときだけコメントアウトを外す
-	// if err := seedData(db); err != nil {
-	// 	log.Fatalf("failed to seed data: %v", err)
-	// }
-	// log.Println("Seed data added successfully")
+	// シードデータを追加したいときだけコメントアウトを外す
+	if err := seedData(db); err != nil {
+		log.Fatalf("failed to seed data: %v", err)
+	}
+	log.Println("Seed data added successfully")
 
 	addr := ":" + strconv.Itoa(config.Port())
 	log.Printf("Serve on http://%s", addr)
@@ -84,9 +84,10 @@ func Run() error {
 	storeStaffUseCase := usecase.NewStoreStaff(db, dao.NewStoreStaffRepository(db))
 	studentUseCase := usecase.NewStudent(db, dao.NewStudentRepository(db))
 	eventUseCase := usecase.NewEvent(db, dao.NewEventRepository(db))
+	itemUseCase := usecase.NewItem(db, dao.NewItemRepository(db))
 
 	r := handler.NewRouter(
-		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase, studentUseCase, eventUseCase)
+		orderUseCase, orderItemUseCase, adminUserUseCase, storeStaffUseCase, studentUseCase, eventUseCase, itemUseCase)
 
 	ctx, _ := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt)
 	srv := &http.Server{
@@ -135,8 +136,8 @@ func seedData(db *gorm.DB) error {
 
 	// Studentのシードデータ
 	student := []object.Student{
-		{ID: 1234, Name: "John Doe", Password: "password1"},
-		{ID: 5678, Name: "Jane Smith", Password: "password2"},
+		{Name: "John Doe", Password: "password1"},
+		{Name: "Jane Smith", Password: "password2"},
 	}
 	if err := db.Create(&student).Error; err != nil {
 		return err
@@ -145,7 +146,7 @@ func seedData(db *gorm.DB) error {
 	// StoreStaffのシードデータ
 	storeStaffs := []object.StoreStaff{
 		{StudentID: student[0].ID, Role: 1, StoreID: stores[0].ID},
-		{StudentID: student[1].ID, Role: 0, StoreID: stores[1].ID},
+		{StudentID: student[1].ID, Role: 0, StoreID: stores[0].ID},
 	}
 	if err := db.Create(&storeStaffs).Error; err != nil {
 		return err
@@ -154,7 +155,7 @@ func seedData(db *gorm.DB) error {
 	// Itemのシードデータ
 	items := []object.Item{
 		{StoreID: stores[0].ID, Name: "Item A", Description: nil, Price: 100, ImageURL: nil},
-		{StoreID: stores[1].ID, Name: "Item B", Description: nil, Price: 200, ImageURL: nil},
+		{StoreID: stores[0].ID, Name: "Item B", Description: nil, Price: 200, ImageURL: nil},
 	}
 	if err := db.Create(&items).Error; err != nil {
 		return err
@@ -163,8 +164,8 @@ func seedData(db *gorm.DB) error {
 	// Orderのシードデータ
 	now := time.Now()
 	orders := []object.Order{
-		{StoreID: stores[0].ID, PickedUpAt: &now, Status: 0, StoreStaffID: storeStaffs[0].ID},
-		{StoreID: stores[1].ID, PickedUpAt: &now, Status: 1, StoreStaffID: storeStaffs[1].ID},
+		{StoreID: stores[0].ID, PickedUpAt: &now, Status: 1, StoreStaffID: storeStaffs[0].ID},
+		{StoreID: stores[0].ID, PickedUpAt: &now, Status: 1, StoreStaffID: storeStaffs[1].ID},
 	}
 	if err := db.Create(&orders).Error; err != nil {
 		return err
@@ -190,8 +191,8 @@ func seedData(db *gorm.DB) error {
 
 	// AdminUserのシードデータ
 	adminUsers := []object.AdminUser{
-		{Username: "admin1", Password: "password", Email: "admin1@gmail.com"},
-		{Username: "admin2", Password: "password", Email: "admin2@gmail.com"},
+		{Username: "admin1", Password: "password", Email: "admin10@gmail.com"},
+		{Username: "admin2", Password: "password", Email: "admin12@gmail.com"},
 	}
 	if err := db.Create(&adminUsers).Error; err != nil {
 		return err

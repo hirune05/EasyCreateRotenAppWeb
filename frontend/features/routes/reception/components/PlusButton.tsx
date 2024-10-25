@@ -1,8 +1,8 @@
-import { Plus } from 'lucide-react'
 import SkeletonButton from '@/components/skeletonButton'
-import { Item } from '@/types/type'
-import { useSetAtom } from 'jotai'
+import type { Item } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
+import { useSetAtom } from 'jotai'
+import { Plus } from 'lucide-react'
 
 type plusButtonProp = {
   item: Item

@@ -1,6 +1,5 @@
-import SelectEvent from '@/features/routes/login/components/SelectEvent'
 import InputUser from '@/features/routes/login/components/InputUser'
-import { Button } from '@/components/ui/button'
+import SelectEvent from '@/features/routes/login/components/SelectEvent'
 
 function Login() {
   return (

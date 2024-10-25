@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "biome lint --apply ./app ./components ./features ./hooks ./lib",
     "format": "biome format --write ./app ./components ./features ./hooks ./lib",
-    "check": "biome check ./app ./components ./features ./hooks ./lib"
+    "check": "biome check --fix ./app ./components ./features ./hooks ./lib"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",

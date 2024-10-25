@@ -1,7 +1,7 @@
 import MenuButtons from '@/features/routes/reception/components/MenuButtons'
-import OrderDetailModal from '@/features/routes/reception/components/orderDetailmodal'
 import ReceptionFooter from '@/features/routes/reception/components/ReceptionFooter'
 import { Suspense } from 'react'
+import OrderDetailModal from '@/features/routes/reception/components/orderDetailmodal'
 
 export default function Page() {
   return (

@@ -11,7 +11,7 @@ export default function Page() {
         <p className='ml-5 text-2xl my-4 font-bold'>合計:200円</p>
         <div className='flex justify-center'>
           <Input
-            className='text-lg text-gray-300 w-11/12 '
+            className='text-lg text-bluck w-11/12 '
             type='number'
             placeholder='お支払い'
           />

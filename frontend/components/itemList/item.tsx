@@ -1,4 +1,4 @@
-import { Item } from '@/types/type'
+import type { Item } from '@/types/type'
 import { v4 as uuidv4 } from 'uuid'
 
 type ItemProp = {
