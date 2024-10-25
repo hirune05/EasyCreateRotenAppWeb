@@ -9,13 +9,20 @@ type CartMenuProps = {
 
 function CartMenu({ item, index }: CartMenuProps) {
   return (
-    <div className='space-y-2 flex-col'>
-      <div className='flex justify-between items-center border rounded-md bg-gray-100'>
-        <span className='text-lg text-black'>{item.name}</span>
+    <div className='flex-col border border-black bg-white'>
+      <div className='flex justify-between items-center border bg-white'>
+        <span className='pl-5 font-bold text-lg font-sans text-black'>
+          {item.name}
+        </span>
         <CrossButton itemValue={index} />
       </div>
       <div>
-        <Input type='text' value={item.description} placeholder='備考' />
+        <Input
+          type='text'
+          value={item.description}
+          placeholder='備考'
+          className='border-none bg-white rounded-none transition-all focus:bg-blue-50 focus:outline-none'
+        />
       </div>
     </div>
   )

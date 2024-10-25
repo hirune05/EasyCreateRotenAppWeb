@@ -26,11 +26,16 @@ const DeliveryDetailDialogs: React.FC = () => {
       <div className='container flex flex-col w-11/12 justify-center m-1'>
         {orders && orders.length > 0 ? (
           orders.map(order => (
-            <DeliveryDetailDialog
-              deliveryOrder={order}
-              key={order.id}
-              onComplete={handleOrderCompleted}
-            />
+            <div key={order.id}>
+              {order.orderItems && order.orderItems.length > 0 ? (
+                <DeliveryDetailDialog
+                  deliveryOrder={order}
+                  onComplete={handleOrderCompleted}
+                />
+              ) : (
+                <p>メニューのない注文です</p>
+              )}
+            </div>
           ))
         ) : (
           <p>完了待ちの注文はありません。</p>
