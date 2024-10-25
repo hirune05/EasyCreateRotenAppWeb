@@ -133,4 +133,4 @@ type OrderedItem = {
   arranges?:string; 
 }
 
-export type {LoginStudentResponse,AddOrderComplexItem,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem}
+export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem}
