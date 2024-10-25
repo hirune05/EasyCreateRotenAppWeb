@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"time"
+        "strconv"
 
 	"gorm.io/gorm"
 )
@@ -199,11 +200,21 @@ func (a *order) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-func (a *order) GetByID(ctx context.Context, id string) (*OrderDTO, error) {
-	order, err := a.orderRepo.GetByID(ctx, id)
+func (u *order) GetByID(ctx context.Context, id string) (*OrderDTO, error) {
+	order, err := u.orderRepo.GetByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get order by id: %w", err)
 	}
+
+        oidto, err := u.orderItemRepo.GetByOrderId(ctx, id)
+        if err != nil {
+                return nil, err
+        }
+        orderItems := make([]object.OrderItem, len(oidto))
+        for i, orderitem := range oidto {
+                orderItems[i] = *orderitem
+        }
+        order.OrderItems = orderItems
 
 	return &OrderDTO{
 		Order: order,
@@ -218,6 +229,15 @@ func (u *order) GetByStoreID(ctx context.Context, id string) ([]*OrderDTO, error
 
 	var orderDTOs []*OrderDTO
 	for _, item := range orders {
+                oidto, err := u.orderItemRepo.GetByOrderId(ctx, strconv.Itoa(item.ID))
+                if err != nil {
+                        return nil, err
+                }
+                orderItems := make([]object.OrderItem, len(oidto))
+                for i, orderitem := range oidto {
+                        orderItems[i] = *orderitem
+                }
+
 		orderDTOs = append(orderDTOs, &OrderDTO{
 			Order: &object.Order{
 				ID:           item.ID,
@@ -227,6 +247,7 @@ func (u *order) GetByStoreID(ctx context.Context, id string) ([]*OrderDTO, error
 				PickedUpAt:   item.PickedUpAt,
 				CreatedAt:    item.CreatedAt,
 				UpdatedAt:    item.UpdatedAt,
+                                OrderItems:   orderItems,
 			},
 		})
 	}
@@ -242,6 +263,14 @@ func (u *order) GetByStatus(ctx context.Context, storeID, status string) ([]*Ord
 
 	var orderDTOs []*OrderDTO
 	for _, item := range orders {
+                oidto, err := u.orderItemRepo.GetByOrderId(ctx, strconv.Itoa(item.ID))
+                if err != nil {
+                        return nil, err
+                }
+                orderItems := make([]object.OrderItem, len(oidto))
+                for i, orderitem := range oidto {
+                        orderItems[i] = *orderitem
+                }
 		orderDTOs = append(orderDTOs, &OrderDTO{
 			Order: &object.Order{
 				ID:           item.ID,
@@ -251,6 +280,7 @@ func (u *order) GetByStatus(ctx context.Context, storeID, status string) ([]*Ord
 				PickedUpAt:   item.PickedUpAt,
 				CreatedAt:    item.CreatedAt,
 				UpdatedAt:    item.UpdatedAt,
+                                OrderItems:   orderItems,
 			},
 		})
 	}
