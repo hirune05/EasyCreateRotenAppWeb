@@ -2,7 +2,7 @@ import { MenuItemProps } from '../type'
 
 const MenuItem: React.FC<MenuItemProps> = ({ item, quantity }) => {
   return (
-    <div className=' flex justify-between border box m-1 bg-blue-50'>
+    <div className=' flex justify-between  box m-1 bg-blue-50'>
       <div className='flex justify-end items-center pl-2 text-sm'>
         {item.name}
       </div>

@@ -19,7 +19,7 @@ export default function Page() {
       </div>
       <div className='flex justify-between mb-4'>
         <Link className='w-3/6' href={'reception'}>
-          <Button className='bg-red-400 text-white py-2 px-4 ml-5  w-8/12'>
+          <Button className='bg-red-400 text-white py-2 px-4 ml-5 text-lg w-8/12'>
             戻る
           </Button>
         </Link>

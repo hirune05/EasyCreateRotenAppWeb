@@ -59,12 +59,13 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
         <DialogDescription>
           <div>受注: {deliveryOrder.storeStaffId}</div>
         </DialogDescription>
-        <div>
-          <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4'>
+        <div className=' flex flex-col m-2 justify-center w-11/12'>
+          <div className='bg-gray-100  mb-5 rounded-md shadow-md '>
             <ItemList />
           </div>
+
           <Button
-            className='bg-green-400 text-white py-2 px-6 rounded w-11/12 m-2'
+            className='bg-green-400 text-white w-fill  text-xl border-none'
             onClick={handleClick}
             disabled={isLoading}
           >
