@@ -5,7 +5,13 @@ import { useState, useEffect } from 'react'
 import { useLoginStudent } from '@/features/routes/login/hooks'
 import type { LoginStudentRequest } from '@/types/type'
 import { useRouter } from 'next/navigation'
-import { tokenAtom, studentIdAtom, nameAtom, storeIdAtom, storeNameAtom } from '@/utils/globalState'
+import {
+  tokenAtom,
+  studentIdAtom,
+  nameAtom,
+  storeIdAtom,
+  storeNameAtom,
+} from '@/utils/globalState'
 import { useSetAtom } from 'jotai'
 
 function Login() {

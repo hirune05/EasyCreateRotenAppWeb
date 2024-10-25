@@ -27,7 +27,10 @@ const InputUser: FC<InputUserProps> = ({
       )}
       <form onSubmit={handleSubmit} className='space-y-6'>
         <div>
-          <label htmlFor='studentId' className='block text-gray-700 text-center'>
+          <label
+            htmlFor='studentId'
+            className='block text-gray-700 text-center'
+          >
             学籍番号
           </label>
           <input
