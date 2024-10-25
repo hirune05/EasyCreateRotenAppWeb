@@ -2,8 +2,8 @@ import type { AddOrderComplexRequest, Order, OrderItem } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
-export const getOrdersCanDelivery = async (storeId: string, status: string) => {
-  const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}/${status}`, {
+export const getOrdersCanDelivery = async (storeId: number) => {
+  const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}/1`, {
     method: 'GET',
     cache: 'no-store',
   })
@@ -84,13 +84,10 @@ export const setOrderStatus = async (orderId: string, status: number) => {
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
-  return data as Order[]
+  return data as Order
 }
 
-export const addOrderComplex = async (
-  orderId: string,
-  reqData: AddOrderComplexRequest,
-) => {
+export const addOrderComplex = async (reqData: AddOrderComplexRequest) => {
   const res = await fetch(`${apiUrl}/v1/orders/complex`, {
     method: 'POST',
     cache: 'no-store',

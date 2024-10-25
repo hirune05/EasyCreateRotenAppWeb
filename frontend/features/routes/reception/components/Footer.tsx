@@ -12,8 +12,9 @@ const Footer: React.FC = () => {
   const usuSaleItems = cartItems.filter(
     cartItems => !cartItems.name.includes('前売り券'),
   )
+
   const totalPrice = usuSaleItems.reduce(
-    (sum, usuSaleItems) => sum + usuSaleItems.price,
+    (sum, usuSaleItems) => sum + (usuSaleItems.price ?? 0),
     0,
   )
 

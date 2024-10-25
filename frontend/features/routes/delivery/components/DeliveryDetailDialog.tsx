@@ -1,5 +1,7 @@
+// DeliveryDetailDialog.tsx
 'use client'
-import ItemList from '@/components/itemList/itemList'
+
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -8,30 +10,65 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import ItemList from '@/components/itemList/itemList'
 import DeliveryItem from './DeliveryItem'
+import { useOrderStatusToPickUpped } from '../hooks'
+import { Order } from '@/types/type'
 
-const DeliveryDetailDialog = () => {
+interface DeliveryDetailDialogProps {
+  deliveryOrder: Order
+  onComplete: () => void
+}
+
+const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
+  deliveryOrder,
+  onComplete,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { error, isLoading, setOrderStatusFunc } = useOrderStatusToPickUpped()
+
+  const handleClick = async () => {
+    try {
+      const orderId = deliveryOrder.id.toString()
+      await setOrderStatusFunc(orderId)
+      setIsOpen(false)
+      onComplete()
+    } catch (err) {
+      console.log(err)
+      alert('注文の完了に失敗しました。再度お試しください。')
+    }
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <DeliveryItem />
+        <DeliveryItem
+          storeStaffId={deliveryOrder.storeStaffId}
+          id={deliveryOrder.id}
+          orderItems={deliveryOrder.orderItems}
+        />
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>
-          <p>ID: 1002003</p>
-          <p>注文番号: 3</p>
+          <p>注文番号: {deliveryOrder.id}</p>
         </DialogTitle>
         <DialogDescription>
-          <div>受注: あすし</div>
+          <div>受注: {deliveryOrder.storeStaffId}</div>
         </DialogDescription>
         <div className=' flex flex-col m-2 justify-center w-11/12'>
           <div className='bg-gray-100  mb-5 rounded-md shadow-md '>
             <ItemList />
           </div>
-          <Button className='bg-green-400 text-white w-fill  text-xl border-none'>
+
+          <Button
+            className='bg-green-400 text-white w-fill  text-xl border-none'
+            onClick={handleClick}
+            disabled={isLoading}
+          >
             完了
           </Button>
         </div>
