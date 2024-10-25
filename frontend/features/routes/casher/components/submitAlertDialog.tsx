@@ -16,15 +16,17 @@ import { AddOrderComplexRequest } from '@/types/type'
 type alertStateProps = {
   alertState: boolean
   useAlertState: Dispatch<SetStateAction<boolean>>
+  payment: number
   reqData: AddOrderComplexRequest
 }
 
 const SubmitAlertDialog = ({
   alertState,
   useAlertState,
+  payment,
   reqData,
 }: alertStateProps) => {
-  const { setReqData } = useSubmitCart()
+  const { setSubmitValue } = useSubmitCart()
   return (
     <AlertDialog open={alertState} onOpenChange={useAlertState}>
       <AlertDialogContent>
@@ -36,7 +38,7 @@ const SubmitAlertDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>いいえ</AlertDialogCancel>
-          <AlertDialogAction onClick={() => setReqData(reqData)}>
+          <AlertDialogAction onClick={() => setSubmitValue(reqData, payment)}>
             はい
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -5,10 +5,16 @@ import SubmitAlertDialog from './submitAlertDialog'
 import { AddOrderComplexItem, AddOrderComplexRequest } from '@/types/type'
 import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
+import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
-const SubmitButton = () => {
+type submitProps = {
+  payment: number
+}
+
+const SubmitButton = ({ payment }: submitProps) => {
   const [cartItems] = useAtom(cartItemsAtom)
   const [alertState, useAlertState] = useState(false)
+  const totalPrice = useCountTotalPrice()
   const submitFunc = () => {
     useAlertState(true)
   }
@@ -43,11 +49,18 @@ const SubmitButton = () => {
       <SubmitAlertDialog
         alertState={alertState}
         useAlertState={useAlertState}
+        payment={payment}
         reqData={reqData}
       />
       <Button
         className='bg-green-400 text-white py-2 px-4 mr-5 w-5/12'
         onClick={() => submitFunc()}
+        disabled={
+          !(
+            (Number.isInteger(payment) && payment == 0) ||
+            payment >= totalPrice
+          )
+        }
       >
         確定
       </Button>
