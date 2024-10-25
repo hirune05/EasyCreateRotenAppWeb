@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button'
 import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
-import Link from 'next/link'
 import type React from 'react'
+import PaymentButton from './PaymentButton'
+import { Suspense } from 'react'
 
 const Footer: React.FC = () => {
   const [cartItems] = useAtom(cartItemsAtom)
@@ -26,12 +26,9 @@ const Footer: React.FC = () => {
         </p>
         <p className='text-xl font-bold text-gray-800'>計:{totalPrice}</p>
       </div>
-
-      <Link className=' text-gray-800' href='/casher'>
-        <Button className='bg-green-400 text-white py-2 px-4 w-30 rounded text-lg '>
-          会計
-        </Button>
-      </Link>
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaymentButton />
+      </Suspense>
     </div>
   )
 }
