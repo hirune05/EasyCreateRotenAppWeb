@@ -7,7 +7,7 @@ type ItemsProp = {
 
 const Items: React.FC<ItemsProp> = ({ items }) => {
   return (
-    <ul className='space-y-1'>
+    <ul className='space-y-1 '>
       {items &&
         items.map((item: Item, index) => (
           <ItemComponent key={index} item={item} />

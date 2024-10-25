@@ -16,13 +16,13 @@ export function FooterDrawerComponent({ children }: FooterDrawerProps) {
 
   return (
     <div
-      className={`fixed ${isOpen ? 'bottom-14' : 'bottom-14'} left-0 right-0 bg-gray-100`}
+      className={`fixed ${isOpen ? 'bottom-16' : 'bottom-16'} left-0 right-0 bg-gray-100`}
     >
       <div className='max-w-screen-xl mx-auto relative'>
         <button
           onClick={toggleDrawer}
           className='absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full 
-                     w-16 h-8 bg-gray-200 rounded-t-md focus:outline-none flex justify-center items-end'
+                     w-16 h-8 bg-gray-100 rounded-t-md focus:outline-none flex justify-center items-end'
           aria-label={isOpen ? 'Close footer' : 'Open footer'}
         >
           <div

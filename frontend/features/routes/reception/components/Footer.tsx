@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
   )
 
   return (
-    <div className='bg-gray-200 fixed bottom-0 position-absolute left-0 right-0 p-4 h-[60px] flex justify-between items-center '>
+    <div className='bg-gray-200 fixed bottom-0 position-absolute left-0 right-0 p-4 h-[65px] flex justify-between items-center '>
       <div className='flex flex-col space-x-4'>
         <p className='text-xl ml-4 font-bold text-gray-800'>
           通常:{usuSaleItems.length} 券:{advSaleItems.length}
