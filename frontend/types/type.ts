@@ -82,17 +82,19 @@ type Store = {
   items: Item[];
 };
 
+// 備考
+// サンプルデータを作るときに型を変えたので本番では戻す
 type Item = {
   id: number;
-  storeId: number;
-  store: Store;
+  storeId?: number;
+  store?: Store;
   name: string;
   description?: string;
-  price: number;
+  price?: number;
   imageUrl?: string;
-  createdAt: Date; 
-  updatedAt: Date; 
-  orderItems: OrderItem[]; 
+  createdAt?: Date; 
+  updatedAt?: Date; 
+  orderItems?: OrderItem[]; 
 };
 
 type OrderItem = {
@@ -107,4 +109,10 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,AddOrderComplexItem,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem}
+type OrderedItem = {
+  name:string
+  quantity: number;
+  arranges?:string; 
+}
+
+export type {LoginStudentResponse,AddOrderComplexItem,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem}
