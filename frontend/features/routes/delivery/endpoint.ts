@@ -87,10 +87,7 @@ export const setOrderStatus = async (orderId: string, status: number) => {
   return data as Order
 }
 
-export const addOrderComplex = async (
-  orderId: string,
-  reqData: AddOrderComplexRequest,
-) => {
+export const addOrderComplex = async (reqData: AddOrderComplexRequest) => {
   const res = await fetch(`${apiUrl}/v1/orders/complex`, {
     method: 'POST',
     cache: 'no-store',

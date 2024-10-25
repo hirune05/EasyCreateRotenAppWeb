@@ -20,8 +20,8 @@ type AddOrderComplexItem = {
 }
 
 type AddOrderComplexRequest = {
-  store_id: string;
-  store_staff_id: string;
+  store_id: number;
+  store_staff_id: number;
   items: AddOrderComplexItem[]
 }
 
@@ -100,17 +100,19 @@ type Store = {
   items: Item[];
 };
 
+// 備考
+// サンプルデータを作るときに型を変えたので本番では戻す
 type Item = {
   id: number;
-  storeId: number;
-  store: Store;
+  storeId?: number;
+  store?: Store;
   name: string;
   description?: string;
-  price: number;
+  price?: number;
   imageUrl?: string;
-  createdAt: Date; 
-  updatedAt: Date; 
-  orderItems: OrderItem[]; 
+  createdAt?: Date; 
+  updatedAt?: Date; 
+  orderItems?: OrderItem[]; 
 };
 
 type OrderItem = {
@@ -125,4 +127,10 @@ type OrderItem = {
   updatedAt: Date;
 };
 
-export type {LoginStudentResponse,LoginStudentRequest,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,getItemByStoreIdResponse}
+type OrderedItem = {
+  name:string
+  quantity: number;
+  arranges?:string; 
+}
+
+export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem}
