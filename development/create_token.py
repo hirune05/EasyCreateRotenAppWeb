@@ -5,6 +5,7 @@
 # 使用方法
 # 0. backend/.envファイルに JWT_SECRET_KEY を設定する
 # 1. カレントディレクトリを development にする。 もしくは、31行目のenv_var = load_env()の括弧内に.envファイルのパスを書く
+# 3. コマンド入力(--id int はuserIdの指定, 省略可能)     python create_token.py --id 112233
 # 2. 出力された以下のような文字列をcurlのヘッダに追加する
 # Cookie: Authorization=XXXXXXXXXXXJWT_TOKENXXXXXXXXXXXXx
 
@@ -34,7 +35,7 @@ SECRET_KEY = env_var.encode()  # バイト列に変換
 # コマンドライン引数を解析する関数
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Generate JWT token.")
-    parser.add_argument('--id', type=int, required=True, help="User ID")
+    parser.add_argument('--id', type=int, default=123, help="User ID")
     return parser.parse_args()
 
 # コマンドライン引数を取得
@@ -55,7 +56,6 @@ header = {
 
 # Base64URLエンコーディングの関数
 def base64url_encode(data):
-    print(f"______________ {data} __________")
     json_data = json.dumps(data, separators=(',', ':')).encode()
     return base64.urlsafe_b64encode(json_data).rstrip(b'=')
 
