@@ -6,6 +6,7 @@ export const getOrdersCanDelivery = async (storeId: number) => {
   const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}/1`, {
     method: 'GET',
     cache: 'no-store',
+    credentials: 'include',
   })
   const data = await res.json()
   return data as Order[]
@@ -15,6 +16,7 @@ export const getAllOrders = async () => {
   const res = await fetch(`${apiUrl}/v1/orders`, {
     method: 'GET',
     cache: 'no-store',
+    credentials: 'include',
   })
   const data = await res.json()
   return data as Order[]
@@ -24,6 +26,7 @@ export const getOrderById = async (orderId: string) => {
   const res = await fetch(`${apiUrl}/v1/orders/${orderId}`, {
     method: 'GET',
     cache: 'no-store',
+    credentials: 'include',
   })
   const data = await res.json()
   return data as Order[]
@@ -33,6 +36,7 @@ export const getOrdersByStoreId = async (storeId: string) => {
   const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}`, {
     method: 'GET',
     cache: 'no-store',
+    credentials: 'include',
   })
   const data = await res.json()
   return data as Order[]
@@ -42,6 +46,7 @@ export const getOrderItemsByOrderId = async (orderId: string) => {
   const res = await fetch(`${apiUrl}/v1/orders/${orderId}/order-items`, {
     method: 'GET',
     cache: 'no-store',
+    credentials: 'include',
   })
   const data = await res.json()
   return data as OrderItem[]
@@ -51,6 +56,7 @@ export const getOrderItemsById = async (orderItemId: string) => {
   const res = await fetch(`${apiUrl}/v1/order-items/${orderItemId}`, {
     method: 'GET',
     cache: 'no-store',
+    credentials: 'include',
   })
   const data = await res.json()
   return data as OrderItem
@@ -67,6 +73,7 @@ export const setOrderPickedUpAt = async (
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
@@ -81,6 +88,7 @@ export const setOrderStatus = async (orderId: string, status: number) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
@@ -94,6 +102,7 @@ export const addOrderComplex = async (reqData: AddOrderComplexRequest) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(reqData),
   })
   const data = await res.json()

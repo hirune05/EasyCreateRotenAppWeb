@@ -14,6 +14,8 @@ import (
         item "backend/app/handler/item"
 	"backend/app/usecase"
 
+	"backend/app/appmiddleware"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -36,14 +38,15 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 		Timeout: 60 * time.Second,
 	}))
 
+        student.RegisterRoutes(e.Group("/v1"), stu)
+        event.RegisterRoutes(e.Group("/v1"), eu)
 	v1 := e.Group("/v1")
+        v1.Use(appmiddleware.RequestAuthHandker)
 
 	order.RegisterRoutes(v1, ou)
 	orderItem.RegisterRoutes(v1, oiu)
 	adminUser.RegisterRoutes(v1, au)
 	storeStaff.RegisterRoutes(v1, su)
-        student.RegisterRoutes(v1, stu)
-        event.RegisterRoutes(v1, eu)
         item.RegisterRoutes(v1, iu)
 
         // routeの一覧表示

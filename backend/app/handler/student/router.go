@@ -2,6 +2,7 @@ package student
 
 import (
 	"backend/app/usecase"
+	"backend/app/appmiddleware"
 
 	"github.com/labstack/echo/v4"
 )
@@ -15,6 +16,6 @@ func RegisterRoutes(e *echo.Group, u usecase.Student) {
 		studentUseCase: u,
 	}
 
-	e.POST("/student", h.Create)
+	e.POST("/student", h.Create, appmiddleware.RequestAuthHandker)
 	e.POST("/student/login", h.Login)
 }
