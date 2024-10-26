@@ -60,6 +60,7 @@ type Item = {
   description?: string;
   price?: number;
   imageUrl?: string;
+  status?: number;
   createdAt?: Date; 
   updatedAt?: Date; 
   OrderItems?: OrderItem[]; 
@@ -73,6 +74,7 @@ type Item = {
 //   name: string;
 //   description: string | null;
 //   price: number;
+//   status: number;
 //   imageUrl: string | null;
 //   createdAt: Date; 
 //   updatedAt: Date; 

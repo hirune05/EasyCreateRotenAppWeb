@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
         "fmt"
+        "os"
 
 	adminUser "backend/app/handler/admin_user"
 	"backend/app/handler/order"
@@ -28,7 +29,9 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		//TODO allow frontend IP
+		AllowOrigins:     []string{os.Getenv("FRONTEND_URL")},
+                AllowMethods:     []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
+                AllowCredentials: true,
 	}))
 
 	// Set a timeout value on the request context (ctx), that will signal

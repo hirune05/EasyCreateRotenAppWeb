@@ -14,6 +14,7 @@ func RequestAuthHandker(next echo.HandlerFunc) echo.HandlerFunc {
         return func (c echo.Context) error {
                 tokenString, err := c.Cookie("Authorization")
                 if err != nil {
+                        log.Printf("Error: %v", err)
                         return c.JSON(http.StatusUnauthorized, map[string]string{"error": "Unauthorized"})
                 }
 
@@ -27,7 +28,7 @@ func RequestAuthHandker(next echo.HandlerFunc) echo.HandlerFunc {
                 })
 
                 if err2 != nil {
-                        log.Fatal(err)
+                        log.Printf("Error: %v", err2)
                         return c.JSON(http.StatusUnauthorized, map[string]string{"error": "Unauthorized"})
                 }
                 return next(c)
