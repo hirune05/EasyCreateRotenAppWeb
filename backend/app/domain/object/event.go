@@ -6,7 +6,7 @@ import (
 
 type Event struct {
 	ID        int       `db:"id" gorm:"primaryKey;autoIncrement" json:"id"`
-	Name      string    `db:"name" gorm:"size:255;not null" json:"name"`
+	Name      string    `db:"name" gorm:"size:255;not null;unique" json:"name"`
 	Year      int       `db:"year" gorm:"not null" json:"year"`
         StartTime time.Time `db:"start_time" gorm:"not null" json:"startTime"`
         EndTime   time.Time `db:"end_time" gorm:"not null" json:"endTime"`

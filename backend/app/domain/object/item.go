@@ -6,9 +6,9 @@ import (
 
 type Item struct {
 	ID          int         `db:"id" gorm:"primaryKey;autoIncrement" json:"id"`
-	StoreID     int         `db:"store_id" gorm:"not null" json:"storeId"`
+	StoreID     int         `db:"store_id" gorm:"not null;uniqueIndex:idx_store_name" json:"storeId"`
 	Store       *Store      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"Store"`
-	Name        string      `db:"name" gorm:"size:255;not null" json:"name"`
+	Name        string      `db:"name" gorm:"size:255;not null;uniqueIndex:idx_store_name" json:"name"`
 	Description *string     `db:"description" json:"description"`
 	Price       int         `db:"price" gorm:"not null" json:"price"`
 	ImageURL    *string     `db:"image_url" json:"imageUrl"`
