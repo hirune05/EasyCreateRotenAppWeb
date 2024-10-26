@@ -7,11 +7,11 @@ import (
 )
 
 type AddRequest struct {
-        StoreID       int     `json:"store_id"`
+        StoreID       int     `json:"storeId"`
         Name          string  `json:"name"`
         Description   *string `json:"description"`
         Price         int     `json:"price"`
-        ImageURL      *string `json:"image_url"`
+        ImageURL      *string `json:"imageUrl"`
 }
 
 func (h *itemHandler) Create(c echo.Context) error {

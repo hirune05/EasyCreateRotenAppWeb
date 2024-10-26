@@ -13,7 +13,7 @@ type Item interface {
         Create(ctx context.Context, storeID int, name string, description *string, price int, imageURL *string) (*ItemDTO, error)
 	GetByID(ctx context.Context, id string) (*ItemDTO, error)
 	GetByStoreID(ctx context.Context, id string) (*GetByStoreIDDTO, error)
-        GetAll(ctx context.Context) ([]*ItemDTO, error)
+        GetAll(ctx context.Context) (*ItemsDTO, error)
 }
 type item struct {
 	db        *gorm.DB
@@ -21,11 +21,15 @@ type item struct {
 }
 
 type GetByStoreIDDTO struct {
-        StoreAndItems *repository.GetByStoreIDDTO
+        GetByStoreIDDTO *repository.GetByStoreIDDTO
 }
 
 type ItemDTO struct {
 	Item *object.Item
+}
+
+type ItemsDTO struct {
+	Items []*object.Item
 }
 
 var _ Item = (*item)(nil)
@@ -79,29 +83,23 @@ func (a *item) GetByID(ctx context.Context, id string) (*ItemDTO, error) {
 }
 
 func (u *item) GetByStoreID(ctx context.Context, id string) (*GetByStoreIDDTO, error) {
-	items, err := u.itemRepo.GetByStoreID(ctx, id)
+	dto, err := u.itemRepo.GetByStoreID(ctx, id)
 	if err != nil {
 		return nil, err
 	}
 
 	return &GetByStoreIDDTO{
-		StoreAndItems: items,
+		GetByStoreIDDTO: dto,
 	}, nil
 }
-func (r *item) GetAll(ctx context.Context) ([]*ItemDTO, error) {
+func (r *item) GetAll(ctx context.Context) (*ItemsDTO, error) {
 	var items []*object.Item
 
 	if err := r.db.WithContext(ctx).Find(&items).Error; err != nil {
 		return nil, fmt.Errorf("failed to retrieve all items: %w", err)
 	}
 
-	var itemDTOs []*ItemDTO
-	for _, item := range items {
-		itemDTO := &ItemDTO{
-			Item: item,
-		}
-		itemDTOs = append(itemDTOs, itemDTO)
-	}
-
-	return itemDTOs, nil
+	return &ItemsDTO{
+		Items: items,
+	}, nil
 }

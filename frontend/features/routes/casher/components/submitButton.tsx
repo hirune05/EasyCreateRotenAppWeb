@@ -6,9 +6,14 @@ import { useAtom } from 'jotai'
 import { useState } from 'react'
 import SubmitAlertDialog from './submitAlertDialog'
 
-const SubmitButton = () => {
+type submitProps = {
+  payment: number
+}
+
+const SubmitButton = ({ payment }: submitProps) => {
   const [cartItems] = useAtom(cartItemsAtom)
   const [alertState, useAlertState] = useState(false)
+  const totalPrice = useCountTotalPrice()
   const submitFunc = () => {
     useAlertState(true)
   }
@@ -16,13 +21,13 @@ const SubmitButton = () => {
     (acc: AddOrderComplexItem[], item) => {
       const existingItem = acc.find(
         accItem =>
-          accItem.item_id === item.id && accItem.arranges === item.description,
+          accItem.itemId === item.id && accItem.arranges === item.description,
       )
       if (existingItem) {
         existingItem.quantity += 1
       } else {
         acc.push({
-          item_id: item.id,
+          itemId: item.id,
           quantity: 1,
           arranges: item.description,
         })
@@ -33,8 +38,8 @@ const SubmitButton = () => {
   )
 
   const reqData: AddOrderComplexRequest = {
-    store_id: 2005,
-    store_staff_id: 2341,
+    storeId: 2005,
+    storeStaffId: 2341,
     items: items,
   }
 
@@ -43,11 +48,18 @@ const SubmitButton = () => {
       <SubmitAlertDialog
         alertState={alertState}
         useAlertState={useAlertState}
+        payment={payment}
         reqData={reqData}
       />
       <Button
         className='bg-green-400 text-white py-2 px-4 mr-5 w-5/12'
         onClick={() => submitFunc()}
+        disabled={
+          !(
+            (Number.isInteger(payment) && payment == 0) ||
+            payment >= totalPrice
+          )
+        }
       >
         確定
       </Button>

@@ -7,10 +7,10 @@ import (
 )
 
 type AddRequest struct {
-	OrderID  int
-	ItemID   int
-	Quantity int
-	Arranges *string
+	OrderID  int      `json:"orderId"`
+	ItemID   int      `json:"itemId"`
+	Quantity int      `json:"quantity"`
+	Arranges *string  `json:"arranges"`
 }
 
 func (h *orderItemHandler) CreateOrderItem(c echo.Context) error {

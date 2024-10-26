@@ -42,28 +42,28 @@ function Login() {
       return
     }
 
-    const student_id_number = Number(studentId)
-    if (isNaN(student_id_number)) {
+    const studentIdNumber = Number(studentId)
+    if (isNaN(studentIdNumber)) {
       setErrorMessage('学籍番号は数字だけを入力して下さい')
       return
     }
-    const selectedEventId_number = Number(selectedEventId)
+    const selectedEventIdNumber = Number(selectedEventId)
 
     const reqData: LoginStudentRequest = {
-      student_id: student_id_number,
+      studentId: studentIdNumber,
       password,
-      event_id: selectedEventId_number,
+      eventId: selectedEventIdNumber,
     }
     try {
       const response = await login(reqData)
 
       setToken(response.token)
-      setStudentIdGlobal(response.student_id)
+      setStudentIdGlobal(response.studentId)
       setName(response.name)
-      setStoreId(response.store_id)
-      setStoreName(response.store_name)
+      setStoreId(response.storeId)
+      setStoreName(response.storeName)
 
-      router.push('/dashboard')
+      router.push('/delivery')
     } catch {
       setErrorMessage('ログインに失敗しました')
     }

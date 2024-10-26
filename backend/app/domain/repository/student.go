@@ -9,9 +9,9 @@ import (
 )
 
 type CheckInEventDTO struct {
-        StoreID       int
-        StoreName     string
-        StoreStaffID  int
+        StoreID       int     `json:"storeId"`
+        StoreName     string  `json:"storeName"`
+        StoreStaffID  int     `json:"storeStaffId"`
 }
 
 type StudentRepository interface {

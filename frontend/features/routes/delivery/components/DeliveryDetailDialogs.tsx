@@ -27,7 +27,7 @@ const DeliveryDetailDialogs: React.FC = () => {
         {orders && orders.length > 0 ? (
           orders.map(order => (
             <div key={order.id}>
-              {order.orderItems && order.orderItems.length > 0 ? (
+              {order.OrderItems && order.OrderItems.length > 0 ? (
                 <DeliveryDetailDialog
                   deliveryOrder={order}
                   onComplete={handleOrderCompleted}

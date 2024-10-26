@@ -18,10 +18,10 @@ import (
 func (h *orderHandler) GetByID(c echo.Context) error {
 	id := c.Param("id")
 
-	order, err := h.orderUseCase.GetByID(c.Request().Context(), id)
+	dto, err := h.orderUseCase.GetByID(c.Request().Context(), id)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "order not found"})
 	}
 
-	return c.JSON(http.StatusOK, order)
+	return c.JSON(http.StatusOK, dto.Order)
 }

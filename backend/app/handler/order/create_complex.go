@@ -8,8 +8,8 @@ import (
 )
 
 type AddComplexRequest struct {
-	StoreID      int                          `json:"store_id"`
-	StoreStaffID int                          `json:"store_staff_id"`
+	StoreID      int                          `json:"storeId"`
+	StoreStaffID int                          `json:"storeStaffId"`
         Items        []*usecase.OrderComplexItem  `json:"items"`
 }
 

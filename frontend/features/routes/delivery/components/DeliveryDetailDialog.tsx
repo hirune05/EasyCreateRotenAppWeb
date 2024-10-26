@@ -49,7 +49,7 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
         <DeliveryItem
           storeStaffId={deliveryOrder.storeStaffId}
           id={deliveryOrder.id}
-          orderItems={deliveryOrder.orderItems}
+          orderItems={deliveryOrder.OrderItems}
         />
       </DialogTrigger>
       <DialogContent>

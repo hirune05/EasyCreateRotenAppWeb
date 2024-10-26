@@ -17,7 +17,7 @@ export const getItemsByStoreId = async (storeId: string) => {
     cache: 'no-store',
   })
   const data = await res.json()
-  return data as Item[]
+  return data as getItemByStoreIdResponse[]
 }
 
 export const getItemById = async (itemId: string) => {
@@ -26,5 +26,5 @@ export const getItemById = async (itemId: string) => {
     cache: 'no-store',
   })
   const data = await res.json()
-  return data as Item[]
+  return data as Item
 }
