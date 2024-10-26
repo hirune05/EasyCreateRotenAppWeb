@@ -9,7 +9,7 @@ const PaymentButton = () => {
   const [cartItems] = useAtom(cartItemsAtom)
   return (
     <Button
-      className='bg-green-400 text-white py-2 px-4 w-30 rounded text-lg'
+      className='bg-green-400 text-white font-bold py-2 px-4 w-30 rounded text-lg'
       disabled={cartItems.length == 0}
       onClick={handleClick}
     >
