@@ -1,5 +1,5 @@
+import type { EventInfo } from '@/types/type'
 import { useEffect, useState } from 'react'
-import { EventInfo } from '@/types/type'
 import { getNowEvents } from './endpoint'
 
 export const useFetchEvents = () => {
