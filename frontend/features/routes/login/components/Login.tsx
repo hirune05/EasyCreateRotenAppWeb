@@ -1,18 +1,18 @@
 'use client'
 import InputUser from '@/features/routes/login/components/InputUser'
 import SelectEvent from '@/features/routes/login/components/SelectEvent'
-import { useState, useEffect } from 'react'
 import { useLoginStudent } from '@/features/routes/login/hooks'
 import type { LoginStudentRequest } from '@/types/type'
-import { useRouter } from 'next/navigation'
 import {
-  tokenAtom,
-  studentIdAtom,
   nameAtom,
   storeIdAtom,
   storeNameAtom,
+  studentIdAtom,
+  tokenAtom,
 } from '@/utils/globalState'
 import { useSetAtom } from 'jotai'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 function Login() {
   const [selectedEventId, setSelectedEventId] = useState<string>('')

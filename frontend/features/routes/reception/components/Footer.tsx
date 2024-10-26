@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
 import Link from 'next/link'
 import type React from 'react'
 

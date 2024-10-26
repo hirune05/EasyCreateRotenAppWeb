@@ -1,4 +1,6 @@
 'use client'
+import type { OrderedItem } from '@/types/type'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import {
   Dialog,
@@ -6,9 +8,6 @@ import {
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
-import { cartItemsAtom } from '@/utils/globalState'
-import { useSearchParams } from 'next/navigation'
-import { OrderedItem } from '@/types/type'
 
 export default function OrderDetailModal() {
   const [isOpen, setIsOpen] = useState(true)

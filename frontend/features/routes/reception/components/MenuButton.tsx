@@ -1,9 +1,9 @@
+import { Button } from '@/components/ui/button'
+import type { Item } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
-import { useEffect, useState } from 'react'
-import { Item } from '@/types/type'
 import { useSetAtom } from 'jotai'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
 
 type ItemProp = {
   storeItem: Item

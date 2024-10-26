@@ -1,5 +1,5 @@
 'use client'
-import { Dispatch, FC, SetStateAction } from 'react'
+import type { Dispatch, FC, SetStateAction } from 'react'
 import { useFetchEvents } from '../../event/hooks'
 
 interface SelectEventProps {

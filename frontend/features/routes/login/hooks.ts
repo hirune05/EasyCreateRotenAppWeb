@@ -1,6 +1,6 @@
+import type { LoginStudentRequest, LoginStudentResponse } from '@/types/type'
 import { useState } from 'react'
 import { studentLogin } from './endpoint'
-import type { LoginStudentRequest, LoginStudentResponse } from '@/types/type'
 
 export const useLoginStudent = () => {
   const [isLoading, setIsLoading] = useState(false)

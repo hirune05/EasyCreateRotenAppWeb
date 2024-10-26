@@ -1,4 +1,4 @@
-import { Item, getItemByStoreIdResponse } from '@/types/type'
+import { type Item } from '@/types/type'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 

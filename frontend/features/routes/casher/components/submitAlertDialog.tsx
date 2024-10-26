@@ -9,9 +9,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Dispatch, SetStateAction } from 'react'
+import type { AddOrderComplexRequest } from '@/types/type'
+import type { Dispatch, SetStateAction } from 'react'
 import { useSubmitCart } from '../hooks'
-import { AddOrderComplexRequest } from '@/types/type'
 
 type alertStateProps = {
   alertState: boolean
