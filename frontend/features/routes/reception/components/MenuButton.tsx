@@ -1,7 +1,6 @@
 import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
-import MinusButton from './MinusButton'
 import { Item } from '@/types/type'
 import { useSetAtom } from 'jotai'
 import { Button } from '@/components/ui/button'
