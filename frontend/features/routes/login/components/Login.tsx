@@ -70,8 +70,8 @@ function Login() {
   }
 
   return (
-    <div className='min-h-screen flex justify-center flex-col'>
-      <div className='bg-white p-8 rounded-lg max-w-md w-full'>
+    <div className='mt-2 flex justify-center flex-col'>
+      <div className='bg-white px-8 rounded-lg max-w-md w-full'>
         <SelectEvent
           selectedEvent={selectedEventId}
           setSelectedEvent={setSelectedEventId}

@@ -10,7 +10,7 @@ function ReceptionFooter() {
   const [cartItems] = useAtom(cartItemsAtom)
 
   return (
-    <div className='flex flex-col min-h-screen space-y-4'>
+    <div className=' flex flex-col min-h-screen space-y-4'>
       <div className='flex-grow'>
         <FooterDrawerComponent>
           <div className='p-4 max-h-[400px] mx-auto overflow-auto'>
@@ -18,12 +18,11 @@ function ReceptionFooter() {
               cartItems.map((cartItem, index) => (
                 <div className='mb-4' key={index}>
                   {' '}
-                  {/* ここでマージンを追加 */}
                   <CartMenu item={cartItem} index={index} />
                 </div>
               ))
             ) : (
-              <p>カートは空です。</p> // カートが空のときのメッセージ
+              <p>カートは空です。</p>
             )}
           </div>
         </FooterDrawerComponent>
