@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"math/rand"
 	"net"
 	"net/http"
 	"os"
@@ -250,12 +251,19 @@ func seedData(db *gorm.DB) error {
 
 	// AdminUserのシードデータ
 	adminUsers := []object.AdminUser{
-		{Username: "admin1", Password: "password", Email: "admin10@gmail.com"},
-		{Username: "admin2", Password: "password", Email: "admin12@gmail.com"},
+		{Username: "admin1", Password: "password", Email: generateRandomEmail("admin1")},
+		{Username: "admin2", Password: "password", Email: generateRandomEmail("admin2")},
 	}
 	if err := db.Create(&adminUsers).Error; err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func generateRandomEmail(username string) string {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	randomNumber := r.Intn(10000)
+	email := fmt.Sprintf("%s%d@gmail.com", username, randomNumber)
+	return email
 }
