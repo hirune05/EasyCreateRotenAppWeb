@@ -7,10 +7,10 @@ import (
 )
 
 func (h *eventHandler) GetAll(c echo.Context) error {
-	events, err := h.eventUseCase.GetAll(c.Request().Context())
+	dto, err := h.eventUseCase.GetAll(c.Request().Context())
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to retrieve events"})
 	}
 
-	return c.JSON(http.StatusOK, events)
+	return c.JSON(http.StatusOK, dto.Events)
 }

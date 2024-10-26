@@ -9,10 +9,10 @@ import (
 func (h *orderItemHandler) GetByID(c echo.Context) error {
 	id := c.Param("id")
 
-	orderItem, err := h.orderItemUseCase.GetByID(c.Request().Context(), id)
+	dto, err := h.orderItemUseCase.GetByID(c.Request().Context(), id)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "order item not found"})
 	}
 
-	return c.JSON(http.StatusOK, orderItem)
+	return c.JSON(http.StatusOK, dto.OrderItem)
 }

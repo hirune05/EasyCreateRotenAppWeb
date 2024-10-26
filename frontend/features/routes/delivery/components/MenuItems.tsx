@@ -6,7 +6,7 @@ const MenuItems: React.FC<MenuItemsProps> = ({ orderItems }) => {
     <div className='grid grid-cols-2 gap-1 '>
       {orderItems.map((orderItem, index) => (
         <MenuItem
-          item={orderItem.item}
+          item={orderItem.Item}
           quantity={orderItem.quantity}
           key={index}
         />

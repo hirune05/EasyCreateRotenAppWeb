@@ -8,12 +8,12 @@ import (
 )
 
 type AdminUser struct {
-	ID        int       `gorm:"primaryKey;autoIncrement" json:"id"`
-	Username  string    `gorm:"size:255;not null" json:"username"`
-	Password  string    `gorm:"size:255;not null" json:"password"`
-	Email     string    `gorm:"size:255;not null;unique" json:"email"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        int       `db:"id" gorm:"primaryKey;autoIncrement" json:"id"`
+	Username  string    `db:"username" gorm:"size:255;not null" json:"username"`
+	Password  string    `db:"password" gorm:"size:255;not null" json:"password"`
+	Email     string    `db:"email" gorm:"size:255;not null;unique" json:"email"`
+	CreatedAt time.Time `db:"created_at" json:"createdAt"`
+	UpdatedAt time.Time `db:"updated_at" json:"updatedAt"`
 }
 
 func NewAdminUser(username, email, password string) (*AdminUser, error) {

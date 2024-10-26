@@ -9,10 +9,10 @@ import (
 )
 
 type Student struct {
-	ID int       `gorm:"primaryKey" json:"id"`
-	Name      string    `gorm:"size:255;not null" json:"username"`
-	Password  string    `gorm:"size:255;not null" json:"password"`
-	CreatedAt time.Time `json:"created_at"`
+	ID int       `db:"id" gorm:"primaryKey" json:"id"`
+	Name      string    `db:"username" gorm:"size:255;not null" json:"username"`
+	Password  string    `db:"password" gorm:"size:255;not null" json:"password"`
+	CreatedAt time.Time `db:"created_at" json:"createdAt"`
 }
 
 func NewStudent(id int, name string, password string) (*Student, error) {

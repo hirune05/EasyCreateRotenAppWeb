@@ -9,9 +9,9 @@ import (
 )
 
 type GetByStoreIDDTO struct {
-        StoreID       int             `json:"store_id"`
-        StoreName     string          `json:"store_name"`
-        Items         []*object.Item  `json:"items"`
+        StoreID       int             `json:"storeId"`
+        StoreName     string          `json:"storeName"`
+        Items         []*object.Item  `json:"Items"`
 }
 
 type ItemRepository interface {

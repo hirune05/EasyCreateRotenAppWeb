@@ -29,16 +29,16 @@ func (r *OrderItemRepositoryImpl) Create(ctx context.Context, tx *gorm.DB, order
 func (r *OrderItemRepositoryImpl) GetByID(ctx context.Context, id string) (*object.OrderItem, error) {
 	var orderItem object.OrderItem
 
-	if err := r.db.WithContext(ctx).Where("id = ?", id).First(&orderItem).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("id = ?", id).Preload("Item").First(&orderItem).Error; err != nil {
 		return nil, fmt.Errorf("failed to find order item by id: %w", err)
 	}
 
 	return &orderItem, nil
 }
 
-func (r *OrderItemRepositoryImpl) GetByOrderId(ctx context.Context, orderID string) ([]*object.OrderItem, error) {
+func (r *OrderItemRepositoryImpl) GetByOrderID(ctx context.Context, orderID string) ([]*object.OrderItem, error) {
 	var orderItems []*object.OrderItem
-	if err := r.db.WithContext(ctx).Where("order_id = ?", orderID).Find(&orderItems).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("order_id = ?", orderID).Preload("Item").Find(&orderItems).Error; err != nil {
 		return nil, fmt.Errorf("failed to find order items by order id: %w", err)
 	}
 	return orderItems, nil

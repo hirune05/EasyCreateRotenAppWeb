@@ -5,13 +5,13 @@ import (
 )
 
 type Event struct {
-	ID        int       `gorm:"primaryKey;autoIncrement" json:"id"`
-	Name      string    `gorm:"size:255;not null" json:"name"`
-	Year      int       `gorm:"not null" json:"year"`
-        StartTime time.Time `gorm:"not null" json:"start_time"`
-        EndTime   time.Time `gorm:"not null" json:"end_time"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	ID        int       `db:"id" gorm:"primaryKey;autoIncrement" json:"id"`
+	Name      string    `db:"name" gorm:"size:255;not null" json:"name"`
+	Year      int       `db:"year" gorm:"not null" json:"year"`
+        StartTime time.Time `db:"start_time" gorm:"not null" json:"startTime"`
+        EndTime   time.Time `db:"end_time" gorm:"not null" json:"endTime"`
+	CreatedAt time.Time `db:"created_at" json:"createdAt"`
+	UpdatedAt time.Time `db:"updated_at" json:"updatedAt"`
 }
 
 func NewEvent(name string, year int, startTime time.Time, endTime time.Time) (*Event, error) {

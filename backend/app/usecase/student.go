@@ -11,19 +11,19 @@ import (
 )
 
 type Student interface {
-	Create(ctx context.Context, id int, name string, password string) (*CreateStudentDTO, error)
+	Create(ctx context.Context, id int, name string, password string) (*StudentDTO, error)
 	Login(ctx context.Context, studentNumber int, password string, EventID int) (*LoginStudentDTO, error)
 }
 type LoginStudentDTO struct {
 	Token        string `json:"token"`
-	StudentID    int    `json:"student_id"`
+	StudentID    int    `json:"studentId"`
 	Name         string `json:"name"`
-	StoreID      int    `json:"store_id"`
-	StoreName    string `json:"store_name"`
-	StoreStaffID int    `json:"store_staff_id"`
+	StoreID      int    `json:"storeId"`
+	StoreName    string `json:"storeName"`
+	StoreStaffID int    `json:"storeStaffId"`
 }
 
-type CreateStudentDTO struct {
+type StudentDTO struct {
 	Student *object.Student
 }
 
@@ -32,6 +32,8 @@ type student struct {
 	studentRepo repository.StudentRepository
 }
 
+var _ Student = (*student)(nil)
+
 func NewStudent(db *gorm.DB, studentRepo repository.StudentRepository) *student {
 	return &student{
 		db:          db,
@@ -39,7 +41,7 @@ func NewStudent(db *gorm.DB, studentRepo repository.StudentRepository) *student 
 	}
 }
 
-func (a *student) Create(ctx context.Context, id int, name string, password string) (*CreateStudentDTO, error) {
+func (a *student) Create(ctx context.Context, id int, name string, password string) (*StudentDTO, error) {
 	student, err := object.NewStudent(id, name, password)
 	if err != nil {
 		return nil, err
@@ -64,7 +66,7 @@ func (a *student) Create(ctx context.Context, id int, name string, password stri
 		return nil, err
 	}
 
-	return &CreateStudentDTO{
+	return &StudentDTO{
 		Student: student,
 	}, nil
 }

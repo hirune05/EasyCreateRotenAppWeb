@@ -22,13 +22,13 @@ const SubmitButton = ({ payment }: submitProps) => {
     (acc: AddOrderComplexItem[], item) => {
       const existingItem = acc.find(
         accItem =>
-          accItem.item_id === item.id && accItem.arranges === item.description,
+          accItem.itemId === item.id && accItem.arranges === item.description,
       )
       if (existingItem) {
         existingItem.quantity += 1
       } else {
         acc.push({
-          item_id: item.id,
+          itemId: item.id,
           quantity: 1,
           arranges: item.description,
         })
@@ -39,8 +39,8 @@ const SubmitButton = ({ payment }: submitProps) => {
   )
 
   const reqData: AddOrderComplexRequest = {
-    store_id: 2005,
-    store_staff_id: 2341,
+    storeId: 2005,
+    storeStaffId: 2341,
     items: items,
   }
 
