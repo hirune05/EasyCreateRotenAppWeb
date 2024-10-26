@@ -39,14 +39,14 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
           {storeItem.name}
         </p>
       </div>
-      <div className=" flex w-full mb-1">
+      <div className=' flex w-full mb-1'>
         <div className='w-4/5'>
-  <p className="text-lg text-left  font-bold text-black ml-2">
-    ￥{storeItem.price}
-  </p>
-  </div>
-  <p className="text-lg text-right mx-1 text-gray-500">{itemCount}</p>
-</div>
+          <p className='text-lg text-left  font-bold text-black ml-2'>
+            ￥{storeItem.price}
+          </p>
+        </div>
+        <p className='text-lg text-right mx-1 text-gray-500'>{itemCount}</p>
+      </div>
     </Button>
   )
 }
