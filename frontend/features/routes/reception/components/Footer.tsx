@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button'
 import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
-import Link from 'next/link'
 import type React from 'react'
 import { Suspense } from 'react'
 import PaymentButton from './PaymentButton'
@@ -22,7 +20,7 @@ const Footer: React.FC = () => {
         </p>
         <p className='text-xl font-bold text-gray-800'>計: {totalPrice} 円</p>
       </div>
-      <
+      <Suspense
       fallback={<div>Loading...</div>}>
         <PaymentButton />
       </Suspense>

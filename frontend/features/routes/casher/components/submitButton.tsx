@@ -5,6 +5,7 @@ import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import SubmitAlertDialog from './submitAlertDialog'
+import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
 type submitProps = {
   payment: number

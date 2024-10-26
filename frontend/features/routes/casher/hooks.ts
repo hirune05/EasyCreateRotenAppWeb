@@ -5,6 +5,8 @@ import { useAtom, useSetAtom } from 'jotai'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { addOrderComplex } from '../delivery/endpoint'
+import useCountAdvSaleItems from '@/hooks/useCountAdvSaleItems'
+import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
 export const useSubmitCart = () => {
   const router = useRouter()

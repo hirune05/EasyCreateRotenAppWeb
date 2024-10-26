@@ -1,13 +1,12 @@
 'use client'
-import type { OrderedItem } from '@/types/type'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
+import { useGetParams } from '../hooks'
 
 export default function OrderDetailModal() {
   const [isOpen, setIsOpen] = useState(true)
