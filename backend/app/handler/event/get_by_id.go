@@ -18,10 +18,10 @@ import (
 func (h *eventHandler) GetByID(c echo.Context) error {
 	id := c.Param("id")
 
-	event, err := h.eventUseCase.GetByID(c.Request().Context(), id)
+	dto, err := h.eventUseCase.GetByID(c.Request().Context(), id)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "event not found"})
 	}
 
-	return c.JSON(http.StatusOK, event)
+	return c.JSON(http.StatusOK, dto.Event)
 }

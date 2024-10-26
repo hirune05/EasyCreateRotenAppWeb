@@ -53,14 +53,14 @@ export const getOrderItemsById = async (orderItemId: string) => {
     cache: 'no-store',
   })
   const data = await res.json()
-  return data as OrderItem[]
+  return data as OrderItem
 }
 
 export const setOrderPickedUpAt = async (
   orderId: string,
   pickedUpTime: Date,
 ) => {
-  const reqData: { picked_up_at: Date } = { picked_up_at: pickedUpTime }
+  const reqData: { pickedUpAt: Date } = { pickedUpAt: pickedUpTime }
   const res = await fetch(`${apiUrl}/v1/orders/${orderId}/picked`, {
     method: 'PUT',
     cache: 'no-store',
@@ -70,7 +70,7 @@ export const setOrderPickedUpAt = async (
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
-  return data as Order[]
+  return data as Order
 }
 
 export const setOrderStatus = async (orderId: string, status: number) => {
@@ -97,5 +97,5 @@ export const addOrderComplex = async (reqData: AddOrderComplexRequest) => {
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
-  return data as Order
+  return data as Order[]
 }

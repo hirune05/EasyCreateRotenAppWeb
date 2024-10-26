@@ -5,15 +5,15 @@ import (
 )
 
 type OrderItem struct {
-	ID        int       `gorm:"primaryKey;autoIncrement" json:"id"`
-	OrderID   int       `gorm:"not null" json:"order_id"`
-	Order     Order     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	ItemID    int       `gorm:"not null" json:"item_id"`
-	Item      Item      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Arranges  *string   `json:"arranges"`
-	Quantity  int       `gorm:"not null" json:"quantity"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        int       `db:"id" gorm:"primaryKey;autoIncrement" json:"id"`
+	OrderID   int       `db:"order_id" gorm:"not null" json:"orderId"`
+	Order     *Order     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:Order`
+	ItemID    int       `db:"item_id" gorm:"not null" json:"itemId"`
+	Item      *Item      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:Item`
+	Arranges  *string   `db:"arranges" json:"arranges"`
+	Quantity  int       `db:"quantity" gorm:"not null" json:"quantity"`
+	CreatedAt time.Time `db:"created_at" json:"createdAt"`
+	UpdatedAt time.Time `db:"updated_at" json:"updatedAt"`
 }
 
 func NewOrderItem(orderID, itemID, quantity int, arranges *string) (*OrderItem, error) {

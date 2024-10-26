@@ -11,24 +11,26 @@ import (
 )
 
 type Event interface {
-	Create (ctx context.Context, name string, year int, startTime time.Time, endTime time.Time) (*CreateEventDTO, error)
+	Create (ctx context.Context, name string, year int, startTime time.Time, endTime time.Time) (*EventDTO, error)
 	Delete(ctx context.Context, id string) error
-	GetByID(ctx context.Context, id string) (*GetEventDTO, error)
-	GetAll(ctx context.Context) ([]*GetEventDTO, error)
-	GetAllNowOn(ctx context.Context) ([]*GetEventDTO, error)
+	GetByID(ctx context.Context, id string) (*EventDTO, error)
+	GetAll(ctx context.Context) (*EventsDTO, error)
+	GetAllNowOn(ctx context.Context) (*EventsDTO, error)
 }
 type event struct {
 	db        *gorm.DB
 	eventRepo repository.EventRepository
 }
 
-type CreateEventDTO struct {
-	Event *object.Event
+var _ Event = (*event)(nil)
+
+type EventDTO struct {
+        Event *object.Event
+}
+type EventsDTO struct {
+        Events []*object.Event
 }
 
-type GetEventDTO struct {
-	Event *object.Event
-}
 
 func NewEvent(db *gorm.DB, eventRepo repository.EventRepository) *event {
 	return &event{
@@ -37,7 +39,7 @@ func NewEvent(db *gorm.DB, eventRepo repository.EventRepository) *event {
 	}
 }
 
-func (a *event) Create(ctx context.Context, name string, year int, startTime time.Time, endTime time.Time) (*CreateEventDTO, error) {
+func (a *event) Create(ctx context.Context, name string, year int, startTime time.Time, endTime time.Time) (*EventDTO, error) {
 	acc, err := object.NewEvent(name, year, startTime, endTime)
 	if err != nil {
 		return nil, err
@@ -62,7 +64,7 @@ func (a *event) Create(ctx context.Context, name string, year int, startTime tim
 		return nil, err
 	}
 
-	return &CreateEventDTO{
+	return &EventDTO{
 		Event: acc,
 	}, nil
 }
@@ -91,49 +93,37 @@ func (a *event) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-func (a *event) GetByID(ctx context.Context, id string) (*GetEventDTO, error) {
+func (a *event) GetByID(ctx context.Context, id string) (*EventDTO, error) {
 	event, err := a.eventRepo.GetByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get event by id: %w", err)
 	}
 
-	return &GetEventDTO{
+	return &EventDTO{
 		Event: event,
 	}, nil
 }
 
-func (r *event) GetAll(ctx context.Context) ([]*GetEventDTO, error) {
+func (r *event) GetAll(ctx context.Context) (*EventsDTO, error) {
 	events, err := r.eventRepo.GetAll(ctx)
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to retrieve all events: %w", err)
 	}
 
-	var eventDTOs []*GetEventDTO
-	for _, event := range events {
-		eventDTO := &GetEventDTO{
-			Event: event,
-		}
-		eventDTOs = append(eventDTOs, eventDTO)
-	}
-
-	return eventDTOs, nil
+	return &EventsDTO{
+		Events: events,
+	}, nil
 }
 
-func (r *event) GetAllNowOn(ctx context.Context) ([]*GetEventDTO, error) {
+func (r *event) GetAllNowOn(ctx context.Context) (*EventsDTO, error) {
 	events, err := r.eventRepo.GetAllNowOn(ctx)
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to retrieve all events: %w", err)
 	}
 
-	var eventDTOs []*GetEventDTO
-	for _, event := range events {
-		eventDTO := &GetEventDTO{
-			Event: event,
-		}
-		eventDTOs = append(eventDTOs, eventDTO)
-	}
-
-	return eventDTOs, nil
+	return &EventsDTO{
+		Events: events,
+	}, nil
 }

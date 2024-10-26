@@ -8,17 +8,17 @@ import (
 )
 
 type LoginRequest struct {
-	StudentID     int    `json:"student_id"`
+	StudentID     int    `json:"studentId"`
 	Password      string `json:"password"`
-        EventID       int    `json:"event_id"`
+        EventID       int    `json:"eventId"`
 }
 
 type LoginResponse struct {
 	Token         string `json:"token"`
-	StudentID     int    `json:"student_id"`
+	StudentID     int    `json:"studentId"`
 	Name          string `json:"name"`
-        StoreID       int    `json:"store_id"`
-        StoreName     string `json:"store_name"`
+        StoreID       int    `json:"storeId"`
+        StoreName     string `json:"storeName"`
 }
 
 func (h *studentHandler) Login(c echo.Context) error {

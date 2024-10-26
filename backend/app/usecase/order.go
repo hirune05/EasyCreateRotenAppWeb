@@ -12,13 +12,13 @@ import (
 
 type Order interface {
 	Create(ctx context.Context, storeID, storeStaffID, status int, pickedUpAt *time.Time) (*OrderDTO, error)
-        CreateComplex(ctx context.Context, storeID int, storeStaffID int, items []*OrderComplexItem) (*CreateOrderComplexDTO, error)
+        CreateComplex(ctx context.Context, storeID int, storeStaffID int, items []*OrderComplexItem) (*OrderDTO, error)
 	Update(ctx context.Context, id string, storeID *int, storeStaffID *int, status *int, pickedUpAt *time.Time) (*OrderDTO, error)
 	Delete(ctx context.Context, id string) error
 	GetByID(ctx context.Context, id string) (*OrderDTO, error)
-	GetByStoreID(ctx context.Context, id string) ([]*OrderDTO, error)
-	GetByStatus(ctx context.Context, storeID, status string) ([]*OrderDTO, error)
-	GetAll(ctx context.Context) ([]*OrderDTO, error)
+	GetByStoreID(ctx context.Context, id string) (*OrdersDTO, error)
+	GetByStatus(ctx context.Context, storeID, status string) (*OrdersDTO, error)
+	GetAll(ctx context.Context) (*OrdersDTO, error)
 }
 type order struct {
 	db        *gorm.DB
@@ -27,7 +27,7 @@ type order struct {
 }
 
 type OrderComplexItem struct {
-	ItemID    int     `json:"item_id"`
+	ItemID    int     `json:"itemId"`
 	Quantity  int     `json:"quantity"`
 	Arranges  *string `json:"arranges"`
 }
@@ -36,9 +36,8 @@ type OrderDTO struct {
 	Order *object.Order
 }
 
-type CreateOrderComplexDTO struct {
-	Order *object.Order
-        OrderItems []*object.OrderItem
+type OrdersDTO struct {
+	Orders []*object.Order
 }
 
 var _ Order = (*order)(nil)
@@ -81,7 +80,7 @@ func (a *order) Create(ctx context.Context, storeID, storeStaffID, status int, p
 	}, nil
 }
 
-func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int, items []*OrderComplexItem) (*CreateOrderComplexDTO, error) {
+func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int, items []*OrderComplexItem) (*OrderDTO, error) {
 	acc, err := object.NewOrder(storeID, storeStaffID, 1, nil)
 	if err != nil {
 		return nil, err
@@ -102,14 +101,11 @@ func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int
 		}
 	}()
 
-
-
 	if err := a.orderRepo.Create(ctx, tx, acc); err != nil {
 		return nil, err
 	}
 
-
-        acc_items := make([]object.OrderItem, len(items))
+        acc_items := make([]*object.OrderItem, len(items))
         for i, item := range items {
                 oi, err := object.NewOrderItem(acc.ID, item.ItemID, item.Quantity, item.Arranges)
                 if err != nil {
@@ -119,12 +115,12 @@ func (a *order) CreateComplex(ctx context.Context, storeID int, storeStaffID int
                 if err := a.orderItemRepo.Create(ctx, tx, oi); err != nil {
                         return nil, err
                 }
-                acc_items[i] = *oi
+                acc_items[i] = oi
         }
 
         acc.OrderItems = acc_items
 
-	return &CreateOrderComplexDTO{
+	return &OrderDTO{
 		Order: acc,
 	}, nil
 }
@@ -199,8 +195,8 @@ func (a *order) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-func (a *order) GetByID(ctx context.Context, id string) (*OrderDTO, error) {
-	order, err := a.orderRepo.GetByID(ctx, id)
+func (u *order) GetByID(ctx context.Context, id string) (*OrderDTO, error) {
+	order, err := u.orderRepo.GetByID(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get order by id: %w", err)
 	}
@@ -210,68 +206,36 @@ func (a *order) GetByID(ctx context.Context, id string) (*OrderDTO, error) {
 	}, nil
 }
 
-func (u *order) GetByStoreID(ctx context.Context, id string) ([]*OrderDTO, error) {
+func (u *order) GetByStoreID(ctx context.Context, id string) (*OrdersDTO, error) {
 	orders, err := u.orderRepo.GetByStoreID(ctx, id)
 	if err != nil {
 		return nil, err
 	}
 
-	var orderDTOs []*OrderDTO
-	for _, item := range orders {
-		orderDTOs = append(orderDTOs, &OrderDTO{
-			Order: &object.Order{
-				ID:           item.ID,
-				StoreID:      item.StoreID,
-				StoreStaffID: item.StoreStaffID,
-				Status:       item.Status,
-				PickedUpAt:   item.PickedUpAt,
-				CreatedAt:    item.CreatedAt,
-				UpdatedAt:    item.UpdatedAt,
-			},
-		})
-	}
-
-	return orderDTOs, nil
+	return &OrdersDTO{
+		Orders: orders,
+	}, nil
 }
 
-func (u *order) GetByStatus(ctx context.Context, storeID, status string) ([]*OrderDTO, error) {
+func (u *order) GetByStatus(ctx context.Context, storeID, status string) (*OrdersDTO, error) {
 	orders, err := u.orderRepo.GetByStatus(ctx, storeID, status)
 	if err != nil {
 		return nil, err
 	}
 
-	var orderDTOs []*OrderDTO
-	for _, item := range orders {
-		orderDTOs = append(orderDTOs, &OrderDTO{
-			Order: &object.Order{
-				ID:           item.ID,
-				StoreID:      item.StoreID,
-				StoreStaffID: item.StoreStaffID,
-				Status:       item.Status,
-				PickedUpAt:   item.PickedUpAt,
-				CreatedAt:    item.CreatedAt,
-				UpdatedAt:    item.UpdatedAt,
-			},
-		})
-	}
-
-	return orderDTOs, nil
+	return &OrdersDTO{
+		Orders: orders,
+	}, nil
 }
 
-func (r *order) GetAll(ctx context.Context) ([]*OrderDTO, error) {
-	var orders []*object.Order
+func (u *order) GetAll(ctx context.Context) (*OrdersDTO, error) {
+	orders, err := u.orderRepo.GetAll(ctx)
 
-	if err := r.db.WithContext(ctx).Find(&orders).Error; err != nil {
+	if err != nil {
 		return nil, fmt.Errorf("failed to retrieve all orders: %w", err)
 	}
 
-	var orderDTOs []*OrderDTO
-	for _, order := range orders {
-		orderDTO := &OrderDTO{
-			Order: order,
-		}
-		orderDTOs = append(orderDTOs, orderDTO)
-	}
-
-	return orderDTOs, nil
+	return &OrdersDTO{
+                Orders: orders,
+        }, nil
 }

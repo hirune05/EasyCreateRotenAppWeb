@@ -29,7 +29,11 @@ func (r *OrderRepositoryImpl) Create(ctx context.Context, tx *gorm.DB, order *ob
 func (r *OrderRepositoryImpl) GetByID(ctx context.Context, id string) (*object.Order, error) {
 	var order object.Order
 
-	if err := r.db.WithContext(ctx).Where("id = ?", id).First(&order).Error; err != nil {
+	if err := r.db.WithContext(ctx).
+                        Where("id = ?", id).
+                        Preload("OrderItems.Item").
+                        First(&order).
+                        Error; err != nil {
 		return nil, fmt.Errorf("failed to find order by id: %w", err)
 	}
 
@@ -38,17 +42,22 @@ func (r *OrderRepositoryImpl) GetByID(ctx context.Context, id string) (*object.O
 
 func (r *OrderRepositoryImpl) GetByStoreID(ctx context.Context, id string) ([]*object.Order, error) {
 	var orders []*object.Order
-	if err := r.db.WithContext(ctx).Where("store_id = ?", id).Find(&orders).Error; err != nil {
+	if err := r.db.WithContext(ctx).
+                        Where("store_id = ?", id).
+                        Preload("OrderItems.Item").
+                        Find(&orders).
+                        Error; err != nil {
 		return nil, fmt.Errorf("failed to find order by store id: %w", err)
 	}
 	return orders, nil
 }
 
-func (r *OrderRepositoryImpl) GetByStatus(ctx context.Context, storeId, status string) ([]*object.Order, error) {
+func (r *OrderRepositoryImpl) GetByStatus(ctx context.Context, storeID, status string) ([]*object.Order, error) {
 	var orders []*object.Order
 	if err := r.db.WithContext(ctx).
-		Where("store_id = ? AND status = ?", storeId, status).
-		Find(&orders).Error; err != nil {
+                        Where("store_id = ? AND status = ?", storeID, status).
+                        Preload("OrderItems.Item").
+                        Find(&orders).Error; err != nil {
 		return nil, fmt.Errorf("failed to find order by store id and status: %w", err)
 	}
 	return orders, nil
@@ -57,7 +66,10 @@ func (r *OrderRepositoryImpl) GetByStatus(ctx context.Context, storeId, status s
 func (r *OrderRepositoryImpl) GetAll(ctx context.Context) ([]*object.Order, error) {
 	var orders []*object.Order
 
-	if err := r.db.WithContext(ctx).Find(&orders).Error; err != nil {
+	if err := r.db.WithContext(ctx).
+                        Preload("OrderItems.Item").
+                        Find(&orders).
+                        Error; err != nil {
 		return nil, fmt.Errorf("failed to retrieve all orders: %w", err)
 	}
 

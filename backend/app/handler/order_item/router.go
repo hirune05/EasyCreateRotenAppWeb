@@ -17,7 +17,7 @@ func RegisterRoutes(e *echo.Group, u usecase.OrderItem) {
 
 	e.POST("/order-items", h.CreateOrderItem)
 	e.GET("/order-items/:id", h.GetByID)
-	e.GET("/orders/:id/order-items", h.GetByOrderId)
+	e.GET("/orders/:id/order-items", h.GetByOrderID)
 	e.PUT("/order-items/:id", h.Update)
 	e.DELETE("/order-items/:id", h.Delete)
 

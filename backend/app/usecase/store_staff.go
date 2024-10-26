@@ -9,10 +9,10 @@ import (
 )
 
 type StoreStaff interface {
-	Create(ctx context.Context, studentId int, role int, storeId int) (*CreateStoreStaffDTO, error)
+	Create(ctx context.Context, studentId int, role int, storeId int) (*StoreStaffDTO, error)
 }
 
-type CreateStoreStaffDTO struct {
+type StoreStaffDTO struct {
 	StoreStaff *object.StoreStaff
 }
 
@@ -21,6 +21,8 @@ type storeStaff struct {
 	storeStaffRepo repository.StoreStaffRepository
 }
 
+var _ StoreStaff = (*storeStaff)(nil)
+
 func NewStoreStaff(db *gorm.DB, storeStaffRepo repository.StoreStaffRepository) *storeStaff {
 	return &storeStaff{
 		db:             db,
@@ -28,7 +30,7 @@ func NewStoreStaff(db *gorm.DB, storeStaffRepo repository.StoreStaffRepository) 
 	}
 }
 
-func (a *storeStaff) Create(ctx context.Context, studentId int, role int, storeId int) (*CreateStoreStaffDTO, error) {
+func (a *storeStaff) Create(ctx context.Context, studentId int, role int, storeId int) (*StoreStaffDTO, error) {
 	storeStaff, err := object.NewStoreStaff(studentId, role, storeId)
 	if err != nil {
 		return nil, err
@@ -53,7 +55,7 @@ func (a *storeStaff) Create(ctx context.Context, studentId int, role int, storeI
 		return nil, err
 	}
 
-	return &CreateStoreStaffDTO{
+	return &StoreStaffDTO{
 		StoreStaff: storeStaff,
 	}, nil
 }

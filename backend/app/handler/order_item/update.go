@@ -7,8 +7,8 @@ import (
 )
 
 type UpdateRequest struct {
-	Quantity int
-	Arranges *string
+	Quantity int      `json:"quantity"`
+	Arranges *string  `json:"arranges"`
 }
 
 func (h *orderItemHandler) Update(c echo.Context) error {
@@ -19,10 +19,10 @@ func (h *orderItemHandler) Update(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	order, err := h.orderItemUseCase.Update(c.Request().Context(), id, req.Quantity, req.Arranges)
+	dto, err := h.orderItemUseCase.Update(c.Request().Context(), id, req.Quantity, req.Arranges)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to update order"})
 	}
 
-	return c.JSON(http.StatusOK, order)
+	return c.JSON(http.StatusOK, dto.OrderItem)
 }

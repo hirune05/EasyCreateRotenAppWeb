@@ -7,9 +7,9 @@ import (
 )
 
 type AddRequest struct {
-	Id            int
-	Name          string
-	Password      string
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Password      string  `json:"password"`
 }
 
 func (h *studentHandler) Create(c echo.Context) error {

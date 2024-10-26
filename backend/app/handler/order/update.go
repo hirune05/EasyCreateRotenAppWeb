@@ -8,10 +8,10 @@ import (
 )
 
 type UpdateRequest struct {
-	StoreID      *int
-	StoreStaffID *int
-	Status       *int
-	PickedUpAt   *time.Time
+	StoreID      *int   `json:"storeId"`
+	StoreStaffID *int   `json:"storeStaffId"`
+	Status       *int   `json:"status"`
+	PickedUpAt   *time.Time   `json:"pickedUpAt"`
 }
 
 func (h *orderHandler) Update(c echo.Context) error {

@@ -36,8 +36,8 @@ const SelectEventWithHook: FC<SelectEventProps> = ({
         >
           <option value=''>選択</option>
           {events.map(event => (
-            <option key={event.Event.id} value={event.Event.id}>
-              {event.Event.name}
+            <option key={event.id} value={event.id}>
+              {event.name}
             </option>
           ))}
         </select>

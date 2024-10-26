@@ -32,7 +32,7 @@ export const useSubmitCart = () => {
         await addOrderComplex(reqData)
 
         const itemData: OrderedItem[] = reqData.items.map(reqItem => {
-          const foundItem = storeItems.find(item => item.id === reqItem.item_id)
+          const foundItem = storeItems.find(item => item.id === reqItem.itemId)
           return {
             name: foundItem ? foundItem.name : 'Unknown item name',
             quantity: reqItem.quantity,
