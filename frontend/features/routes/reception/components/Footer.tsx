@@ -20,8 +20,7 @@ const Footer: React.FC = () => {
         </p>
         <p className='text-xl font-bold text-gray-800'>計: {totalPrice} 円</p>
       </div>
-      <Suspense
-      fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <PaymentButton />
       </Suspense>
     </div>
