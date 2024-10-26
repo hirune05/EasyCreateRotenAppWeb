@@ -1,10 +1,10 @@
+import { cartItemsAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
 import type React from 'react'
-import PaymentButton from './PaymentButton'
 import { Suspense } from 'react'
+import PaymentButton from './PaymentButton'
 import useCountAdvSaleItems from '@/hooks/useCountAdvSaleItems'
 import useCountTotalPrice from '@/hooks/useCountTotalPrice'
-import { useAtom } from 'jotai'
-import { cartItemsAtom } from '@/utils/globalState'
 
 const Footer: React.FC = () => {
   const [cartItems] = useAtom(cartItemsAtom)
@@ -20,7 +20,8 @@ const Footer: React.FC = () => {
         </p>
         <p className='text-xl font-bold text-gray-800'>計: {totalPrice} 円</p>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+      fallback={<div>Loading...</div>}>
         <PaymentButton />
       </Suspense>
     </div>

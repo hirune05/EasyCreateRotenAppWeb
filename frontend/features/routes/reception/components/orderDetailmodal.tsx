@@ -1,13 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
-import { useSearchParams } from 'next/navigation'
-import { OrderedItem } from '@/types/type'
 import { useGetParams } from '../hooks'
 
 export default function OrderDetailModal() {

@@ -1,7 +1,7 @@
 'use client'
 
+import type { Order } from '@/types/type'
 import { useEffect, useState } from 'react'
-import { Order } from '@/types/type'
 import { getOrdersCanDelivery, setOrderStatus } from './endpoint'
 
 export const useOrdersCanDelivery = () => {

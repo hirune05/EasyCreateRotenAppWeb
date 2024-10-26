@@ -1,4 +1,4 @@
-import { MenuItemProps } from '../type'
+import type { MenuItemProps } from '../type'
 
 const MenuItem: React.FC<MenuItemProps> = ({ item, quantity }) => {
   return (

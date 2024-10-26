@@ -1,7 +1,7 @@
 // DeliveryDetailDialog.tsx
 'use client'
 
-import { useState } from 'react'
+import ItemList from '@/components/itemList/itemList'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -10,10 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import ItemList from '@/components/itemList/itemList'
-import DeliveryItem from './DeliveryItem'
+import type { Order } from '@/types/type'
+import { useState } from 'react'
 import { useOrderStatusToPickUpped } from '../hooks'
-import { Order } from '@/types/type'
+import DeliveryItem from './DeliveryItem'
 
 interface DeliveryDetailDialogProps {
   deliveryOrder: Order
