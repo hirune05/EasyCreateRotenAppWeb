@@ -25,8 +25,12 @@ export default function OrderDetailModal() {
             </DialogTitle>
             <DialogDescription></DialogDescription>
             <p>合計 {totalPrice}円</p>
-            <p>お預り {paymentAmount}円</p>
-            <p>お釣り {paymentAmount - totalPrice}円</p>
+            {paymentAmount != 0 && (
+              <>
+                <p>お預り {paymentAmount}円</p>
+                <p>お釣り {paymentAmount - totalPrice}円</p>
+              </>
+            )}
             <ul className='space-y-1'>
               {orderedItems &&
                 orderedItems.map((orderedItem, index) => (
