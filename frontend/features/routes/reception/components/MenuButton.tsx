@@ -30,7 +30,7 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
   return (
     <Button
       onClick={handleAddItem}
-      className='bg-white shadow-lg flex-col rounded-lg h-full p-0 w-full items-start justify-normal m-0'
+      className='bg-gradient-to-tr from-white to-gray-50 shadow-lg border border-gray-200 flex-col rounded-lg h-full p-0 w-full items-start justify-normal m-0'
       variant='ghost'
     >
       <div className='w-full h-2/3 justify-start'>
