@@ -1,6 +1,5 @@
+import apiUrl from '@/constants/url'
 import type { EventInfo } from '@/types/type'
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 export const getAllEvents = async () => {
   const res = await fetch(`${apiUrl}/v1/events`, {

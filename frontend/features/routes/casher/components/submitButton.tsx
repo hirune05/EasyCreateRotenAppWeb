@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import type { AddOrderComplexItem, AddOrderComplexRequest } from '@/types/type'
-import { cartItemsAtom } from '@/utils/globalState'
+import { cartItemsAtom, storeIdAtom, studentIdAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import SubmitAlertDialog from './submitAlertDialog'
@@ -13,6 +13,8 @@ type submitProps = {
 
 const SubmitButton = ({ payment }: submitProps) => {
   const [cartItems] = useAtom(cartItemsAtom)
+  const [storeId] = useAtom(storeIdAtom)
+  const [studentId] = useAtom(studentIdAtom)
   const [alertState, useAlertState] = useState(false)
   const totalPrice = useCountTotalPrice()
   const submitFunc = () => {
@@ -38,9 +40,13 @@ const SubmitButton = ({ payment }: submitProps) => {
     [],
   )
 
+  if (!storeId || !studentId) {
+    return <p>Loading...</p>
+  }
+
   const reqData: AddOrderComplexRequest = {
-    storeId: 2005,
-    storeStaffId: 2341,
+    storeId: storeId,
+    storeStaffId: studentId,
     items: items,
   }
 

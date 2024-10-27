@@ -1,6 +1,5 @@
+import apiUrl from '@/constants/url'
 import type { LoginStudentRequest, LoginStudentResponse } from '@/types/type'
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 export const studentLogin = async (reqData: LoginStudentRequest) => {
   const res = await fetch(`${apiUrl}/v1/student/login`, {

@@ -11,7 +11,7 @@ function ReceptionFooter() {
 
   return (
     <div className=' flex flex-col min-h-screen space-y-4'>
-      <div className='flex-grow'>
+      <div className=''>
         <FooterDrawerComponent>
           <div className='p-4 max-h-[400px] mx-auto overflow-auto'>
             {cartItems && cartItems.length > 0 ? (
