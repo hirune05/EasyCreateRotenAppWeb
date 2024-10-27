@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import CrossButton from '@/features/routes/reception/components/CrossButton'
 import type { Item } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
-import { useAtom, useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
 
 type CartMenuProps = {

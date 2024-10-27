@@ -1,6 +1,5 @@
+import apiUrl from '@/constants/url'
 import { getItemByStoreIdResponse, type Item } from '@/types/type'
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 export const getAllItems = async () => {
   const res = await fetch(`${apiUrl}/v1/items`, {
@@ -14,10 +13,10 @@ export const getAllItems = async () => {
 export const getItemsByStoreId = async (storeId: string) => {
   const res = await fetch(`${apiUrl}/v1/items/store/${storeId}`, {
     method: 'GET',
-    cache: 'no-store',
+    cache: 'force-cache',
   })
   const data = await res.json()
-  return data as getItemByStoreIdResponse[]
+  return data as getItemByStoreIdResponse
 }
 
 export const getItemById = async (itemId: string) => {

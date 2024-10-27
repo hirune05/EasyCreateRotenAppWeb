@@ -5,6 +5,9 @@ import MenuButton from './MenuButton'
 
 const MenuButtons = () => {
   const [storeItems] = useAtom(storeItemsAtom)
+  if (!storeItems) {
+    return <p>Loading...</p>
+  }
   return (
     <div className='grid grid-cols-2 gap-3 h-full mx-auto '>
       {storeItems.map((storeItem, index) => (

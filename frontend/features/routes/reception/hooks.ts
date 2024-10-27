@@ -2,6 +2,9 @@
 import { OrderedItem } from '@/types/type'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { getItemsByStoreId } from './endpoint'
+import { useAtom, useSetAtom } from 'jotai'
+import { storeIdAtom, storeItemsAtom } from '@/utils/globalState'
 
 export const useHandleCliclkPayment = () => {
   const router = useRouter()
@@ -42,4 +45,37 @@ export const useGetParams = () => {
   }, [searchParams])
 
   return { orderedItems, totalPrice, paymentAmount, totalItems, advSaleItems }
+}
+
+export const useSetItemsByStoreId = () => {
+  const [storeId] = useAtom(storeIdAtom)
+  const setToken = useSetAtom(storeItemsAtom)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>()
+  const storeIdString = storeId.toString()
+
+  const fetchItems = async () => {
+    try {
+      setIsLoading(true)
+      const data = await getItemsByStoreId(storeIdString)
+      setToken(data.Items)
+    } catch (error) {
+      console.error('Error fetching items:', error)
+      setError('Failed to fetch items')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (storeId) {
+      fetchItems()
+    }
+  }, [storeId])
+
+  const refetch = () => {
+    fetchItems()
+  }
+
+  return { error, isLoading, refetch }
 }

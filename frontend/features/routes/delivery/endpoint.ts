@@ -1,6 +1,5 @@
+import apiUrl from '@/constants/url'
 import type { AddOrderComplexRequest, Order, OrderItem } from '@/types/type'
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 export const getOrdersCanDelivery = async (storeId: number) => {
   const res = await fetch(`${apiUrl}/v1/orders/store/${storeId}/1`, {
