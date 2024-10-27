@@ -12,7 +12,12 @@ const Header = () => {
             href='/'
             className='px-2 mt-5 ho ver:bg-gray-700 rounded  font-bold text-5xl jusefly-start text-white  font-sans'
           >
-            <Image src={logoimage} alt='ロゴ' className='w-3/4 mb-1' />
+            <Image
+              src={logoimage}
+              alt='ロゴ'
+              className='w-3/4 mb-1'
+              priority={true}
+            />
           </Link>
         </div>
       </nav>
