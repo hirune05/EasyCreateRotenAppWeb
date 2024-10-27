@@ -59,7 +59,7 @@ const SubmitButton = ({ payment }: submitProps) => {
         reqData={reqData}
       />
       <Button
-        className='bg-green-400 text-white py-2 px-4 mr-5 w-5/12'
+        className='bg-green-400 border text-white font-mono   py-2 px-4 mb-4 w-1/2'
         onClick={() => submitFunc()}
         disabled={
           !(
@@ -68,7 +68,7 @@ const SubmitButton = ({ payment }: submitProps) => {
           )
         }
       >
-        確定
+        注文を確定
       </Button>
     </>
   )

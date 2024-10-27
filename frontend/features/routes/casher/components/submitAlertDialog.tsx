@@ -31,7 +31,7 @@ const SubmitAlertDialog = ({
     <AlertDialog open={alertState} onOpenChange={useAlertState}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>確定でよろしいですか？</AlertDialogTitle>
+          <AlertDialogTitle>注文を確定しますか？</AlertDialogTitle>
           <AlertDialogDescription>
             「はい」を押すと注文が確定します。
           </AlertDialogDescription>
