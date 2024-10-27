@@ -14,7 +14,7 @@ const CrossButton = ({ itemValue }: crossButtonProps) => {
   // Todo
   // handleDeleteItemをhooksにまとめる
   const handleDeleteItem = () => {
-    const updatedItems = [...cartItems]
+    const updatedItems = structuredClone(cartItems)
     updatedItems.splice(itemValue, 1)
     setCartItems(updatedItems)
   }
