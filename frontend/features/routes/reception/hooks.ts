@@ -53,7 +53,7 @@ export const useSetItemsByStoreId = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>()
   const storeIdString = storeId.toString()
-  
+
   const fetchItems = async () => {
     try {
       setIsLoading(true)
