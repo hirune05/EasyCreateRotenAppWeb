@@ -21,6 +21,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
+
 func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su usecase.StoreStaff, stu usecase.Student, eu usecase.Event, iu usecase.Item) http.Handler {
 	e := echo.New()
 
@@ -45,6 +46,8 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
         event.RegisterRoutes(e.Group("/v1"), eu)
 	v1 := e.Group("/v1")
         v1.Use(appmiddleware.RequestAuthHandker)
+
+	v1.GET("/auth", func(c echo.Context) error { return c.NoContent(http.StatusNoContent)})
 
 	order.RegisterRoutes(v1, ou)
 	orderItem.RegisterRoutes(v1, oiu)
