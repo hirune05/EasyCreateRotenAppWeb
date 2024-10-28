@@ -14,3 +14,14 @@ type Report struct {
 	CreatedAt    time.Time  `db:"created_at" json:"createdAt"`
 	UpdatedAt    time.Time  `db:"updated_at" json:"updatedAt"`
 }
+
+func NewReport(storeID *int, storeStaffID *int, description string) (*Report, error) {
+        item := &Report{
+		StoreID:      storeID,
+                StoreStaffID: storeStaffID,
+                Description:  description,
+		CreatedAt:    time.Now(),
+		UpdatedAt:    time.Now(),
+        }
+        return item, nil
+}
