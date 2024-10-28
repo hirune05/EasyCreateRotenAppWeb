@@ -29,21 +29,22 @@ const region = "us-east-1"
 
 var (
 	fromEmailAddress = "mail@roten-app.com"
-	toEmailAddress   = "ii440092@icloud.com"
-	subject          = "タイトル"
-	body             = "本文"
+	// toEmailAddress   = "fkys2932@gmail.com"
+	toEmailAddress = "ii440092@icloud.com"
+	subject        = "タイトル"
+	body           = "本文"
 )
 
-func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB) error {
+func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB) (string, error) {
 
 	accessKey := os.Getenv("AWS_ACCESS_KEY_ID")
 	if accessKey == "" {
-		return errors.New("AWS_ACCESS_KEY_ID is not configured")
+		return "", errors.New("AWS_ACCESS_KEY_ID is not configured")
 	}
 
 	secretKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
 	if secretKey == "" {
-		return errors.New("AWS_SECRET_ACCESS_KEY is not configured")
+		return "", errors.New("AWS_SECRET_ACCESS_KEY is not configured")
 	}
 
 	cfg := aws.Config{
@@ -75,9 +76,9 @@ func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB) error
 	res, err := client.SendEmail(ctx, input)
 	if err != nil {
 		fmt.Println("Error sending email:", err)
-		return err
+		return "", err
 	}
 	fmt.Println("Email message ID:", *res.MessageId)
 
-	return nil
+	return "Email message ID:" + *res.MessageId, nil
 }

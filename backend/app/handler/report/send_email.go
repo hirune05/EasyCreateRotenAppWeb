@@ -13,5 +13,5 @@ func (h *reportHandler) SendEmail(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "send email failed + " + err.Error()})
 	}
 
-	return c.JSON(http.StatusOK, dto.IsSucceeded)
+	return c.JSON(http.StatusOK, dto.Message)
 }

@@ -7,5 +7,5 @@ import (
 )
 
 type ReportRepository interface {
-	SendEmail(ctx context.Context, tx *gorm.DB) error
+	SendEmail(ctx context.Context, tx *gorm.DB) (string, error)
 }

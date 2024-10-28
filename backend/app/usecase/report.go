@@ -12,7 +12,7 @@ type Report interface {
 }
 
 type CreateReportDTO struct {
-	IsSucceeded *bool
+	Message string
 }
 
 type report struct {
@@ -36,9 +36,10 @@ func (a *report) SendEmail(ctx context.Context) (*CreateReportDTO, error) {
 		return nil, tx.Error
 	}
 
-	if err := a.reportRepo.SendEmail(ctx, tx); err != nil {
+	message, err := a.reportRepo.SendEmail(ctx, tx)
+	if err != nil {
 		return nil, err
 	}
 
-	return &CreateReportDTO{}, nil
+	return &CreateReportDTO{Message: message}, nil
 }
