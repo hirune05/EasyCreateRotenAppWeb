@@ -9,7 +9,8 @@ import (
 )
 
 type Report interface {
-        Create(ctx context.Context, storeID *int, storeStaffID *int, description string) (*ReportDTO, error)
+        Create(ctx context.Context, storeID *int, storeStaffID *int, title string, description string) (*ReportDTO, error)
+	SendEmail(ctx context.Context, subject string, body string) (*CreateReportDTO, error)
 }
 type report struct {
 	db        *gorm.DB
@@ -20,17 +21,21 @@ type ReportDTO struct {
 	Report *object.Report
 }
 
+type CreateReportDTO struct {
+	Message string
+}
+
 var _ Report = (*report)(nil)
 
 func NewReport(db *gorm.DB, reportRepo repository.ReportRepository) *report {
 	return &report{
-		db:        db,
+		db:         db,
 		reportRepo: reportRepo,
 	}
 }
 
-func (a *report) Create(ctx context.Context, storeID *int, storeStaffID *int, description string) (*ReportDTO, error) {
-	acc, err := object.NewReport(storeID, storeStaffID, description)
+func (a *report) Create(ctx context.Context, storeID *int, storeStaffID *int, title string, description string) (*ReportDTO, error) {
+	acc, err := object.NewReport(storeID, storeStaffID, title, description)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +59,26 @@ func (a *report) Create(ctx context.Context, storeID *int, storeStaffID *int, de
 		return nil, err
 	}
 
+        _, err2 := a.reportRepo.SendEmail(ctx, tx, title, description)
+        if err2 != "" {
+		return nil, err2
+        }
+
 	return &ReportDTO{
 		Report: acc,
 	}, nil
+}
+func (a *report) SendEmail(ctx context.Context, subject string, body string) (*CreateReportDTO, error) {
+
+	tx := a.db.Begin()
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	message, err := a.reportRepo.SendEmail(ctx, tx, subject, body)
+	if err != nil {
+		return nil, err
+	}
+
+	return &CreateReportDTO{Message: message}, nil
 }

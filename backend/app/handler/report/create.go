@@ -7,8 +7,9 @@ import (
 )
 
 type AddRequest struct {
-        StoreID       *int     `json:"storeId"`
+        StoreID       *int    `json:"storeId"`
         StoreStaffID  *int    `json:"storeStaffId"`
+        Title         string  `json:"title"`
         Description   string  `json:"description"`
 }
 
@@ -20,7 +21,7 @@ func (h *reportHandler) Create(c echo.Context) error {
 
 	ctx := c.Request().Context()
 
-	dto, err := h.reportUseCase.Create(ctx, req.StoreID, req.StoreStaffID, req.Description)
+	dto, err := h.reportUseCase.Create(ctx, req.StoreID, req.StoreStaffID, req.Title, req.Description)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
