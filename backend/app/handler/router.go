@@ -1,17 +1,17 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"time"
-        "fmt"
 
 	adminUser "backend/app/handler/admin_user"
+	event "backend/app/handler/event"
+	item "backend/app/handler/item"
 	"backend/app/handler/order"
 	orderItem "backend/app/handler/order_item"
 	storeStaff "backend/app/handler/store_staff"
-        student "backend/app/handler/student"
-        event "backend/app/handler/event"
-        item "backend/app/handler/item"
+	student "backend/app/handler/student"
 	"backend/app/usecase"
 
 	"github.com/labstack/echo/v4"
@@ -42,14 +42,14 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	orderItem.RegisterRoutes(v1, oiu)
 	adminUser.RegisterRoutes(v1, au)
 	storeStaff.RegisterRoutes(v1, su)
-        student.RegisterRoutes(v1, stu)
-        event.RegisterRoutes(v1, eu)
-        item.RegisterRoutes(v1, iu)
+	student.RegisterRoutes(v1, stu)
+	event.RegisterRoutes(v1, eu)
+	item.RegisterRoutes(v1, iu)
 
-        // routeの一覧表示
-        for _, rr := range e.Routes() {
-          fmt.Printf("%s %s\n", rr.Method, rr.Path)
-        }
+	// routeの一覧表示
+	for _, rr := range e.Routes() {
+		fmt.Printf("%s %s\n", rr.Method, rr.Path)
+	}
 
 	return e
 }
