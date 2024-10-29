@@ -11,6 +11,7 @@ type Item struct {
 	Name        string      `db:"name" gorm:"size:255;not null;uniqueIndex:idx_store_name" json:"name"`
 	Description *string     `db:"description" json:"description"`
 	Price       int         `db:"price" gorm:"not null" json:"price"`
+        Status      int         `db:"status" gorm:"not null;default:0" json:"status"`
 	ImageURL    *string     `db:"image_url" json:"imageUrl"`
 	CreatedAt   time.Time   `db:"created_at" json:"createdAt"`
 	UpdatedAt   time.Time   `db:"updated_at" json:"updatedAt"`
