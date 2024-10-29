@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"backend/app/domain/object"
 	"backend/app/domain/repository"
 	"context"
 	"errors"
@@ -8,34 +9,39 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/sesv2"
 	"github.com/aws/aws-sdk-go-v2/service/sesv2/types"
 	"gorm.io/gorm"
 )
 
-var _ repository.ReportRepository = (*ReportRepositoryImpl)(nil)
 
 type ReportRepositoryImpl struct {
 	db *gorm.DB
 }
 
+const region = "us-east-1"
+
+var _ repository.ReportRepository = (*ReportRepositoryImpl)(nil)
+
+var (
+	fromEmailAddress = "mail@roten-app.com"
+)
+
+
 func NewReportRepository(db *gorm.DB) *ReportRepositoryImpl {
 	return &ReportRepositoryImpl{db: db}
 }
 
-const region = "us-east-1"
+func (r *ReportRepositoryImpl) Create(ctx context.Context, tx *gorm.DB, report *object.Report) error {
+	if err := tx.WithContext(ctx).Create(report).Error; err != nil {
+		return fmt.Errorf("failed to insert report: %w", err)
+	}
+	return nil
+}
 
-var (
-	fromEmailAddress = "mail@roten-app.com"
-	// toEmailAddress   = "fkys2932@gmail.com"
-	toEmailAddress = "ii440092@icloud.com"
-	subject        = "タイトル"
-	body           = "本文"
-)
 
-func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB) (string, error) {
+func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB, subject string, body string) (string, error) {
 
 	accessKey := os.Getenv("AWS_ACCESS_KEY_ID")
 	if accessKey == "" {
@@ -52,12 +58,17 @@ func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB) (stri
 		Credentials: credentials.NewStaticCredentialsProvider(accessKey, secretKey, ""),
 	}
 
+	var toEmailAddress []string
+        if err :=  r.db.WithContext(ctx).Table("admin_users").Select("email").Scan(&toEmailAddress).Error; err != nil {
+		return "", fmt.Errorf("failed to find email by admin_users: %w", err)
+        }
+	
 	client := sesv2.NewFromConfig(cfg)
 
 	input := &sesv2.SendEmailInput{
 		FromEmailAddress: &fromEmailAddress,
 		Destination: &types.Destination{
-			ToAddresses: []string{toEmailAddress},
+			ToAddresses: toEmailAddress,
 		},
 		Content: &types.EmailContent{
 			Simple: &types.Message{

@@ -1,4 +1,4 @@
-package item
+package report
 
 import (
 	"backend/app/usecase"
@@ -14,5 +14,6 @@ func RegisterRoutes(e *echo.Group, u usecase.Report) {
 	h := &reportHandler{
 		reportUseCase: u,
 	}
-	e.POST("/report-test", h.SendEmail)
+
+	e.POST("/reports", h.Create)
 }
