@@ -10,8 +10,14 @@ import { useGetParams } from '../hooks'
 
 export default function OrderDetailModal() {
   const [isOpen, setIsOpen] = useState(true)
-  const { orderedItems, totalPrice, paymentAmount, totalItems, advSaleItems } =
-    useGetParams()
+  const {
+    orderedItems,
+    totalPrice,
+    paymentAmount,
+    totalItems,
+    advSaleItems,
+    orderId,
+  } = useGetParams()
 
   return (
     <>
@@ -19,9 +25,12 @@ export default function OrderDetailModal() {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogContent>
             <DialogTitle>
-              <p className='font-bold mb-2'>
-                小計/{totalItems} 点 ({advSaleItems} 点)
-              </p>
+              <div>
+                <p className='font-bold mb-2'>
+                  小計/{totalItems} 点 ({advSaleItems} 点)
+                </p>
+                <p>受け渡し {orderId} 番</p>
+              </div>
             </DialogTitle>
             <DialogDescription></DialogDescription>
             <p>合計 {totalPrice}円</p>

@@ -29,7 +29,7 @@ export const useSubmitCart = () => {
   useEffect(() => {
     const postCartItems = async () => {
       if (reqData) {
-        await addOrderComplex(reqData)
+        const response = await addOrderComplex(reqData)
 
         if (!storeItems) {
           return
@@ -53,9 +53,9 @@ export const useSubmitCart = () => {
           String(cartItems.length) +
           '&advSaleItems=' +
           String(advSaleItems.length) +
-          '&itemData=' +
-          JSON.stringify(itemData)
-        setCartItems([])
+          '&orderId=' +
+          String(response.id)
+        '&itemData=' + JSON.stringify(itemData) + setCartItems([])
         router.push(path)
       }
     }
