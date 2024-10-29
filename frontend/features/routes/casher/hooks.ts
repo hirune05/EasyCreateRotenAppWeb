@@ -54,8 +54,11 @@ export const useSubmitCart = () => {
           '&advSaleItems=' +
           String(advSaleItems.length) +
           '&orderId=' +
-          String(response.id)
-        '&itemData=' + JSON.stringify(itemData) + setCartItems([])
+          String(response.id) +
+          '&itemData=' +
+          JSON.stringify(itemData)
+
+        setCartItems([])
         router.push(path)
       }
     }
