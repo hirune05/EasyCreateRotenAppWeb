@@ -59,7 +59,7 @@ type Item = {
   Store?: Store;
   name: string;
   description?: string;
-  price?: number;
+  price: number;
   imageUrl?: string;
   status?: number;
   createdAt?: Date; 

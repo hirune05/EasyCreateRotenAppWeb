@@ -7,9 +7,10 @@ import { useEffect, useState } from 'react'
 
 type ItemProp = {
   storeItem: Item
+  isTicket: boolean
 }
 
-const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
+const MenuButton: React.FC<ItemProp> = ({ storeItem, isTicket }) => {
   const [cartItems] = useAtom(cartItemsAtom)
   const [itemCount, setItemCount] = useState(0)
   const setCartItems = useSetAtom(cartItemsAtom)
@@ -23,15 +24,19 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
     setItemCount(itemNum)
   }, [cartItems, storeItem.name])
 
+  const price = isTicket ? 0 : storeItem.price
+
   const handleAddItem = () => {
     const newElement = {
       id: storeItem.id,
       name: storeItem.name,
-      price: storeItem.price,
+      price: price,
       arranges: undefined,
     }
     setCartItems((prevItems: CartItem[]) => [...prevItems, newElement])
   }
+
+  //TODO 前売り券の時はボタンの色を変える？
 
   return (
     <Button
