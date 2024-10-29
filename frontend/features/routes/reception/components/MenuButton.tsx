@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import type { Item } from '@/types/type'
+import type { Item, CartItem } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
 import { useSetAtom } from 'jotai'
@@ -18,13 +18,19 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
   // useEffectの内容をhooksにまとめる
   useEffect(() => {
     const itemNum = cartItems.filter(
-      item => item.name === storeItem.name,
+      orderItem => orderItem.name === storeItem.name,
     ).length
     setItemCount(itemNum)
   }, [cartItems, storeItem.name])
 
   const handleAddItem = () => {
-    setCartItems((prevItems: Item[]) => [...prevItems, storeItem])
+    const newElement = {
+      id: storeItem.id,
+      name: storeItem.name,
+      price: storeItem.price,
+      arranges: undefined,
+    }
+    setCartItems((prevItems: CartItem[]) => [...prevItems, newElement])
   }
 
   return (

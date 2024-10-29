@@ -1,20 +1,19 @@
-import type { Item } from '@/types/type'
+import type { CartItem } from '@/types/type'
 import { v4 as uuidv4 } from 'uuid'
 
 type ItemProp = {
-  item: Item
+  cartItem: CartItem
 }
 
-const ItemComponent = ({ item }: ItemProp) => {
+const ItemComponent = ({ cartItem }: ItemProp) => {
   const uniqueID = uuidv4()
   return (
     <li key={uniqueID} className=''>
       <div className='flex justify-between w-full'>
-        <div className='pl-3 text-left text-xl'>{item.name}</div>
-        {/* <div className='text-end'>{1}</div> */}
+        <div className='pl-3 text-left text-xl'>{cartItem.name}</div>
       </div>
       <div className='flex justify-center w-full'>
-        <span>{item.description}</span>
+        <span>{cartItem.arranges}</span>
       </div>
     </li>
   )
