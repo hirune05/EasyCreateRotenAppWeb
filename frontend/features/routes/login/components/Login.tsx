@@ -1,18 +1,18 @@
 'use client'
 import InputUser from '@/features/routes/login/components/InputUser'
 import SelectEvent from '@/features/routes/login/components/SelectEvent'
-import { useState, useEffect } from 'react'
 import { useLoginStudent } from '@/features/routes/login/hooks'
 import type { LoginStudentRequest } from '@/types/type'
-import { useRouter } from 'next/navigation'
 import {
-  tokenAtom,
-  studentIdAtom,
   nameAtom,
   storeIdAtom,
   storeNameAtom,
+  studentIdAtom,
+  tokenAtom,
 } from '@/utils/globalState'
 import { useSetAtom } from 'jotai'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 function Login() {
   const [selectedEventId, setSelectedEventId] = useState<string>('')
@@ -63,15 +63,15 @@ function Login() {
       setStoreId(response.storeId)
       setStoreName(response.storeName)
 
-      router.push('/delivery')
+      router.push('/roleSelect')
     } catch {
       setErrorMessage('ログインに失敗しました')
     }
   }
 
   return (
-    <div className='min-h-screen flex justify-center flex-col'>
-      <div className='bg-white p-8 rounded-lg max-w-md w-full'>
+    <div className='mt-2 flex justify-center flex-col'>
+      <div className='bg-white px-8 rounded-lg max-w-md w-full'>
         <SelectEvent
           selectedEvent={selectedEventId}
           setSelectedEvent={setSelectedEventId}

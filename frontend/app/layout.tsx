@@ -14,8 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>
+      <body className='bg-gray-50'>
         <Header />
+        <div className='h-[120px]' />
         {children}
       </body>
     </html>

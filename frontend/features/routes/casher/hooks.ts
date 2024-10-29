@@ -1,10 +1,10 @@
 'use client'
+import type { AddOrderComplexRequest, OrderedItem } from '@/types/type'
+import { cartItemsAtom, storeItemsAtom } from '@/utils/globalState'
+import { useAtom, useSetAtom } from 'jotai'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { addOrderComplex } from '../delivery/endpoint'
-import { AddOrderComplexRequest, OrderedItem } from '@/types/type'
-import { useRouter } from 'next/navigation'
-import { useAtom, useSetAtom } from 'jotai'
-import { cartItemsAtom, storeItemsAtom } from '@/utils/globalState'
 import useCountAdvSaleItems from '@/hooks/useCountAdvSaleItems'
 import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
@@ -30,6 +30,10 @@ export const useSubmitCart = () => {
     const postCartItems = async () => {
       if (reqData) {
         await addOrderComplex(reqData)
+
+        if (!storeItems) {
+          return
+        }
 
         const itemData: OrderedItem[] = reqData.items.map(reqItem => {
           const foundItem = storeItems.find(item => item.id === reqItem.itemId)

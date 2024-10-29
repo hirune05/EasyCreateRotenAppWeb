@@ -1,13 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from '../../../../components/ui/dialog'
-import { useSearchParams } from 'next/navigation'
-import { OrderedItem } from '@/types/type'
 import { useGetParams } from '../hooks'
 
 export default function OrderDetailModal() {
@@ -27,8 +25,12 @@ export default function OrderDetailModal() {
             </DialogTitle>
             <DialogDescription></DialogDescription>
             <p>合計 {totalPrice}円</p>
-            <p>お預り {paymentAmount}円</p>
-            <p>お釣り {paymentAmount - totalPrice}円</p>
+            {paymentAmount != 0 && (
+              <>
+                <p>お預り {paymentAmount}円</p>
+                <p>お釣り {paymentAmount - totalPrice}円</p>
+              </>
+            )}
             <ul className='space-y-1'>
               {orderedItems &&
                 orderedItems.map((orderedItem, index) => (

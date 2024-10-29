@@ -9,9 +9,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Dispatch, SetStateAction } from 'react'
+import type { AddOrderComplexRequest } from '@/types/type'
+import type { Dispatch, SetStateAction } from 'react'
 import { useSubmitCart } from '../hooks'
-import { AddOrderComplexRequest } from '@/types/type'
 
 type alertStateProps = {
   alertState: boolean
@@ -31,7 +31,7 @@ const SubmitAlertDialog = ({
     <AlertDialog open={alertState} onOpenChange={useAlertState}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>確定でよろしいですか？</AlertDialogTitle>
+          <AlertDialogTitle>注文を確定しますか？</AlertDialogTitle>
           <AlertDialogDescription>
             「はい」を押すと注文が確定します。
           </AlertDialogDescription>

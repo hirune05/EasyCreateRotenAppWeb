@@ -1,10 +1,9 @@
-import { Card, CardContent } from '@/components/ui/card'
-import type { Item } from '@/types/type'
+import { Button } from '@/components/ui/button'
+import type { Item, CartItem } from '@/types/type'
 import { cartItemsAtom } from '@/utils/globalState'
 import { useAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { useEffect, useState } from 'react'
-import MinusButton from './MinusButton'
-import PlusButton from './PlusButton'
 
 type ItemProp = {
   storeItem: Item
@@ -12,24 +11,48 @@ type ItemProp = {
 
 const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
   const [cartItems] = useAtom(cartItemsAtom)
-  const [itemCount, useItemCount] = useState(0)
+  const [itemCount, setItemCount] = useState(0)
+  const setCartItems = useSetAtom(cartItemsAtom)
 
   // Todo
   // useEffectの内容をhooksにまとめる
   useEffect(() => {
-    const itemNum = cartItems.filter(item => item.name == storeItem.name).length
-    useItemCount(itemNum)
-  }, [cartItems])
+    const itemNum = cartItems.filter(
+      orderItem => orderItem.name === storeItem.name,
+    ).length
+    setItemCount(itemNum)
+  }, [cartItems, storeItem.name])
+
+  const handleAddItem = () => {
+    const newElement = {
+      id: storeItem.id,
+      name: storeItem.name,
+      price: storeItem.price,
+      arranges: undefined,
+    }
+    setCartItems((prevItems: CartItem[]) => [...prevItems, newElement])
+  }
 
   return (
-    <Card>
-      <CardContent className='flex justify-between items-center p-4 border rounded-md bg-gray-100'>
-        <div className='text-lg text-black'>{storeItem.name}</div>
-        <PlusButton item={storeItem} />
-        <span className='px-3 py-1 text-black'>{itemCount}</span>
-        <MinusButton item={storeItem} />
-      </CardContent>
-    </Card>
+    <Button
+      onClick={handleAddItem}
+      className='bg-gradient-to-tr from-white to-gray-50 shadow-lg border border-gray-200 flex-col rounded-lg h-full p-0 w-full items-start justify-normal m-0'
+      variant='ghost'
+    >
+      <div className='w-full h-2/3 justify-start'>
+        <p className='text-left text-lg mt-3 mx-3 font-bold text-gray-600'>
+          {storeItem.name}
+        </p>
+      </div>
+      <div className=' flex w-full mb-1'>
+        <div className='w-4/5'>
+          <p className='text-lg text-left  font-bold text-black ml-2'>
+            ￥{storeItem.price}
+          </p>
+        </div>
+        <p className='text-lg text-right mx-1 text-gray-500'>{itemCount}</p>
+      </div>
+    </Button>
   )
 }
 

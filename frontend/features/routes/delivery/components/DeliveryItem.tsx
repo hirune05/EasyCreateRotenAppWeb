@@ -1,4 +1,4 @@
-import { deliveryOrderProps } from '../type'
+import type { deliveryOrderProps } from '../type'
 import MenuItems from './MenuItems'
 
 const DeliveryItem: React.FC<deliveryOrderProps> = ({

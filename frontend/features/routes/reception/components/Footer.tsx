@@ -1,10 +1,10 @@
+import { cartItemsAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
 import type React from 'react'
-import PaymentButton from './PaymentButton'
 import { Suspense } from 'react'
+import PaymentButton from './PaymentButton'
 import useCountAdvSaleItems from '@/hooks/useCountAdvSaleItems'
 import useCountTotalPrice from '@/hooks/useCountTotalPrice'
-import { useAtom } from 'jotai'
-import { cartItemsAtom } from '@/utils/globalState'
 
 const Footer: React.FC = () => {
   const [cartItems] = useAtom(cartItemsAtom)
@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
   const totalPrice = useCountTotalPrice()
 
   return (
-    <div className='bg-gray-200 fixed bottom-0 position-absolute left-0 right-0 p-4 h-[65px] flex justify-between items-center '>
+    <div className='bg-white  shadow  fixed bottom-0 position-absolute left-0 right-0 p-4 h-[65px] flex justify-between items-center '>
       <div className='flex flex-col space-x-4'>
         <p className='text-xl ml-4 font-bold text-gray-800'>
           通常: {cartItems.length - advSaleItems.length} 点, 券:{' '}

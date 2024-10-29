@@ -69,8 +69,8 @@ type Item = {
 // 本番用の型
 // type Item = {
 //   id: number;
-//   storeId: number;
-//   Store: Store | null;
+//   storeId?: number;
+//   Store?: Store;
 //   name: string;
 //   description: string | null;
 //   price: number;
@@ -101,7 +101,7 @@ type OrderItem = {
   itemId: number;
   /* item: Item | null; */
   Item: Item;
-  arranges: string | null;
+  arranges?: string;
   quantity: number;
   createdAt: Date;
   updatedAt: Date;
@@ -145,4 +145,11 @@ type OrderedItem = {
   arranges?:string; 
 }
 
-export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem}
+type CartItem = {
+  id: number;
+  name: string;
+  price: number;
+  arranges?: string;
+}
+
+export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem,CartItem}

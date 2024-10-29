@@ -1,10 +1,10 @@
 'use client'
 import { Button } from '@/components/ui/button'
+import type { AddOrderComplexItem, AddOrderComplexRequest } from '@/types/type'
+import { cartItemsAtom, storeIdAtom, studentIdAtom } from '@/utils/globalState'
+import { useAtom } from 'jotai'
 import { useState } from 'react'
 import SubmitAlertDialog from './submitAlertDialog'
-import { AddOrderComplexItem, AddOrderComplexRequest } from '@/types/type'
-import { useAtom } from 'jotai'
-import { cartItemsAtom } from '@/utils/globalState'
 import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
 type submitProps = {
@@ -13,6 +13,8 @@ type submitProps = {
 
 const SubmitButton = ({ payment }: submitProps) => {
   const [cartItems] = useAtom(cartItemsAtom)
+  const [storeId] = useAtom(storeIdAtom)
+  const [studentId] = useAtom(studentIdAtom)
   const [alertState, useAlertState] = useState(false)
   const totalPrice = useCountTotalPrice()
   const submitFunc = () => {
@@ -22,7 +24,7 @@ const SubmitButton = ({ payment }: submitProps) => {
     (acc: AddOrderComplexItem[], item) => {
       const existingItem = acc.find(
         accItem =>
-          accItem.itemId === item.id && accItem.arranges === item.description,
+          accItem.itemId === item.id && accItem.arranges === item.arranges,
       )
       if (existingItem) {
         existingItem.quantity += 1
@@ -30,7 +32,7 @@ const SubmitButton = ({ payment }: submitProps) => {
         acc.push({
           itemId: item.id,
           quantity: 1,
-          arranges: item.description,
+          arranges: item.arranges,
         })
       }
       return acc
@@ -38,9 +40,13 @@ const SubmitButton = ({ payment }: submitProps) => {
     [],
   )
 
+  if (!storeId || !studentId) {
+    return <p>Loading...</p>
+  }
+
   const reqData: AddOrderComplexRequest = {
-    storeId: 2005,
-    storeStaffId: 2341,
+    storeId: storeId,
+    storeStaffId: studentId,
     items: items,
   }
 
@@ -53,7 +59,7 @@ const SubmitButton = ({ payment }: submitProps) => {
         reqData={reqData}
       />
       <Button
-        className='bg-green-400 text-white py-2 px-4 mr-5 w-5/12'
+        className='bg-green-400 border text-white font-mono   py-2 px-4 mb-4 w-1/2'
         onClick={() => submitFunc()}
         disabled={
           !(
@@ -62,7 +68,7 @@ const SubmitButton = ({ payment }: submitProps) => {
           )
         }
       >
-        確定
+        注文を確定
       </Button>
     </>
   )

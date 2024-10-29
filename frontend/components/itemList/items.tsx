@@ -1,16 +1,16 @@
-import type { Item } from '@/types/type'
+import type { CartItem } from '@/types/type'
 import ItemComponent from './item'
 
 type ItemsProp = {
-  items: Item[]
+  cartItems: CartItem[]
 }
 
-const Items: React.FC<ItemsProp> = ({ items }) => {
+const Items: React.FC<ItemsProp> = ({ cartItems }: ItemsProp) => {
   return (
     <ul className='space-y-1 '>
-      {items &&
-        items.map((item: Item, index) => (
-          <ItemComponent key={index} item={item} />
+      {cartItems &&
+        cartItems.map((cartItem: CartItem, index) => (
+          <ItemComponent key={index} cartItem={cartItem} />
         ))}
     </ul>
   )

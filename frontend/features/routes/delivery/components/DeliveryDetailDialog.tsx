@@ -1,7 +1,7 @@
 // DeliveryDetailDialog.tsx
 'use client'
 
-import { useState } from 'react'
+import ItemList from '@/components/itemList/itemList'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -10,10 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import ItemList from '@/components/itemList/itemList'
-import DeliveryItem from './DeliveryItem'
+import type { CartItem, Order } from '@/types/type'
+import { useState } from 'react'
 import { useOrderStatusToPickUpped } from '../hooks'
-import { Order } from '@/types/type'
+import DeliveryItem from './DeliveryItem'
 
 interface DeliveryDetailDialogProps {
   deliveryOrder: Order
@@ -43,6 +43,15 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
     return <p>Error: {error}</p>
   }
 
+  const cartItems: CartItem[] = deliveryOrder.OrderItems.map(cartItem => {
+    return {
+      id: cartItem.Item.id,
+      name: cartItem.Item.name,
+      price: cartItem.Item.price,
+      arranges: undefined,
+    }
+  })
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
@@ -57,11 +66,11 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
           <p>注文番号: {deliveryOrder.id}</p>
         </DialogTitle>
         <DialogDescription>
-          <div>受注: {deliveryOrder.storeStaffId}</div>
+          <span>受注: {deliveryOrder.storeStaffId}</span>
         </DialogDescription>
         <div className=' flex flex-col m-2 justify-center w-11/12'>
           <div className='bg-gray-100  mb-5 rounded-md shadow-md '>
-            <ItemList />
+            <ItemList cartItems={cartItems} />
           </div>
 
           <Button
