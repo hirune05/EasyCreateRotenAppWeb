@@ -7,6 +7,7 @@ import {
   nameAtom,
   storeIdAtom,
   storeNameAtom,
+  storeStaffIdAtom,
   studentIdAtom,
   tokenAtom,
 } from '@/utils/globalState'
@@ -24,6 +25,7 @@ function Login() {
 
   const setToken = useSetAtom(tokenAtom)
   const setStudentIdGlobal = useSetAtom(studentIdAtom)
+  const setStoreStaffId = useSetAtom(storeStaffIdAtom)
   const setName = useSetAtom(nameAtom)
   const setStoreId = useSetAtom(storeIdAtom)
   const setStoreName = useSetAtom(storeNameAtom)
@@ -62,6 +64,7 @@ function Login() {
       setName(response.name)
       setStoreId(response.storeId)
       setStoreName(response.storeName)
+      setStoreStaffId(response.storeStaffId)
 
       router.push('/delivery')
     } catch {
