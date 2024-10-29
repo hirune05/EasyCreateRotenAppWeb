@@ -105,5 +105,5 @@ export const addOrderComplex = async (reqData: AddOrderComplexRequest) => {
     body: JSON.stringify(reqData),
   })
   const data = await res.json()
-  return data as Order[]
+  return data as Order
 }

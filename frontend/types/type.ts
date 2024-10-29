@@ -5,6 +5,7 @@ type LoginStudentResponse = {
   name: string;
   storeId: number;
   storeName: string;
+  storeStaffId: number;
 };
 
 type LoginStudentRequest = {
