@@ -60,7 +60,7 @@ func (a *report) Create(ctx context.Context, storeID *int, storeStaffID *int, ti
 	}
 
         _, err2 := a.reportRepo.SendEmail(ctx, tx, title, description)
-        if err2 != "" {
+        if err2 != nil {
 		return nil, err2
         }
 
