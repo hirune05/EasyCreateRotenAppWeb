@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+  "os"
 
 	adminUser "backend/app/handler/admin_user"
 	event "backend/app/handler/event"
@@ -15,9 +16,12 @@ import (
         report "backend/app/handler/report"
 	"backend/app/usecase"
 
+	"backend/app/appmiddleware"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
+
 
 func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su usecase.StoreStaff, stu usecase.Student, eu usecase.Event, iu usecase.Item, ru usecase.Report) http.Handler {
 	e := echo.New()
@@ -27,7 +31,9 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		//TODO allow frontend IP
+		AllowOrigins:     []string{os.Getenv("FRONTEND_URL")},
+                AllowMethods:     []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
+                AllowCredentials: true,
 	}))
 
 	// Set a timeout value on the request context (ctx), that will signal
@@ -37,7 +43,12 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 		Timeout: 60 * time.Second,
 	}))
 
+        student.RegisterRoutes(e.Group("/v1"), stu)
+        event.RegisterRoutes(e.Group("/v1"), eu)
 	v1 := e.Group("/v1")
+        v1.Use(appmiddleware.RequestAuthHandker)
+
+	v1.GET("/auth", func(c echo.Context) error { return c.NoContent(http.StatusNoContent)})
 
 	order.RegisterRoutes(v1, ou)
 	orderItem.RegisterRoutes(v1, oiu)
