@@ -1,9 +1,9 @@
 
-import { Item } from '@/types/type';
+import { Item, CartItem } from '@/types/type';
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils'
 
-const cartItemsAtom = atom<Item[]>([])
+const cartItemsAtom = atom<CartItem[]>([])
 const storeItemsAtom = atom<Item[] | null>(null)
 
 const tokenAtom = atomWithStorage<string | null>('token', null)
