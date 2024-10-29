@@ -18,7 +18,7 @@ function ReceptionFooter() {
               cartItems.map((cartItem, index) => (
                 <div className='mb-4' key={index}>
                   {' '}
-                  <CartMenu item={cartItem} index={index} />
+                  <CartMenu orderItem={cartItem} index={index} />
                 </div>
               ))
             ) : (

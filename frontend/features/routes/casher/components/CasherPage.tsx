@@ -7,9 +7,12 @@ import { useState } from 'react'
 import ItemList from '@/components/itemList/itemList'
 import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useAtom } from 'jotai'
+import { cartItemsAtom } from '@/utils/globalState'
 
 const CasherPage = () => {
   const [payment, setPayment] = useState(0)
+  const [cartItems] = useAtom(cartItemsAtom)
   const totalPrice = useCountTotalPrice()
   return (
     <>
@@ -33,7 +36,7 @@ const CasherPage = () => {
           </div>
 
           <div className='bg-gray-100 p-4 rounded-md shadow-md mx-4 mb-4 h-[400px]'>
-            <ItemList />
+            <ItemList cartItems={cartItems} />
           </div>
           <div className='flex justify-center'>
             <SubmitButton payment={payment} />
