@@ -136,7 +136,6 @@ type Student = {
   createdAt: Date;
 };
 
-
 type OrderedItem = {
   name:string
   quantity: number;
@@ -150,4 +149,12 @@ type CartItem = {
   arranges?: string;
 }
 
-export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem,CartItem}
+type ReportItems = {
+  storeId?:number
+  storeStaffId?:number
+  description:string
+  title:string
+
+}
+
+export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem,CartItem,ReportItems}
