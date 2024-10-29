@@ -66,7 +66,7 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
           <p>注文番号: {deliveryOrder.id}</p>
         </DialogTitle>
         <DialogDescription>
-          <div>受注: {deliveryOrder.storeStaffId}</div>
+          <span>受注: {deliveryOrder.storeStaffId}</span>
         </DialogDescription>
         <div className=' flex flex-col m-2 justify-center w-11/12'>
           <div className='bg-gray-100  mb-5 rounded-md shadow-md '>
