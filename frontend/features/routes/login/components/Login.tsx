@@ -63,7 +63,7 @@ function Login() {
       setStoreId(response.storeId)
       setStoreName(response.storeName)
 
-      router.push('/delivery')
+      router.push('/roleSelect')
     } catch {
       setErrorMessage('ログインに失敗しました')
     }
