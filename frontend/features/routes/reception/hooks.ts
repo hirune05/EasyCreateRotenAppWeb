@@ -46,6 +46,8 @@ export const useGetParams = () => {
       setTotalItems(Number(getTotalItemsParams))
       setAdvSaleItems(Number(getAdvSaleItemsParams))
       setOrderId(Number(getOrderIdParams))
+
+      router.replace('/reception')
     }
   }, [searchParams])
 
