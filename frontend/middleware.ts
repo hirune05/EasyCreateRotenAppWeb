@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
     const data = await response.json()
 
-    if (!data.valid) {
+    if (data.error) {
       throw new Error(data.error || 'Invalid token')
     }
 
