@@ -4,7 +4,6 @@ import ReceptionFooter from '@/features/routes/reception/components/ReceptionFoo
 import OrderDetailModal from '@/features/routes/reception/components/orderDetailmodal'
 import { Suspense } from 'react'
 import { useSetItemsByStoreId } from '../hooks'
-import ReportModal from '@/features/common/report/reportModal'
 export default function ReceptionHome() {
   const { isLoading, error } = useSetItemsByStoreId()
 
@@ -24,7 +23,6 @@ export default function ReceptionHome() {
         <div className='h-[80px]'>
           <MenuButtons />
         </div>
-        <ReportModal />
         <ReceptionFooter />
       </div>
     </div>
