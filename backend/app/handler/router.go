@@ -50,7 +50,7 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	v1 := e.Group("/v1")
         v1.Use(appmiddleware.RequestAuthHandker)
 
-	v1.GET("/auth", func(c echo.Context) error { return c.NoContent(http.StatusNoContent)})
+	v1.GET("/auth", func(c echo.Context) error { return c.JSON(http.StatusOK, map[string]string{"message": "successed"})})
 
 	order.RegisterRoutes(v1, ou)
 	orderItem.RegisterRoutes(v1, oiu)
