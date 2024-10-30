@@ -58,7 +58,6 @@ function Login() {
     }
     try {
       const response = await login(reqData)
-      console.log(response)
 
       setToken(response.token)
       setStudentIdGlobal(response.studentId)
