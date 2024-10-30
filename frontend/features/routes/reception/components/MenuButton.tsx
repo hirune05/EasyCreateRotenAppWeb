@@ -15,21 +15,22 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem, isTicket }) => {
   const [itemCount, setItemCount] = useState(0)
   const setCartItems = useSetAtom(cartItemsAtom)
 
+  const price = isTicket ? 0 : storeItem.price
+  const name = isTicket ? storeItem.name + '(前)' : storeItem.name
+
   // Todo
   // useEffectの内容をhooksにまとめる
   useEffect(() => {
     const itemNum = cartItems.filter(
-      orderItem => orderItem.name === storeItem.name,
+      orderItem => orderItem.name === name,
     ).length
     setItemCount(itemNum)
-  }, [cartItems, storeItem.name])
-
-  const price = isTicket ? 0 : storeItem.price
+  }, [cartItems, name])
 
   const handleAddItem = () => {
     const newElement = {
       id: storeItem.id,
-      name: storeItem.name,
+      name: name,
       price: price,
       arranges: undefined,
     }
@@ -46,7 +47,7 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem, isTicket }) => {
     >
       <div className='w-full h-2/3 justify-start'>
         <p className='text-left text-lg mt-3 mx-3 font-bold text-gray-600'>
-          {storeItem.name}
+          {name}
         </p>
       </div>
       <div className=' flex w-full mb-1'>
