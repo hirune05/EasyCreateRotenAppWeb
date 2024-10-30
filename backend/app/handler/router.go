@@ -43,8 +43,10 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 		Timeout: 60 * time.Second,
 	}))
 
-        student.RegisterRoutes(e.Group("/v1"), stu)
-        event.RegisterRoutes(e.Group("/v1"), eu)
+        v1_noToken := e.Group("/v1")
+        student.RegisterRoutes(v1_noToken, stu)
+        event.RegisterRoutes(v1_noToken, eu)
+
 	v1 := e.Group("/v1")
         v1.Use(appmiddleware.RequestAuthHandker)
 
@@ -54,8 +56,6 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	orderItem.RegisterRoutes(v1, oiu)
 	adminUser.RegisterRoutes(v1, au)
 	storeStaff.RegisterRoutes(v1, su)
-	student.RegisterRoutes(v1, stu)
-	event.RegisterRoutes(v1, eu)
 	item.RegisterRoutes(v1, iu)
 	report.RegisterRoutes(v1, ru)
 
