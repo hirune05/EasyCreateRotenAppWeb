@@ -13,5 +13,5 @@ func (h *orderHandler) Delete(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to delete order"})
 	}
 
-	return c.NoContent(http.StatusNoContent)
+	return c.JSON(http.StatusOK, map[string]string{"message": "successed"})
 }
