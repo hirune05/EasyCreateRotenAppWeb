@@ -58,7 +58,7 @@ const ReportModal = () => {
             placeholder='説明'
           ></Textarea>
         </div>
-        <div className='flex space-x-3 px-3  justify-end  mt-3 w-full'>
+        <div className='flex space-x-3   justify-center  mt-3 w-full'>
           <AlertDialogCancel className='w-1/2'>キャンセル</AlertDialogCancel>
 
           <AlertDialogAction
