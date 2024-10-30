@@ -33,7 +33,7 @@ const ReportModal = () => {
   }
   return (
     <AlertDialog open={Open} onOpenChange={setOpen}>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger className='h-12 mt-6'>
         <Image
           src={reportIcon}
           alt='通報'

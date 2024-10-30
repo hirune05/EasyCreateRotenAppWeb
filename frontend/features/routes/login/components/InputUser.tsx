@@ -25,7 +25,7 @@ const InputUser: FC<InputUserProps> = ({
       {errorMessage && (
         <p className='text-red-500 text-center mb-4'>{errorMessage}</p>
       )}
-      <form onSubmit={handleSubmit} className='space-y-6'>
+      <form onSubmit={handleSubmit} className='space-y-4'>
         <div>
           <label
             htmlFor='studentId'
@@ -54,13 +54,15 @@ const InputUser: FC<InputUserProps> = ({
             className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
         </div>
-        <button
-          type='submit'
-          className='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
-          disabled={isLoading}
-        >
-          {isLoading ? 'ログイン中...' : 'ログイン'}
-        </button>
+        <div className='w-full flex justify-center '>
+          <button
+            type='submit'
+            className='w-full  bg-blue-500 text-white py-3 mt-8  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+            disabled={isLoading}
+          >
+            {isLoading ? 'ログイン中...' : 'ログイン'}
+          </button>
+        </div>
       </form>
     </div>
   )
