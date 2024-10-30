@@ -37,7 +37,7 @@ const ReportModal = () => {
         <Image
           src={reportIcon}
           alt='通報'
-          className='size-1/2 mx-auto  bg-white border-2  border-red-500 rounded-lg justify-end mr-3'
+          className=' mx-auto max-h-12 max-w-12 flex size-full  bg-white border-2  border-red-500 rounded-lg justify-end mr-3'
           priority={true}
         />
       </AlertDialogTrigger>
@@ -58,7 +58,7 @@ const ReportModal = () => {
             placeholder='説明'
           ></Textarea>
         </div>
-        <div className='flex space-x-3 px-3 justify-center  mt-3 w-full'>
+        <div className='flex space-x-3 px-3  justify-end  mt-3 w-full'>
           <AlertDialogCancel className='w-1/2'>キャンセル</AlertDialogCancel>
 
           <AlertDialogAction
