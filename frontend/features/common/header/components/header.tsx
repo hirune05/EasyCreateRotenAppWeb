@@ -8,10 +8,10 @@ const Header = () => {
   return (
     <header className='fixed top-0 left-0 w-full  bg-orange-50 shadow-sm'>
       <nav className='flex justify-between '>
-        <div className='flex h-[100px] px-2 pt-8 w-full items-center'>
+        <div className='flex h-[100px] px-2  pt-8 w-full items-center'>
           <Link
             href='/roleSelect'
-            className='px-2 mt-8 ho ver:bg-gray-700 rounded  font-bold text-5xl jusefly-start text-white  font-sans'
+            className='ver:bg-gray-700 rounded w-3/4 font-bold text-5xl max-w-80 jusefly-start text-white  font-sans'
           >
             <Image
               src={logoimage}
@@ -20,7 +20,7 @@ const Header = () => {
               priority={true}
             />
           </Link>
-          <div className='w-1/4'>
+          <div className=' size-full flex pr-4  justify-end absolute '>
             <ReportModal />
           </div>
         </div>

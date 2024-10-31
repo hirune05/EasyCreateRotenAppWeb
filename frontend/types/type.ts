@@ -135,7 +135,7 @@ type OrderedItem = {
 type CartItem = {
   id: number;
   name: string;
-  price: number;
+  price?: number;
   arranges?: string;
 }
 

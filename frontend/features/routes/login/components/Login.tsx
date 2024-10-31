@@ -73,23 +73,25 @@ function Login() {
   }
 
   return (
-    <div className='mt-2 flex justify-center flex-col'>
-      <div className='bg-white px-8 rounded-lg max-w-md w-full'>
-        <SelectEvent
-          selectedEvent={selectedEventId}
-          setSelectedEvent={setSelectedEventId}
-        />
-        <InputUser
-          studentId={studentId}
-          setStudentId={setStudentId}
-          password={password}
-          setPassword={setPassword}
-          errorMessage={errorMessage}
-          handleSubmit={handleSubmit}
-          isLoading={isLoading}
-        />
+    <>
+      <div className='mt-2 flex items-center justify-center flex-col'>
+        <div className=' px-8 rounded-lg  w-full'>
+          <SelectEvent
+            selectedEvent={selectedEventId}
+            setSelectedEvent={setSelectedEventId}
+          />
+          <InputUser
+            studentId={studentId}
+            setStudentId={setStudentId}
+            password={password}
+            setPassword={setPassword}
+            errorMessage={errorMessage}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

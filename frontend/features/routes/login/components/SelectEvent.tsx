@@ -26,8 +26,8 @@ const SelectEventWithHook: FC<SelectEventProps> = ({
   }
 
   return (
-    <div className='flex justify-center bg-gray-100 mb-4'>
-      <div className='bg-white rounded-lg w-full'>
+    <div className='flex justify-center mb-4'>
+      <div className=' rounded-lg w-full'>
         <h1 className='text-center'>イベント名</h1>
         <select
           value={selectedEvent}
