@@ -12,7 +12,7 @@ import SubmitAlertDialog from './submitAlertDialog'
 import useCountTotalPrice from '@/hooks/useCountTotalPrice'
 
 type submitProps = {
-  payment: number
+  payment: number | undefined
 }
 
 const SubmitButton = ({ payment }: submitProps) => {
@@ -59,7 +59,7 @@ const SubmitButton = ({ payment }: submitProps) => {
       <SubmitAlertDialog
         alertState={alertState}
         useAlertState={useAlertState}
-        payment={payment}
+        payment={payment ? payment : 0}
         reqData={reqData}
       />
       <Button
@@ -67,8 +67,9 @@ const SubmitButton = ({ payment }: submitProps) => {
         onClick={() => submitFunc()}
         disabled={
           !(
-            (Number.isInteger(payment) && payment == 0) ||
-            payment >= totalPrice
+            payment == 0 ||
+            payment == undefined ||
+            (payment && payment >= totalPrice)
           )
         }
       >
