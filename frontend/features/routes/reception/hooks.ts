@@ -35,7 +35,6 @@ export const useGetParams = () => {
     if (
       getItemDataParams &&
       getTotalPriceParams &&
-      getPaymentAmountParams &&
       getTotalItemsParams &&
       getAdvSaleItemsParams &&
       getOrderIdParams
