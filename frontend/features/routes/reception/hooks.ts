@@ -16,7 +16,7 @@ export const useHandleCliclkPayment = () => {
 }
 
 export const useGetParams = () => {
-  const [orderedItems, setOrderedItems] = useState<OrderedItem[]>()
+  const [orderedItems, setOrderedItems] = useState<OrderedItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const [paymentAmount, setPaymentAmount] = useState<number>(0)
   const [totalItems, setTotalItems] = useState<number>(0)
@@ -24,6 +24,7 @@ export const useGetParams = () => {
   const [orderId, setOrderId] = useState<number>(0)
   const searchParams = useSearchParams()
   const router = useRouter()
+
   useEffect(() => {
     const getItemDataParams = searchParams.get('itemData')
     const getTotalPriceParams = searchParams.get('totalPrice')
@@ -39,16 +40,24 @@ export const useGetParams = () => {
       getAdvSaleItemsParams &&
       getOrderIdParams
     ) {
-      setOrderedItems(JSON.parse(getItemDataParams))
+      try {
+        setOrderedItems(JSON.parse(getItemDataParams))
+      } catch (error) {
+        console.error('Failed to parse itemData:', error)
+      }
       setTotalPrice(Number(getTotalPriceParams))
       setPaymentAmount(Number(getPaymentAmountParams))
       setTotalItems(Number(getTotalItemsParams))
       setAdvSaleItems(Number(getAdvSaleItemsParams))
       setOrderId(Number(getOrderIdParams))
+    }
+  }, [])
 
+  useEffect(() => {
+    if (orderedItems.length > 0) {
       router.replace('/reception')
     }
-  }, [searchParams])
+  }, [orderedItems])
 
   return {
     orderedItems,

@@ -21,7 +21,7 @@ export default function OrderDetailModal() {
 
   return (
     <>
-      {orderedItems && (
+      {orderedItems.length > 0 && (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogContent>
             <DialogTitle>
