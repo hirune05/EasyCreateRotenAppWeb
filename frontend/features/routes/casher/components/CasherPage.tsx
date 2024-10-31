@@ -11,7 +11,7 @@ import { useAtom } from 'jotai'
 import { cartItemsAtom } from '@/utils/globalState'
 
 const CasherPage = () => {
-  const [payment, setPayment] = useState(0)
+  const [payment, setPayment] = useState<number>()
   const [cartItems] = useAtom(cartItemsAtom)
   const totalPrice = useCountTotalPrice()
   return (
@@ -31,7 +31,7 @@ const CasherPage = () => {
             <hr className='border-t border-gray-300 mt-1 mx-2' />
             <p className='ml-5 text-3xl my-4 font-bold'>合計:{totalPrice}円</p>
             <div className='flex justify-center'>
-              <PaymentInput setPayment={setPayment} />
+              <PaymentInput payment={payment} setPayment={setPayment} />
             </div>
           </div>
 
