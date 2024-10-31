@@ -68,9 +68,8 @@ const SubmitButton = ({ payment }: submitProps) => {
         onClick={() => submitFunc()}
         disabled={
           !(
-            (Number.isInteger(payment) &&
-              /^\d+$/.test(String(payment)) &&
-              payment === 0) ||
+            payment == 0 ||
+            payment == undefined ||
             (payment && payment >= totalPrice)
           )
         }
