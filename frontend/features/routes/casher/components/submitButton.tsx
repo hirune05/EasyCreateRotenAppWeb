@@ -60,7 +60,6 @@ const SubmitButton = ({ payment }: submitProps) => {
         alertState={alertState}
         useAlertState={useAlertState}
         payment={payment ? payment : 0}
-        payment={payment ? payment : 0}
         reqData={reqData}
       />
       <Button

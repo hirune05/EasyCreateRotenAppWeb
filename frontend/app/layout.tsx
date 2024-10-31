@@ -19,7 +19,7 @@ export default function RootLayout({
         <Header />
         <div className='h-[120px]' />
         {children}
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   )

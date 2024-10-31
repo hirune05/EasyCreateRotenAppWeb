@@ -38,7 +38,9 @@ export const useSubmitCart = () => {
           }
 
           const itemData: OrderedItem[] = reqData.items.map(reqItem => {
-            const foundItem = storeItems.find(item => item.id === reqItem.itemId)
+            const foundItem = storeItems.find(
+              item => item.id === reqItem.itemId,
+            )
             return {
               name: foundItem ? foundItem.name : 'Unknown item name',
               quantity: reqItem.quantity,
@@ -65,9 +67,10 @@ export const useSubmitCart = () => {
         } catch (error) {
           console.log(error)
           toast({
-            title: "注文に失敗しました",
-            description: "注文の処理中にエラーが発生しました。再度お試しください。",
-            variant: "destructive",
+            title: '注文に失敗しました',
+            description:
+              '注文の処理中にエラーが発生しました。再度お試しください。',
+            variant: 'destructive',
           })
         }
       }
