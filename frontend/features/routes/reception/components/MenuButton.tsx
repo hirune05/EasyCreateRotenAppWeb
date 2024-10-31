@@ -7,31 +7,37 @@ import { useEffect, useState } from 'react'
 
 type ItemProp = {
   storeItem: Item
+  isTicket: boolean
 }
 
-const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
+const MenuButton: React.FC<ItemProp> = ({ storeItem, isTicket }) => {
   const [cartItems] = useAtom(cartItemsAtom)
   const [itemCount, setItemCount] = useState(0)
   const setCartItems = useSetAtom(cartItemsAtom)
+
+  const price = isTicket ? 0 : storeItem.price
+  const name = isTicket ? storeItem.name + '(前)' : storeItem.name
 
   // Todo
   // useEffectの内容をhooksにまとめる
   useEffect(() => {
     const itemNum = cartItems.filter(
-      orderItem => orderItem.name === storeItem.name,
+      orderItem => orderItem.name === name,
     ).length
     setItemCount(itemNum)
-  }, [cartItems, storeItem.name])
+  }, [cartItems, name])
 
   const handleAddItem = () => {
     const newElement = {
       id: storeItem.id,
-      name: storeItem.name,
-      price: storeItem.price,
+      name: name,
+      price: price,
       arranges: undefined,
     }
     setCartItems((prevItems: CartItem[]) => [...prevItems, newElement])
   }
+
+  //TODO 前売り券の時はボタンの色を変える？
 
   return (
     <Button
@@ -41,7 +47,7 @@ const MenuButton: React.FC<ItemProp> = ({ storeItem }) => {
     >
       <div className='w-full h-2/3 justify-start'>
         <p className='text-left text-lg mt-3 mx-3 font-bold text-gray-600'>
-          {storeItem.name}
+          {name}
         </p>
       </div>
       <div className=' flex w-full mb-1'>

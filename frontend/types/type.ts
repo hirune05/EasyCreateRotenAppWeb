@@ -53,19 +53,6 @@ type EventInfo = {
 
 // 備考
 // サンプルデータを作るときに型を変えたので本番では戻す
-// type Item = {
-//   id: number;
-//   storeId?: number;
-//   Store?: Store;
-//   name: string;
-//   description?: string;
-//   price?: number;
-//   imageUrl?: string;
-//   status?: number;
-//   createdAt?: Date; 
-//   updatedAt?: Date; 
-//   OrderItems?: OrderItem[]; 
-// };
 
 // 本番用の型
 type Item = {

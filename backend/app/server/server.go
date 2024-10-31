@@ -109,10 +109,10 @@ func Run() error {
 	log.Println("Database migration completed successfully")
 
 	// シードデータを追加したいときだけコメントアウトを外す
-	if err := seedData(db); err != nil {
-		log.Fatalf("failed to seed data: %v", err)
-	}
-	log.Println("Seed data added successfully")
+	// if err := seedData(db); err != nil {
+	// 	log.Fatalf("failed to seed data: %v", err)
+	// }
+	// log.Println("Seed data added successfully")
 
 	addr := ":" + strconv.Itoa(config.Port())
 	log.Printf("Serve on http://%s", addr)

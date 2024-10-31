@@ -14,7 +14,7 @@ export const getAllItems = async () => {
 export const getItemsByStoreId = async (storeId: string) => {
   const res = await fetch(`${apiUrl}/v1/items/store/${storeId}`, {
     method: 'GET',
-    cache: 'force-cache',
+    cache: 'no-store',
     credentials: 'include',
   })
   const data = await res.json()
