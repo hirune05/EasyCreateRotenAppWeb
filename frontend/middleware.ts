@@ -1,4 +1,3 @@
-// middleware.ts
 import apiUrl from '@/constants/url'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -20,12 +19,12 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
+    const cookie = "Authorization=" + token
     const response = await fetch(apiUrl + '/v1/auth', {
-      method: 'POST',
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
+        "Cookie": cookie
+      }
     })
 
     if (!response.ok) {
@@ -34,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
     const data = await response.json()
 
-    if (!data.valid) {
+    if (data.error) {
       throw new Error(data.error || 'Invalid token')
     }
 
