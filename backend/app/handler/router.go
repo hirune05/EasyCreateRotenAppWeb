@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -25,12 +27,26 @@ import (
 func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su usecase.StoreStaff, stu usecase.Student, eu usecase.Event, iu usecase.Item, ru usecase.Report) http.Handler {
 	e := echo.New()
 
+	var frontEndUrl string
+	var err error
+
+	frontEndUrl = os.Getenv("FRONTEND_PROD_URL")
+	if frontEndUrl == "" {
+		frontEndUrl = os.Getenv("FRONTEND_URL")
+	} else {
+		frontEndUrl, err = getEnvVariable("FRONTEND_PROD_URL", "FRONTEND_URL")
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+	}
+
 	// A good base middleware stack
 	e.Use(middleware.RequestID())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins:     []string{os.Getenv("FRONTEND_URL")},
+		AllowOrigins:     []string{frontEndUrl},
 		AllowMethods:     []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 		AllowCredentials: true,
 	}))
@@ -49,7 +65,7 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	v1 := e.Group("/v1")
 	v1.Use(appmiddleware.RequestAuthHandker)
 
-	v1.GET("/auth", func(c echo.Context) error { return c.JSON(http.StatusOK, map[string]string{"message": "successed"})})
+	v1.GET("/auth", func(c echo.Context) error { return c.JSON(http.StatusOK, map[string]string{"message": "successed"}) })
 
 	order.RegisterRoutes(v1, ou)
 	orderItem.RegisterRoutes(v1, oiu)
@@ -64,4 +80,25 @@ func NewRouter(ou usecase.Order, oiu usecase.OrderItem, au usecase.AdminUser, su
 	}
 
 	return e
+}
+
+func getEnvVariable(jsonEnvKey string, key string) (string, error) {
+	// Get the environment variable that contains JSON data
+	jsonEnv := os.Getenv(jsonEnvKey)
+	if jsonEnv == "" {
+		return "", errors.New(fmt.Sprintf("Environment variable %s is not configured", jsonEnvKey))
+	}
+
+	// Parse the JSON data
+	var jsonData map[string]string
+	err := json.Unmarshal([]byte(jsonEnv), &jsonData)
+	if err != nil {
+		return "", errors.New(fmt.Sprintf("Failed to parse JSON from %s: %s", jsonEnvKey, err))
+	}
+
+	// Extract the value for the given key
+	if val, exists := jsonData[key]; exists {
+		return val, nil
+	}
+	return "", errors.New(fmt.Sprintf("Key %s not found in JSON from %s", key, jsonEnvKey))
 }
