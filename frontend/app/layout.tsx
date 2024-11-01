@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/features/common/header/components/header'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: '露店アプリ',
@@ -18,6 +19,7 @@ export default function RootLayout({
         <Header />
         <div className='h-[120px]' />
         {children}
+        <Toaster />
       </body>
     </html>
   )

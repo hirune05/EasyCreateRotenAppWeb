@@ -51,9 +51,6 @@ type EventInfo = {
   updatedAt: Date;
 };
 
-// 備考
-// サンプルデータを作るときに型を変えたので本番では戻す
-
 // 本番用の型
 type Item = {
   id: number;
