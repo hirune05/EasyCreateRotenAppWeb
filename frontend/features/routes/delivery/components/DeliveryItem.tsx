@@ -2,24 +2,23 @@ import type { deliveryOrderProps } from '../type'
 import MenuItems from './MenuItems'
 
 const DeliveryItem: React.FC<deliveryOrderProps> = ({
-  storeStaffId,
+  storeStaff,
   id,
   orderItems,
 }) => {
   return (
-    <div className='text-2xl border space-y-2 rounded-lg m-1 bg-gray-50'>
-      <div className='flex justify-between m-1'>
-        {/* 注文者名 */}
-        <p className='flex justify-start items-center mt-3 pl-2'>
-          注文者:{storeStaffId}
-        </p>
-        {/* 受け取り番号 */}
-        <p className='mr-2 px-8 py-1   flex justify-end items-center bg-white mt-3 font-bold'>
+    <div className='  w-full   rounded-sm bg-white border-4  border-amber-50 mx-auto min-h-[95px] shadow-md'>
+      <div className='flex justify-between mx-1'>
+        <div className='flex justify-start text-gray-600 items-end text-sm  pl-2'>
+          注文者:{storeStaff?.Student?.name}
+        </div>
+        <div className='mr-2  flex justify-end items-center text-xl font-bold'>
           {id}
-        </p>
+        </div>
       </div>
-      <hr className='border-t border-gray-300 mx-2' />
+      <div className='border-t border-gray-300 h-full  my-auto' >
       <MenuItems orderItems={orderItems} />
+      </div>
     </div>
   )
 }

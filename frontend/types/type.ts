@@ -147,4 +147,4 @@ type ReportItems = {
 
 }
 
-export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem,CartItem,ReportItems}
+export type {LoginStudentResponse,LoginStudentRequest,AddOrderComplexItem,getItemByStoreIdResponse,AdminUser,EventInfo,Order,Item,AddOrderComplexRequest,OrderItem,OrderedItem,CartItem,ReportItems,StoreStaff}

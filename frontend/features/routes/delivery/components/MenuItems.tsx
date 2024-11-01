@@ -3,7 +3,7 @@ import MenuItem from './MenuItem'
 
 const MenuItems: React.FC<MenuItemsProps> = ({ orderItems }) => {
   return (
-    <div className='grid grid-cols-2 gap-1 '>
+    <div className='grid grid-cols-2 gap-1 p-1'>
       {orderItems.map((orderItem, index) => (
         <MenuItem
           item={orderItem.Item}

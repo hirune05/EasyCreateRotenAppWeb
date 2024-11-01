@@ -1,4 +1,4 @@
-import type { Item, Order, OrderItem } from '@/types/type'
+import type { Item, Order, OrderItem,StoreStaff } from '@/types/type'
 
 export type MenuItemsProps = {
   orderItems: OrderItem[]
@@ -9,7 +9,7 @@ export type deliveryOrderProp = {
 }
 
 export type deliveryOrderProps = {
-  storeStaffId: number
+  storeStaff: StoreStaff | null
   id: number
   orderItems: OrderItem[]
 }

@@ -15,15 +15,13 @@ const DeliveryDetailDialogs: React.FC = () => {
     return <p>Loading...</p>
   }
 
-  // 完了時に呼ばれるコールバック関数
   const handleOrderCompleted = () => {
     refetch()
   }
 
   return (
-    <div>
-      <h1 className='flex justify-center'>受け渡し</h1>
-      <div className='container flex flex-col w-11/12 justify-center m-1'>
+    <div className='h-screen overflow-y-scroll'>
+      <div className='flex flex-col w-full'>
         {orders && orders.length > 0 ? (
           orders.map(order => (
             <div key={order.id}>
@@ -38,7 +36,7 @@ const DeliveryDetailDialogs: React.FC = () => {
             </div>
           ))
         ) : (
-          <p>完了待ちの注文はありません。</p>
+          <p className='text-center'>完了待ちの注文はありません。</p>
         )}
       </div>
     </div>
