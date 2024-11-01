@@ -16,8 +16,8 @@ const DeliveryItem: React.FC<deliveryOrderProps> = ({
           {id}
         </div>
       </div>
-      <div className='border-t border-gray-300 h-full  my-auto' >
-      <MenuItems orderItems={orderItems} />
+      <div className='border-t border-gray-300 h-full  my-auto'>
+        <MenuItems orderItems={orderItems} />
       </div>
     </div>
   )

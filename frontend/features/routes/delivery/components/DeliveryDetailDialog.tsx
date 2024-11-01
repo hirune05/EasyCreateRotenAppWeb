@@ -53,18 +53,18 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
   })
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen} >
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <div className='flex justify-center w-full'>
-      <DialogTrigger className='w-11/12 my-1'>
-        <DeliveryItem
-          storeStaff={deliveryOrder.StoreStaff}
-          id={deliveryOrder.id}
-          orderItems={deliveryOrder.OrderItems}
-        />
-      </DialogTrigger>
+        <DialogTrigger className='w-11/12 my-1'>
+          <DeliveryItem
+            storeStaff={deliveryOrder.StoreStaff}
+            id={deliveryOrder.id}
+            orderItems={deliveryOrder.OrderItems}
+          />
+        </DialogTrigger>
       </div>
       <DialogContent>
-        <DialogTitle >
+        <DialogTitle>
           <p>注文番号: {deliveryOrder.id}</p>
         </DialogTitle>
         <DialogDescription>
