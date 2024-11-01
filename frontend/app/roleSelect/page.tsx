@@ -1,3 +1,4 @@
+import LogoutButton from '@/components/LogoutButton'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -22,6 +23,7 @@ export default function Page() {
             受け渡し
           </Button>
         </Link>
+        <LogoutButton />
       </div>
     </>
   )
