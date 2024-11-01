@@ -54,25 +54,26 @@ const DeliveryDetailDialog: React.FC<DeliveryDetailDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
-        <DeliveryItem
-          storeStaffId={deliveryOrder.storeStaffId}
-          id={deliveryOrder.id}
-          orderItems={deliveryOrder.OrderItems}
-        />
-      </DialogTrigger>
+      <div className='flex justify-center w-full'>
+        <DialogTrigger className='w-11/12 my-1'>
+          <DeliveryItem
+            storeStaff={deliveryOrder.StoreStaff}
+            id={deliveryOrder.id}
+            orderItems={deliveryOrder.OrderItems}
+          />
+        </DialogTrigger>
+      </div>
       <DialogContent>
         <DialogTitle>
           <p>注文番号: {deliveryOrder.id}</p>
         </DialogTitle>
         <DialogDescription>
-          <span>受注: {deliveryOrder.storeStaffId}</span>
+          <span>受注: {deliveryOrder.StoreStaff?.Student?.name}</span>
         </DialogDescription>
         <div className=' flex flex-col m-2 justify-center w-11/12'>
           <div className='bg-gray-100  mb-5 rounded-md shadow-md '>
             <ItemList cartItems={cartItems} />
           </div>
-
           <Button
             className='bg-green-400 text-white w-fill  text-xl border-none'
             onClick={handleClick}
