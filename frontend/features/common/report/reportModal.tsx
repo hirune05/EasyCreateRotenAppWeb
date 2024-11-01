@@ -33,11 +33,11 @@ const ReportModal = () => {
   }
   return (
     <AlertDialog open={Open} onOpenChange={setOpen}>
-      <AlertDialogTrigger className='h-12 mt-6'>
+      <AlertDialogTrigger className='h-12'>
         <Image
           src={reportIcon}
           alt='通報'
-          className=' mx-auto max-h-12 max-w-12 flex size-full  bg-white border-2  border-red-500 rounded-lg justify-end mr-3'
+          className=' mx-auto max-h-12 max-w-12 flex size-full  bg-white border-2  border-red-500 rounded-lg justify-end '
           priority={true}
         />
       </AlertDialogTrigger>
