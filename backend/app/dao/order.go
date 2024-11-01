@@ -32,6 +32,7 @@ func (r *OrderRepositoryImpl) GetByID(ctx context.Context, id string) (*object.O
 	if err := r.db.WithContext(ctx).
                         Where("id = ?", id).
                         Preload("OrderItems.Item").
+                        Preload("StoreStaff.Student", func(db *gorm.DB) *gorm.DB { return db.Select("id, name") }).
                         First(&order).
                         Error; err != nil {
 		return nil, fmt.Errorf("failed to find order by id: %w", err)
@@ -45,6 +46,7 @@ func (r *OrderRepositoryImpl) GetByStoreID(ctx context.Context, id string) ([]*o
 	if err := r.db.WithContext(ctx).
                         Where("store_id = ?", id).
                         Preload("OrderItems.Item").
+                        Preload("StoreStaff.Student", func(db *gorm.DB) *gorm.DB { return db.Select("id, name") }).
                         Find(&orders).
                         Error; err != nil {
 		return nil, fmt.Errorf("failed to find order by store id: %w", err)
@@ -57,6 +59,7 @@ func (r *OrderRepositoryImpl) GetByStatus(ctx context.Context, storeID, status s
 	if err := r.db.WithContext(ctx).
                         Where("store_id = ? AND status = ?", storeID, status).
                         Preload("OrderItems.Item").
+                        Preload("StoreStaff.Student", func(db *gorm.DB) *gorm.DB { return db.Select("id, name") }).
                         Find(&orders).Error; err != nil {
 		return nil, fmt.Errorf("failed to find order by store id and status: %w", err)
 	}
@@ -68,6 +71,7 @@ func (r *OrderRepositoryImpl) GetAll(ctx context.Context) ([]*object.Order, erro
 
 	if err := r.db.WithContext(ctx).
                         Preload("OrderItems.Item").
+                        Preload("StoreStaff.Student", func(db *gorm.DB) *gorm.DB { return db.Select("id, name") }).
                         Find(&orders).
                         Error; err != nil {
 		return nil, fmt.Errorf("failed to retrieve all orders: %w", err)
