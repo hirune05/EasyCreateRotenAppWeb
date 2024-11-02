@@ -4,7 +4,9 @@ import (
 	"backend/app/domain/object"
 	"backend/app/domain/repository"
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 
 	"gorm.io/gorm"
@@ -89,9 +91,14 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		return nil, errors.New("student id is not a vendor at this event.")
 	}
 
-	secretKey := os.Getenv("JWT_SECRET_KEY")
+	var secretKey string
+
+	secretKey = os.Getenv("JWT_CONFIG")
 	if secretKey == "" {
-		return nil, errors.New("JWT secret key is not configured")
+		secretKey = os.Getenv("JWT_SECRET_KEY")
+	} else {
+		secretKey, err = getEnvVariable("JWT_CONFIG", "JWT_SECRET_KEY")
+
 	}
 
 	token, err := student.GenerateJWTToken(secretKey)
@@ -106,4 +113,25 @@ func (a *student) Login(ctx context.Context, studentID int, password string, eve
 		StoreName:    dao.StoreName,
 		StoreStaffID: dao.StoreStaffID,
 	}, nil
+}
+
+func getEnvVariable(jsonEnvKey string, key string) (string, error) {
+	// Get the environment variable that contains JSON data
+	jsonEnv := os.Getenv(jsonEnvKey)
+	if jsonEnv == "" {
+		return "", errors.New(fmt.Sprintf("Environment variable %s is not configured", jsonEnvKey))
+	}
+
+	// Parse the JSON data
+	var jsonData map[string]string
+	err := json.Unmarshal([]byte(jsonEnv), &jsonData)
+	if err != nil {
+		return "", errors.New(fmt.Sprintf("Failed to parse JSON from %s: %s", jsonEnvKey, err))
+	}
+
+	// Extract the value for the given key
+	if val, exists := jsonData[key]; exists {
+		return val, nil
+	}
+	return "", errors.New(fmt.Sprintf("Key %s not found in JSON from %s", key, jsonEnvKey))
 }
