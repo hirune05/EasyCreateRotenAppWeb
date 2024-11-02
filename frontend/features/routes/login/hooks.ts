@@ -1,3 +1,4 @@
+'use client'
 import type { LoginStudentRequest, LoginStudentResponse } from '@/types/type'
 import { useState } from 'react'
 import { studentLogin } from './endpoint'
@@ -17,7 +18,7 @@ export const useLoginStudent = () => {
       // 有効期限は6時間
       expires.setTime(expires.getTime() + 1 * 6 * 60 * 60 * 1000)
       // 本番環境(https通信)で使用
-      document.cookie = `Authorization=${response.token}; expires=${expires.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
+      document.cookie = `Authorization=${response.token}; expires=${expires.toUTCString()}; path=/; Secure; SameSite=None`;
       //ローカル
       // document.cookie = `Authorization=${response.token}; expires=${expires.toUTCString()}; path=/`
 
