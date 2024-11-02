@@ -2,7 +2,7 @@
 4Iで開発した露店の回転を効率化するアプリです！！
 
 # アーキテクチャ図
-![image](https://github.com/user-attachments/assets/28fce68f-d552-4531-859c-f2d8abe97cde)
+![aws](https://github.com/user-attachments/assets/6cc7a495-e9a5-4cca-b92e-9d6d9f0d16fd)
 
 # 使用技術
 ## フロントエンド
