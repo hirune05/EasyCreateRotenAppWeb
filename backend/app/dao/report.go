@@ -4,6 +4,7 @@ import (
 	"backend/app/domain/object"
 	"backend/app/domain/repository"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -14,7 +15,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sesv2/types"
 	"gorm.io/gorm"
 )
-
 
 type ReportRepositoryImpl struct {
 	db *gorm.DB
@@ -28,7 +28,6 @@ var (
 	fromEmailAddress = "mail@roten-app.com"
 )
 
-
 func NewReportRepository(db *gorm.DB) *ReportRepositoryImpl {
 	return &ReportRepositoryImpl{db: db}
 }
@@ -40,17 +39,19 @@ func (r *ReportRepositoryImpl) Create(ctx context.Context, tx *gorm.DB, report *
 	return nil
 }
 
-
 func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB, subject string, body string) (string, error) {
 
-	accessKey := os.Getenv("AWS_ACCESS_KEY_ID")
-	if accessKey == "" {
-		return "", errors.New("AWS_ACCESS_KEY_ID is not configured")
-	}
+	var accessKey string
+	var awsConfig string
+	var secretKey string
 
-	secretKey := os.Getenv("AWS_SECRET_ACCESS_KEY")
-	if secretKey == "" {
-		return "", errors.New("AWS_SECRET_ACCESS_KEY is not configured")
+	awsConfig = os.Getenv("AWS_CONFIG")
+	if awsConfig == "" {
+		accessKey = os.Getenv("AWS_ACCESS_KEY_ID")
+		secretKey = os.Getenv("AWS_SECRET_ACCESS_KEY")
+	} else {
+		accessKey, _ = getEnvVariable("AWS_CONFIG", "AWS_ACCESS_KEY_ID")
+		secretKey, _ = getEnvVariable("AWS_CONFIG", "AWS_SECRET_ACCESS_KEY")
 	}
 
 	cfg := aws.Config{
@@ -59,10 +60,10 @@ func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB, subje
 	}
 
 	var toEmailAddress []string
-        if err :=  r.db.WithContext(ctx).Table("admin_users").Select("email").Scan(&toEmailAddress).Error; err != nil {
+	if err := r.db.WithContext(ctx).Table("admin_users").Select("email").Scan(&toEmailAddress).Error; err != nil {
 		return "", fmt.Errorf("failed to find email by admin_users: %w", err)
-        }
-	
+	}
+
 	client := sesv2.NewFromConfig(cfg)
 
 	input := &sesv2.SendEmailInput{
@@ -92,4 +93,25 @@ func (r *ReportRepositoryImpl) SendEmail(ctx context.Context, tx *gorm.DB, subje
 	fmt.Println("Email message ID:", *res.MessageId)
 
 	return "Email message ID:" + *res.MessageId, nil
+}
+
+func getEnvVariable(jsonEnvKey string, key string) (string, error) {
+	// Get the environment variable that contains JSON data
+	jsonEnv := os.Getenv(jsonEnvKey)
+	if jsonEnv == "" {
+		return "", errors.New(fmt.Sprintf("Environment variable %s is not configured", jsonEnvKey))
+	}
+
+	// Parse the JSON data
+	var jsonData map[string]string
+	err := json.Unmarshal([]byte(jsonEnv), &jsonData)
+	if err != nil {
+		return "", errors.New(fmt.Sprintf("Failed to parse JSON from %s: %s", jsonEnvKey, err))
+	}
+
+	// Extract the value for the given key
+	if val, exists := jsonData[key]; exists {
+		return val, nil
+	}
+	return "", errors.New(fmt.Sprintf("Key %s not found in JSON from %s", key, jsonEnvKey))
 }
