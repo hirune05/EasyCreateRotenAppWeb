@@ -15,14 +15,21 @@ import (
 func RequestAuthHandker(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		tokenString, err := c.Cookie("Authorization")
+		if err != nil {
+			log.Printf("Error: %v", err)
+		}
+
 		var secretKey string
 
-		secretKey = os.Getenv("JWT_CONFIG")
-		if secretKey == "" {
+		jwtConf := os.Getenv("JWT_CONFIG")
+		if jwtConf == "" {
 			secretKey = os.Getenv("JWT_SECRET_KEY")
 		} else {
 			secretKey, err = getEnvVariable("JWT_CONFIG", "JWT_SECRET_KEY")
 		}
+
+		log.Printf("%v", tokenString)
+		log.Printf("%v", secretKey)
 
 		if err != nil {
 			log.Printf("Error: %v", err)

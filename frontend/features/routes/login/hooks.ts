@@ -17,8 +17,9 @@ export const useLoginStudent = () => {
       // 有効期限は6時間
       expires.setTime(expires.getTime() + 1 * 6 * 60 * 60 * 1000)
       // 本番環境(https通信)で使用
-      // document.cookie = `token=${response.token}; expires=${expires.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
-      document.cookie = `Authorization=${response.token}; expires=${expires.toUTCString()}; path=/`
+      document.cookie = `Authorization=${response.token}; expires=${expires.toUTCString()}; path=/; Secure; HttpOnly; SameSite=Strict`;
+      //ローカル
+      // document.cookie = `Authorization=${response.token}; expires=${expires.toUTCString()}; path=/`
 
       return response as LoginStudentResponse
     } catch (err) {
