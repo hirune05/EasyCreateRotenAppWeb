@@ -18,12 +18,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
+
   try {
-    const cookie = "Authorization=" + token
     const response = await fetch(apiUrl + '/v1/auth', {
       method: 'GET',
       headers: {
-        "Cookie": cookie
+        "Authorization": token
       }
     })
 

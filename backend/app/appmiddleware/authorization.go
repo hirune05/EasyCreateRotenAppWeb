@@ -14,12 +14,14 @@ import (
 
 func RequestAuthHandker(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		tokenString, err := c.Cookie("Authorization")
-		if err != nil {
-			log.Printf("Error: %v", err)
+		tokenString := c.Request().Header.Get("Authorization")
+		if tokenString == "" {
+			log.Printf("Error: Not include Authorization")
+			return c.JSON(http.StatusUnauthorized, map[string]string{"error": "Unauthorized", "message": "Not include Authorization"})
 		}
 
 		var secretKey string
+                var err error
 
 		jwtConf := os.Getenv("JWT_CONFIG")
 		if jwtConf == "" {
@@ -36,7 +38,7 @@ func RequestAuthHandker(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusUnauthorized, map[string]string{"error": "Unauthorized"})
 		}
 
-		_, err2 := jwt.Parse(tokenString.Value, func(token *jwt.Token) (interface{}, error) {
+		_, err2 := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 			}
