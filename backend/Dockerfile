@@ -34,6 +34,6 @@ WORKDIR /root/
 
 # ビルド済みバイナリをコピー
 COPY --from=build /app/main .
-COPY --from=build /app/.env .
+# COPY --from=build /app/.env .
 
 CMD ["./main"]
