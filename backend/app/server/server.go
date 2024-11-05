@@ -268,3 +268,5 @@ func generateRandomEmail(username string) string {
 	email := fmt.Sprintf("%s%d@gmail.com", username, randomNumber)
 	return email
 }
+
+//
