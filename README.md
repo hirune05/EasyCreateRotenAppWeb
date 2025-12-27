@@ -1,6 +1,10 @@
 # EasyCreateRotenAppWeb
 4Iで開発した露店の回転を効率化するアプリです！！
 
+# デプロイ先（露店従事者のみログイン可能）
+https://easy-create-roten-app-web-kdom.vercel.app/login
+（※ 文化祭終了に伴い、運用を停止しました。）
+
 # アーキテクチャ図
 ![aws](https://github.com/user-attachments/assets/6cc7a495-e9a5-4cca-b92e-9d6d9f0d16fd)
 
